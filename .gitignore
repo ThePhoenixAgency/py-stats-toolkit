@@ -221,20 +221,11 @@ deployments/
 *.server
 *.service
 
-# Fichiers de workflow spécifiques
+# GitHub
+.github/
+.github/workflows/
 .github/workflows/*.yml
 .github/workflows/*.yaml
-
-# Fichiers de serveur
-server/
-server/*.py
-server/*.md
-server/*.yaml
-server/*.yml
-server/*.json
-server/*.ini
-server/*.conf
-server/*.config
 
 # Fichiers de configuration spécifiques
 .pre-commit-config.yaml
