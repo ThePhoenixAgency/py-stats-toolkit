@@ -212,10 +212,10 @@ deployments/
 *.service
 
 # GitHub
-.github/
-.github/workflows/
-.github/workflows/*.yml
-.github/workflows/*.yaml
+.github/*
+!.github/workflows/
+!.github/workflows/*.yml
+!.github/workflows/*.yaml
 
 # Fichiers de configuration spécifiques
 .pre-commit-config.yaml
