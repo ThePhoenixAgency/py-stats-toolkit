@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
 setup(
@@ -19,7 +20,7 @@ setup(
     author="Phoenix Project",
     author_email="contact@phonxproject.onmicrosoft.com",
     description="Une boîte à outils complète pour l'analyse statistique en Python",
-    long_description=open("README.md").read(),
+    long_description=open("README.md", encoding='utf-8').read(),
     long_description_content_type="text/markdown",
     url="https://github.com/PhoenixGuardianTools/py-stats-toolkit",
     classifiers=[

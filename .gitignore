@@ -177,4 +177,8 @@ py_stats_toolkit-0.1.0-py3-none-any.whl
 
 # Fichiers de configuration à ignorer
 .pre-commit-config.yaml
-pytest.ini 
+pytest.ini
+
+# Fichiers de configuration sensibles
+.pypirc
+.env 
