@@ -1,3 +1,0 @@
-backup
-genetic_lottery_optimizer
-py_stats_toolkit
