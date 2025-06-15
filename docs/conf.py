@@ -1,46 +1,61 @@
-"""
-Configuration de la documentation Sphinx pour py_stats_toolkit.
-"""
+'''
+=====================================================================
+File : conf.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
+=====================================================================
+Copyright (c) 2025, Phoenix Project
+All rights reserved.
+
+Description du module conf.py
+
+tags : module, documentation
+=====================================================================
+Ce module contient la configuration de la documentation.
+
+tags : module, documentation
+=====================================================================
+'''
 
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-# -- Informations du projet -------------------------------------------------
-
-project = 'Py Stats Toolkit'
-copyright = '2024, PhoenixProject'
-author = 'PhoenixProject'
-
-# La version complète, incluant alpha/beta/rc tags
-release = '1.0.0'
-
-# -- Configuration générale -------------------------------------------------
+project = 'py_stats_toolkit'
+copyright = '2025, Phoenix Project'
+author = 'Phoenix Project'
 
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.mathjax',
 ]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-# -- Options pour la sortie HTML -------------------------------------------
-
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+# -- Informations du projet -------------------------------------------------
+
+release = '1.0.0'
+
+# -- Configuration générale -------------------------------------------------
+
+# -- Options pour la sortie HTML -------------------------------------------
+
 html_logo = '_static/logo.png'
 html_favicon = '_static/favicon.ico'
 
 # -- Options pour l'extension autodoc --------------------------------------
 
 autodoc_member_order = 'bysource'
-autodoc_typehints = 'description'
-autodoc_typehints_format = 'short'
+add_module_names = False
 
 # -- Options pour l'extension napoleon ------------------------------------
 

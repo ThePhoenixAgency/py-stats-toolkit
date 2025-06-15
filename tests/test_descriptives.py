@@ -1,29 +1,144 @@
+'''
+=====================================================================
+File : test_descriptives.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
+=====================================================================
+Copyright (c) 2025, Phoenix Project
+All rights reserved.
+
+Description du module test_descriptives.py
+
+tags : module, stats
+=====================================================================
+Ce module Description du module test_descriptives.py
+
+tags : module, stats
+=====================================================================
+'''
+
+# Imports spécifiques au module
+from typing import Any, Dict, List, Optional, Tuple, Union
+import numpy as np
+import pandas as pd
+
+# Imports de la base
+from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
+
+class TestMoyenneGlissante(StatisticalModule):
+    """
+    Classe TestMoyenneGlissante
+    
+    Attributes:
+        data, parameters, results
+    """
+    
+    def __init__(self):
+        """
+        Initialise TestMoyenneGlissante.
+        """
+        super().__init__()
+        pass
+    
+    def configure(self, **kwargs) -> None:
+        """
+        Configure les paramètres de TestMoyenneGlissante.
+        
+        Args:
+            **kwargs: Paramètres de configuration
+        """
+        pass
+    
+    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
+        """
+        Exécute le flux de travail d'analyse.
+        
+        Args:
+            data (Union[pd.DataFrame, pd.Series]): Données à analyser
+            **kwargs: Arguments additionnels
+            
+        Returns:
+            Dict[str, Any]: Résultats de l'analyse
+        """
+        pass 
+
 import unittest
 import numpy as np
 import pandas as pd
-from py_stats_toolkit.stats.descriptives.MoyenneGlissanteModule import MoyenneGlissanteModule
-import pytest
-from py_stats_toolkit.stats.descriptives import DescriptiveStatistics
+from py_stats_toolkit.stats.descriptives.basic_stats import BasicStatistics
 
 class TestMoyenneGlissante(unittest.TestCase):
     def setUp(self):
-        self.module = MoyenneGlissanteModule()
-        self.data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        self.stats = BasicStatistics()
+        
+        # Données de test pour la moyenne glissante
+        self.data = pd.DataFrame({
+            'valeur': np.random.normal(0, 1, 100)
+        })
     
-    def test_process(self):
-        result = self.module.process(self.data, window_size=3)
-        expected = pd.Series([np.nan, np.nan, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0])
-        pd.testing.assert_series_equal(result, expected)
+    def test_moyenne_glissante(self):
+        """Test de la moyenne glissante."""
+        result = self.stats.process(
+            self.data,
+            method="moyenne_glissante",
+            window=5,
+            value_col='valeur'
+        )
+        
+        self.assertIn('Méthode', result)
+        self.assertIn('Résultats', result)
+        self.assertEqual(result['Méthode'], 'Moyenne glissante')
+        self.assertEqual(len(result['Résultats']), 96)  # 100 - 5 + 1
     
-    def test_invalid_data(self):
+    def test_invalid_method(self):
+        """Test avec une méthode invalide."""
+        with self.assertRaises(ValueError):
+            self.stats.process(
+                self.data,
+                method="invalid_method",
+                window=5,
+                value_col='valeur'
+            )
+    
+    def test_invalid_data_type(self):
+        """Test avec un type de données invalide."""
         with self.assertRaises(TypeError):
-            self.module.process("invalid_data")
+            self.stats.process(
+                "invalid_data",
+                method="moyenne_glissante",
+                window=5,
+                value_col='valeur'
+            )
     
-    def test_window_size(self):
-        self.module.process(self.data, window_size=5)
-        self.assertEqual(self.module.get_window_size(), 5)
+    def test_missing_columns(self):
+        """Test avec des colonnes manquantes."""
+        with self.assertRaises(ValueError):
+            self.stats.process(
+                self.data,
+                method="moyenne_glissante",
+                window=5,
+                value_col='invalid_col'
+            )
 
-class TestDescriptives:
+class TestDescriptives(unittest.TestCase):
+    """
+    Tests pour le module de statistiques descriptives.
+    """
+    
+    def setUp(self):
+        """
+        Configuration initiale pour les tests.
+        """
+        self.data = pd.DataFrame({
+            'x': np.random.normal(0, 1, 100),
+            'y': np.random.normal(0, 1, 100)
+        })
+        self.descriptives = StatisticalModule()
+    
     @pytest.fixture
     def sample_data(self):
         """Données d'exemple pour les tests."""

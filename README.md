@@ -1,6 +1,6 @@
 # Py Stats Toolkit
 
-Une boîte à outils complète pour l'analyse statistique en Python.
+Un kit d'outils statistiques en Python pour l'analyse de données.
 
 ## 📋 Description
 
@@ -8,12 +8,12 @@ Py Stats Toolkit est une bibliothèque Python puissante et intuitive conçue pou
 
 ## ✨ Fonctionnalités
 
-- Analyse statistique avancée
-- Visualisation de données
-- Tests statistiques
-- Modélisation prédictive
-- Analyse de survie
-- Calculs astronomiques
+- **Statistiques descriptives** : Moyenne, médiane, écart-type, etc.
+- **Analyse de corrélation** : Pearson, Spearman, Kendall
+- **Régression** : Régression linéaire avec métriques
+- **Visualisation** : Histogrammes, boxplots, nuages de points, etc.
+- **Séries temporelles** : Analyse et prévision
+- **Probabilités** : Distributions et tests statistiques
 
 ## 🚀 Installation
 
@@ -52,19 +52,45 @@ pip install -e .
 ## 🛠️ Utilisation
 
 ```python
-import py_stats_toolkit as pst
+from py_stats_toolkit.stats.descriptives.basic_stats import BasicStatistics
+from py_stats_toolkit.stats.correlation.correlation import Correlation
+from py_stats_toolkit.visualization.basic_plots import BasicPlots
+import pandas as pd
+import numpy as np
 
-# Exemple d'utilisation
-# À compléter avec des exemples concrets
+# Création de données de test
+data = pd.DataFrame({
+    'x': np.random.normal(0, 1, 100),
+    'y': np.random.normal(0, 1, 100)
+})
+
+# Statistiques descriptives
+stats = BasicStatistics()
+results = stats.process(data)
+print("Statistiques descriptives:", results)
+
+# Analyse de corrélation
+corr = Correlation()
+results = corr.process(data, method='pearson', x_col='x', y_col='y')
+print("Corrélation:", results)
+
+# Visualisation
+plots = BasicPlots()
+fig = plots.process(data, plot_type='scatter', x_col='x', y_col='y')
 ```
 
 ## 📚 Documentation
 
-La documentation complète est disponible dans le dossier `docs/`.
+La documentation complète est disponible sur [ReadTheDocs](https://py-stats-toolkit.readthedocs.io/).
 
 ## 🤝 Contribution
 
-Les contributions sont les bienvenues ! Consultez notre guide de contribution dans [CONTRIBUTING.md](CONTRIBUTING.md) pour plus de détails.
+Les contributions sont les bienvenues ! N'hésitez pas à :
+1. Fork le projet
+2. Créer une branche pour votre fonctionnalité
+3. Commiter vos changements
+4. Pousser vers la branche
+5. Ouvrir une Pull Request
 
 ## 📄 Licence
 
@@ -76,8 +102,8 @@ Pour signaler une vulnérabilité de sécurité, veuillez consulter notre [polit
 
 ## 📞 Contact
 
-- Email : contact@phonxproject.onmicrosoft.com
-- GitHub : [PhoenixGuardianTools/py-stats-toolkit](https://github.com/PhoenixGuardianTools/py-stats-toolkit)
+- Email : contact@phonxproject.onmicrosoft.fr
+- GitHub : [Phoenix Project](https://github.com/phoenixproject)
 
 ## 🙏 Remerciements
 

@@ -1,3 +1,141 @@
+'''
+=====================================================================
+File : test_correlation.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
+=====================================================================
+Copyright (c) 2025, Phoenix Project
+All rights reserved.
+
+Description du module test_correlation.py
+
+tags : module, stats
+=====================================================================
+Ce module Description du module test_correlation.py
+
+tags : module, stats
+=====================================================================
+'''
+
+# Imports spécifiques au module
+from typing import Any, Dict, List, Optional, Tuple, Union
+import numpy as np
+import pandas as pd
+import unittest
+
+# Imports de la base
+from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
+from py_stats_toolkit.stats.correlation.correlation import Correlation
+
+class TestCorrelation(unittest.TestCase):
+    """
+    Tests pour le module de corrélation.
+    """
+    
+    def setUp(self):
+        """
+        Configuration initiale pour les tests.
+        """
+        self.data = pd.DataFrame({
+            'x': np.random.normal(0, 1, 100),
+            'y': np.random.normal(0, 1, 100)
+        })
+        self.correlation = StatisticalModule()
+        
+        # Données de test pour la corrélation de Pearson
+        self.pearson_data = pd.DataFrame({
+            'x': np.random.normal(0, 1, 100),
+            'y': np.random.normal(0, 1, 100)
+        })
+        
+        # Données de test pour la corrélation de Spearman
+        self.spearman_data = pd.DataFrame({
+            'x': np.random.uniform(0, 1, 100),
+            'y': np.random.uniform(0, 1, 100)
+        })
+        
+        # Données de test pour la corrélation de Kendall
+        self.kendall_data = pd.DataFrame({
+            'x': np.random.uniform(0, 1, 100),
+            'y': np.random.uniform(0, 1, 100)
+        })
+    
+    def test_pearson_correlation(self):
+        """Test de la corrélation de Pearson."""
+        result = self.correlation.process(
+            self.pearson_data,
+            method="pearson",
+            x_col='x',
+            y_col='y'
+        )
+        
+        self.assertIn('Méthode', result)
+        self.assertIn('Coefficient', result)
+        self.assertIn('p-valeur', result)
+        self.assertEqual(result['Méthode'], 'Pearson')
+    
+    def test_spearman_correlation(self):
+        """Test de la corrélation de Spearman."""
+        result = self.correlation.process(
+            self.spearman_data,
+            method="spearman",
+            x_col='x',
+            y_col='y'
+        )
+        
+        self.assertIn('Méthode', result)
+        self.assertIn('Coefficient', result)
+        self.assertIn('p-valeur', result)
+        self.assertEqual(result['Méthode'], 'Spearman')
+    
+    def test_kendall_correlation(self):
+        """Test de la corrélation de Kendall."""
+        result = self.correlation.process(
+            self.kendall_data,
+            method="kendall",
+            x_col='x',
+            y_col='y'
+        )
+        
+        self.assertIn('Méthode', result)
+        self.assertIn('Coefficient', result)
+        self.assertIn('p-valeur', result)
+        self.assertEqual(result['Méthode'], 'Kendall')
+    
+    def test_invalid_method(self):
+        """Test avec une méthode invalide."""
+        with self.assertRaises(ValueError):
+            self.correlation.process(
+                self.pearson_data,
+                method="invalid_method",
+                x_col='x',
+                y_col='y'
+            )
+    
+    def test_invalid_data_type(self):
+        """Test avec un type de données invalide."""
+        with self.assertRaises(TypeError):
+            self.correlation.process(
+                "invalid_data",
+                method="pearson",
+                x_col='x',
+                y_col='y'
+            )
+    
+    def test_missing_columns(self):
+        """Test avec des colonnes manquantes."""
+        with self.assertRaises(ValueError):
+            self.correlation.process(
+                self.pearson_data,
+                method="pearson",
+                x_col='invalid_x',
+                y_col='y'
+            )
+
 import pytest
 import numpy as np
 import pandas as pd

@@ -1,3 +1,96 @@
+'''
+=====================================================================
+File : test_probabilistes.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
+=====================================================================
+Copyright (c) 2025, Phoenix Project
+All rights reserved.
+
+Description du module test_probabilistes.py
+
+tags : module, stats
+=====================================================================
+Ce module Description du module test_probabilistes.py
+
+tags : module, stats
+=====================================================================
+'''
+
+# Imports spécifiques au module
+from typing import Any, Dict, List, Optional, Tuple, Union
+import numpy as np
+import pandas as pd
+import unittest
+
+# Imports de la base
+from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
+from py_stats_toolkit.stats.probabilistes.probabilistes import Probabilistes
+
+class TestProbabilistes(unittest.TestCase):
+    """
+    Tests pour le module de probabilités.
+    """
+    
+    def setUp(self):
+        """
+        Configuration initiale pour les tests.
+        """
+        self.data = pd.DataFrame({
+            'x': np.random.normal(0, 1, 100),
+            'y': np.random.normal(0, 1, 100)
+        })
+        self.probabilistes = StatisticalModule()
+        
+        # Données de test pour l'analyse probabiliste
+        self.data = pd.DataFrame({
+            'valeur': np.random.normal(0, 1, 100)
+        })
+    
+    def test_analyse_probabiliste(self):
+        """Test de l'analyse probabiliste."""
+        result = self.probabilistes.process(
+            self.data,
+            method="normal",
+            value_col='valeur'
+        )
+        
+        self.assertIn('Méthode', result)
+        self.assertIn('Paramètres', result)
+        self.assertIn('Tests', result)
+        self.assertEqual(result['Méthode'], 'Analyse probabiliste')
+    
+    def test_invalid_method(self):
+        """Test avec une méthode invalide."""
+        with self.assertRaises(ValueError):
+            self.probabilistes.process(
+                self.data,
+                method="invalid_method",
+                value_col='valeur'
+            )
+    
+    def test_invalid_data_type(self):
+        """Test avec un type de données invalide."""
+        with self.assertRaises(TypeError):
+            self.probabilistes.process(
+                "invalid_data",
+                method="normal",
+                value_col='valeur'
+            )
+    
+    def test_missing_columns(self):
+        """Test avec des colonnes manquantes."""
+        with self.assertRaises(ValueError):
+            self.probabilistes.process(
+                self.data,
+                method="normal",
+                value_col='invalid_col'
+            )
+
 import pytest
 import numpy as np
 from py_stats_toolkit.stats.probabilistes import (

@@ -1,7 +1,32 @@
-import unittest
+'''
+=====================================================================
+File : test_biostats.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
+=====================================================================
+Copyright (c) 2025, Phoenix Project
+All rights reserved.
+
+Description du module test_biostats.py
+
+tags : module, stats
+=====================================================================
+Ce module Description du module test_biostats.py
+
+tags : module, stats
+=====================================================================
+'''
+
+# Imports spécifiques au module
+from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 import pandas as pd
-from py_stats_toolkit.biostats.BioStatsModule import BioStatsModule
+import unittest
+from py_stats_toolkit.Modules.biostats.BioStatsModule import BioStatsModule
 
 class TestBioStats(unittest.TestCase):
     def setUp(self):

@@ -1,3 +1,104 @@
+'''
+=====================================================================
+File : test_regression.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
+=====================================================================
+Copyright (c) 2025, Phoenix Project
+All rights reserved.
+
+Description du module test_regression.py
+
+tags : module, stats
+=====================================================================
+Ce module Description du module test_regression.py
+
+tags : module, stats
+=====================================================================
+'''
+
+# Imports spécifiques au module
+from typing import Any, Dict, List, Optional, Tuple, Union
+import numpy as np
+import pandas as pd
+
+# Imports de la base
+from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
+
+import unittest
+from py_stats_toolkit.stats.regression.regression import Regression
+
+class TestRegression(unittest.TestCase):
+    """
+    Tests pour le module de régression.
+    """
+    
+    def setUp(self):
+        """
+        Configuration initiale pour les tests.
+        """
+        self.data = pd.DataFrame({
+            'x': np.random.normal(0, 1, 100),
+            'y': np.random.normal(0, 1, 100)
+        })
+        self.regression = StatisticalModule()
+        
+        # Données de test pour la régression
+        np.random.seed(42)
+        n_samples = 100
+        self.data = pd.DataFrame({
+            'x': np.random.normal(0, 1, n_samples),
+            'y': 2 * np.random.normal(0, 1, n_samples) + 1 + np.random.normal(0, 0.1, n_samples)
+        })
+    
+    def test_regression_lineaire(self):
+        """Test de la régression linéaire."""
+        result = self.regression.process(
+            self.data,
+            method="lineaire",
+            x_col='x',
+            y_col='y'
+        )
+        
+        self.assertIn('Méthode', result)
+        self.assertIn('Coefficients', result)
+        self.assertIn('R2', result)
+        self.assertEqual(result['Méthode'], 'Régression linéaire')
+    
+    def test_invalid_method(self):
+        """Test avec une méthode invalide."""
+        with self.assertRaises(ValueError):
+            self.regression.process(
+                self.data,
+                method="invalid_method",
+                x_col='x',
+                y_col='y'
+            )
+    
+    def test_invalid_data_type(self):
+        """Test avec un type de données invalide."""
+        with self.assertRaises(TypeError):
+            self.regression.process(
+                "invalid_data",
+                method="lineaire",
+                x_col='x',
+                y_col='y'
+            )
+    
+    def test_missing_columns(self):
+        """Test avec des colonnes manquantes."""
+        with self.assertRaises(ValueError):
+            self.regression.process(
+                self.data,
+                method="lineaire",
+                x_col='invalid_x',
+                y_col='y'
+            )
+
 import pytest
 import numpy as np
 import pandas as pd

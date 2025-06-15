@@ -1,23 +1,21 @@
 '''
 =====================================================================
-capsules/__init__.py
+File : __init__.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
 =====================================================================
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-This module contains specialized statistical analysis capsules that provide
-pre-built analysis workflows and specialized statistical methods. Each capsule
-is designed to handle specific types of statistical analysis with predefined
-workflows and configurations.
+Ce module initialise le package des capsules d'analyse statistique.
+Il définit les imports publics et les configurations de base pour
+l'utilisation des capsules dans le projet py_stats_toolkit.
 
-tags : capsules, analysis, workflow, specialized, stats, pre-built, configuration
-=====================================================================
-Ce module contient des capsules d'analyse statistique spécialisées qui fournissent
-des flux de travail d'analyse prédéfinis et des méthodes statistiques spécialisées.
-Chaque capsule est conçue pour gérer des types spécifiques d'analyse statistique
-avec des flux de travail et des configurations prédéfinis.
-
-tags : capsules, analyse, flux de travail, spécialisé, stats, prédéfini, configuration
+tags : capsule, initialisation, package, configuration
 =====================================================================
 '''
 

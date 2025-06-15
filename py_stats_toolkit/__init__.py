@@ -1,34 +1,36 @@
 '''
 =====================================================================
-py_stats_toolkit
+File : __init__.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
 =====================================================================
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-A comprehensive statistical analysis toolkit providing advanced
-methods for data analysis, visualization, and modeling.
+Ce module initialise le package principal py_stats_toolkit. Il définit
+les imports publics et les configurations globales pour l'ensemble
+de la bibliothèque d'analyse statistique.
 
-tags : statistics, data analysis, visualization, modeling, machine learning
-=====================================================================
-Une boîte à outils complète d'analyse statistique fournissant des
-méthodes avancées pour l'analyse de données, la visualisation et
-la modélisation.
-
-tags : statistiques, analyse de données, visualisation, modélisation, apprentissage automatique
+tags : initialisation, package, configuration, bibliothèque, statistiques
 =====================================================================
 '''
 
-from .core.StatisticalModule import StatisticalModule
-from .core.TimeSeriesModule import TimeSeriesModule
-from .core.RegressionModule import RegressionModule
-from .core.TestModule import TestModule
-from .core.VisualizationModule import VisualizationModule
-from .core.GameTheoryModule import GameTheoryModule
-from .core.FractalModule import FractalModule
-from .core.MarkovChainModule import MarkovChainModule
-from .core.AdvancedTimeSeriesModule import AdvancedTimeSeriesModule
-from .core.NetworkAnalysisModule import NetworkAnalysisModule
-from .core.GeneticAlgorithmModule import GeneticAlgorithmModule
+from .Abstracts.AbstractClassBase import StatisticalModule
+from .Abstracts.TimeSeriesModule import TimeSeriesModule
+from .Abstracts.RegressionModule import RegressionModule
+from .Abstracts.TestModule import TestModule
+from .Abstracts.VisualizationModule import VisualizationModule
+from .Abstracts.GameTheoryModule import GameTheoryModule
+from .Abstracts.FractalModule import FractalModule
+from .Abstracts.MarkovChainModule import MarkovChainModule
+from .Abstracts.AdvancedTimeSeriesModule import AdvancedTimeSeriesModule
+from .Abstracts.NetworkAnalysisModule import NetworkAnalysisModule
+from .Abstracts.GeneticAlgorithmModule import GeneticAlgorithmModule
+from .capsules.BaseCapsule import BaseCapsule
 
 __version__ = '0.1.0'
 __author__ = 'Phoenix Project'
@@ -45,5 +47,6 @@ __all__ = [
     'MarkovChainModule',
     'AdvancedTimeSeriesModule',
     'NetworkAnalysisModule',
-    'GeneticAlgorithmModule'
+    'GeneticAlgorithmModule',
+    'BaseCapsule'
 ] 

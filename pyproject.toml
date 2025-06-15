@@ -10,6 +10,9 @@ include = '\.pyi?$'
 [tool.isort]
 profile = "black"
 multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
 line_length = 88
 
 [tool.mypy]
@@ -20,11 +23,9 @@ disallow_untyped_defs = true
 disallow_incomplete_defs = true
 
 [tool.pytest.ini_options]
-minversion = "6.0"
-addopts = "-ra -q"
-testpaths = [
-    "tests",
-]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=py_stats_toolkit --cov-report=term-missing"
 
 [tool.coverage.run]
 source = ["py_stats_toolkit"]

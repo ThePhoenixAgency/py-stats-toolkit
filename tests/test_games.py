@@ -1,3 +1,26 @@
+'''
+=====================================================================
+File : test_games.py
+=====================================================================
+version : 1.0.0
+release : 15/06/2025
+author : Phoenix Project
+contact : contact@phonxproject.onmicrosoft.fr
+license : MIT
+=====================================================================
+Copyright (c) 2025, Phoenix Project
+All rights reserved.
+
+Description du module test_games.py
+
+tags : module, stats
+=====================================================================
+Ce module Description du module test_games.py
+
+tags : module, stats
+=====================================================================
+'''
+
 import unittest
 import numpy as np
 import pandas as pd
