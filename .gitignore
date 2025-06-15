@@ -19,37 +19,139 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Virtual Environment
+# Environnements virtuels
 venv/
 env/
 ENV/
+.env
+.venv
+env.bak/
+venv.bak/
+.python-version
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-
-# Testing
-.coverage
-coverage.xml
-htmlcov/
-.pytest_cache/
-
-# Distribution
-dist/
-build/
+.project
+.pydevproject
+.settings/
+*.sublime-workspace
+*.sublime-project
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb
 
-# Environment variables
-.env
+# Tests et couverture
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+htmlcov/
 
-# Logs
+# Documentation
+docs/_build/
+site/
+
+# Logs et bases de données
 *.log
+*.sqlite
+*.db
 
-# OS specific
+# Fichiers système
 .DS_Store
-Thumbs.db 
+Thumbs.db
+desktop.ini
+
+# Fichiers de configuration locaux
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Fichiers de déploiement
+*.pem
+*.key
+*.cert
+
+# Fichiers de cache
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Fichiers de build
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.dylib
+*.dll
+
+# Fichiers de distribution
+dist/
+build/
+*.egg-info/
+
+# Fichiers de développement
+*.bak
+*.tmp
+*.temp
+*.swp
+*~
+
+# Fichiers spécifiques au projet
+*.csv
+*.xlsx
+*.xls
+*.json
+!package.json
+!pyproject.toml
+!requirements*.txt
+!setup.cfg
+!tox.ini
+!pytest.ini
+!mypy.ini
+!flake8.ini
+!isort.cfg
+!black.toml
+!pre-commit-config.yaml
+
+# Fichiers de données
+data/
+datasets/
+raw_data/
+processed_data/
+
+# Fichiers de modèles
+models/
+*.h5
+*.pkl
+*.joblib
+*.model
+
+# Fichiers de logs
+logs/
+*.log.*
+
+# Fichiers de configuration serveur
+nginx/
+apache/
+*.conf
+*.config
+
+# Fichiers de déploiement
+deploy/
+docker/
+docker-compose*.yml
+!docker-compose.yml
+.docker/ 
