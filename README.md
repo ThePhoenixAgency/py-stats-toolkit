@@ -1,115 +1,84 @@
-# Py-Stats-Toolkit
+# Py Stats Toolkit
 
-Une bibliothèque Python complète pour l'analyse statistique avancée et le traitement des données.
+Une boîte à outils complète pour l'analyse statistique en Python.
 
-## 🚀 Fonctionnalités
+## 📋 Description
 
-- **Analyse Statistique** : Méthodes statistiques fondamentales et avancées
-- **Séries Temporelles** : Analyse et prévision de séries temporelles
-- **Régression** : Modèles de régression linéaire et non-linéaire
-- **Tests Statistiques** : Tests paramétriques et non-paramétriques
-- **Visualisation** : Outils de visualisation de données
-- **Théorie des Jeux** : Analyse des interactions stratégiques
-- **Fractales** : Analyse des structures fractales
-- **Chaînes de Markov** : Analyse des processus stochastiques
-- **Réseaux Complexes** : Analyse des structures de réseaux
-- **Algorithmes Génétiques** : Optimisation par algorithmes génétiques
+Py Stats Toolkit est une bibliothèque Python puissante et intuitive conçue pour simplifier l'analyse statistique. Elle offre un ensemble complet d'outils pour l'analyse de données, la visualisation et le traitement statistique.
 
-## 📦 Installation
+## ✨ Fonctionnalités
+
+- Analyse statistique avancée
+- Visualisation de données
+- Tests statistiques
+- Modélisation prédictive
+- Analyse de survie
+- Calculs astronomiques
+
+## 🚀 Installation
+
+### Prérequis
+
+- Python 3.8 ou supérieur
+- pip (gestionnaire de paquets Python)
+
+### Installation via pip
 
 ```bash
-pip install -r requirements.txt
+pip install py-stats-toolkit
 ```
+
+### Installation depuis les sources
+
+```bash
+git clone https://github.com/PhoenixGuardianTools/py-stats-toolkit.git
+cd py-stats-toolkit
+pip install -e .
+```
+
+## 📦 Dépendances principales
+
+- numpy >= 1.20.0
+- pandas >= 1.3.0
+- scikit-learn >= 0.24.0
+- seaborn >= 0.11.0
+- matplotlib >= 3.4.0
+- scipy >= 1.7.0
+- lifelines >= 0.26.0
+- joblib >= 1.0.0
+- statsmodels >= 0.13.0
+- ephem >= 4.1.0
 
 ## 🛠️ Utilisation
 
 ```python
-from py_stats_toolkit import (
-    StatisticalModule,
-    TimeSeriesModule,
-    RegressionModule,
-    TestModule,
-    VisualizationModule,
-    GameTheoryModule,
-    FractalModule,
-    MarkovChainModule,
-    AdvancedTimeSeriesModule,
-    NetworkAnalysisModule,
-    GeneticAlgorithmModule
-)
+import py_stats_toolkit as pst
 
-# Exemple d'utilisation d'un algorithme génétique
-def fitness_function(individual):
-    return np.sum(individual)  # Exemple simple
-
-ga = GeneticAlgorithmModule()
-results = ga.process(
-    fitness_function,
-    population_size=100,
-    chromosome_length=10,
-    generations=50
-)
+# Exemple d'utilisation
+# À compléter avec des exemples concrets
 ```
 
 ## 📚 Documentation
 
 La documentation complète est disponible dans le dossier `docs/`.
 
-### Modules Principaux
-
-- **StatisticalModule** : Analyse statistique de base
-- **TimeSeriesModule** : Analyse des séries temporelles
-- **RegressionModule** : Modèles de régression
-- **TestModule** : Tests statistiques
-- **VisualizationModule** : Visualisation de données
-- **GameTheoryModule** : Analyse de la théorie des jeux
-- **FractalModule** : Analyse des fractales
-- **MarkovChainModule** : Analyse des chaînes de Markov
-- **AdvancedTimeSeriesModule** : Analyse avancée des séries temporelles
-- **NetworkAnalysisModule** : Analyse des réseaux complexes
-- **GeneticAlgorithmModule** : Optimisation par algorithmes génétiques
-
-## 🧪 Tests
-
-```bash
-pytest tests/
-```
-
-## 📝 Licence
-
-MIT License
-
 ## 🤝 Contribution
 
-Les contributions sont les bienvenues ! N'hésitez pas à :
+Les contributions sont les bienvenues ! Consultez notre guide de contribution dans [CONTRIBUTING.md](CONTRIBUTING.md) pour plus de détails.
 
-1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commiter vos changements
-4. Pousser vers la branche
-5. Ouvrir une Pull Request
+## 📄 Licence
 
-## 📞 Support
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-Pour toute question ou problème, veuillez ouvrir une issue sur GitHub.
+## 🔒 Sécurité
 
-## 📊 Exemples
+Pour signaler une vulnérabilité de sécurité, veuillez consulter notre [politique de sécurité](SECURITY.md).
 
-Des exemples d'utilisation sont disponibles dans le dossier `examples/`.
+## 📞 Contact
 
-## 🔧 Développement
+- Email : contact@phonxproject.onmicrosoft.com
+- GitHub : [PhoenixGuardianTools/py-stats-toolkit](https://github.com/PhoenixGuardianTools/py-stats-toolkit)
 
-Pour installer les dépendances de développement :
+## 🙏 Remerciements
 
-```bash
-pip install -e ".[dev]"
-```
-
-## 📈 Roadmap
-
-- [ ] Implémentation des méthodes manquantes
-- [ ] Amélioration de la documentation
-- [ ] Ajout de nouveaux tests
-- [ ] Optimisation des performances
-- [ ] Support de nouvelles fonctionnalités
-- [ ] Ajout d'autres types d'algorithmes d'optimisation 
+Merci à tous les contributeurs qui ont participé au développement de ce projet. 
