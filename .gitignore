@@ -20,6 +20,19 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*.whl
+*-py3-none-any.whl
+*-py3.8-none-any.whl
+*-py3.9-none-any.whl
+*-py3.10-none-any.whl
+*-py3.11-none-any.whl
+*-py3.12-none-any.whl
+*-dist-info/
+*-py3.8-dist-info/
+*-py3.9-dist-info/
+*-py3.10-dist-info/
+*-py3.11-dist-info/
+*-py3.12-dist-info/
 
 # Environnements virtuels
 venv/
@@ -60,6 +73,8 @@ htmlcov/
 # Documentation
 docs/_build/
 site/
+*.md
+!README.md
 
 # Logs et bases de données
 *.log
@@ -119,12 +134,10 @@ build/
 !requirements*.txt
 !setup.cfg
 !tox.ini
-!pytest.ini
 !mypy.ini
 !flake8.ini
 !isort.cfg
 !black.toml
-!pre-commit-config.yaml
 
 # Fichiers de données
 data/
@@ -154,4 +167,14 @@ deploy/
 docker/
 docker-compose*.yml
 !docker-compose.yml
-.docker/ 
+.docker/
+
+# Dossiers spécifiques au projet
+server/
+py_stats_toolkit/
+py_stats_toolkit-0.1.0.dist-info/
+py_stats_toolkit-0.1.0-py3-none-any.whl
+
+# Fichiers de configuration à ignorer
+.pre-commit-config.yaml
+pytest.ini 

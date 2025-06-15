@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from ..core.AbstractClassBase import StatisticalModule
-from ...utils.parallel import ParallelProcessor
+from core.AbstractClassBase import StatisticalModule
+from utils.parallel import ParallelProcessor
 
 class FrequenceModule(StatisticalModule):
     """Module pour l'analyse de fréquence."""

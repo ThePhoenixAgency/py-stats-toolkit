@@ -12,7 +12,9 @@ setup(
         "matplotlib>=3.4.0",
         "scipy>=1.7.0",
         "lifelines>=0.26.0",
-        "joblib>=1.0.0"
+        "joblib>=1.0.0",
+        "statsmodels>=0.13.0",
+        "ephem>=4.1.0"
     ],
     author="Phoenix Project",
     author_email="contact@phonxproject.onmicrosoft.com",
