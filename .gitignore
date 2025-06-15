@@ -181,4 +181,71 @@ pytest.ini
 
 # Fichiers de configuration sensibles
 .pypirc
-.env 
+.env
+
+# Workflows et CI/CD
+.github/workflows/
+.gitlab-ci/
+.azure-pipelines/
+.circleci/
+.travis.yml
+appveyor.yml
+.github/
+
+# Fichiers de configuration supplémentaires
+*.yaml
+*.yml
+!docker-compose.yml
+!github-workflow.yml
+config/
+configs/
+settings/
+*.ini
+!tox.ini
+!pytest.ini
+!mypy.ini
+!flake8.ini
+!isort.cfg
+!black.toml
+
+# Fichiers de déploiement et serveur
+deploy.bat
+deploy.py
+deploy/
+server/
+servers/
+deployment/
+deployments/
+*.deploy
+*.deployment
+*.server
+*.service
+
+# Fichiers de workflow spécifiques
+.github/workflows/*.yml
+.github/workflows/*.yaml
+
+# Fichiers de serveur
+server/
+server/*.py
+server/*.md
+server/*.yaml
+server/*.yml
+server/*.json
+server/*.ini
+server/*.conf
+server/*.config
+
+# Fichiers de configuration spécifiques
+.pre-commit-config.yaml
+pytest.ini
+
+# Fichiers de déploiement
+deploy.bat
+deploy.py
+server/
+deploy/
+*.deploy
+*.deployment
+*.server
+*.service 
