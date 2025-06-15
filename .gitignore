@@ -75,6 +75,7 @@ docs/_build/
 site/
 *.md
 !README.md
+!CHANGELOG.md
 
 # Logs et bases de données
 *.log
@@ -184,13 +185,11 @@ pytest.ini
 .env
 
 # Workflows et CI/CD
-.github/workflows/
 .gitlab-ci/
 .azure-pipelines/
 .circleci/
 .travis.yml
 appveyor.yml
-.github/
 
 # Fichiers de configuration supplémentaires
 *.yaml
@@ -198,15 +197,6 @@ appveyor.yml
 !docker-compose.yml
 !github-workflow.yml
 config/
-configs/
-settings/
-*.ini
-!tox.ini
-!pytest.ini
-!mypy.ini
-!flake8.ini
-!isort.cfg
-!black.toml
 
 # Fichiers de déploiement et serveur
 deploy.bat
