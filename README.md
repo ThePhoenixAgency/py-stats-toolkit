@@ -239,7 +239,7 @@ Pour signaler une vulnérabilité de sécurité, veuillez consulter notre [polit
 ## 📞 Contact
 
 - Email : contact@phonxproject.onmicrosoft.fr
-- GitHub : [Phoenix Project](https://github.com/phoenixproject)
+- GitHub : [PhoenixGuardianTools/py-stats-toolkit](https://github.com/PhoenixGuardianTools/py-stats-toolkit)
 
 ## 🙏 Remerciements
 

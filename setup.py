@@ -34,7 +34,7 @@ setup(
     description="Kit d'outils statistiques en Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/phoenixproject/py-stats-toolkit",
+    url="https://github.com/PhoenixGuardianTools/py-stats-toolkit",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -70,8 +70,8 @@ setup(
         ]
     },
     project_urls={
-        "Bug Tracker": "https://github.com/phoenixproject/py-stats-toolkit/issues",
+        "Bug Tracker": "https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues",
         "Documentation": "https://py-stats-toolkit.readthedocs.io/",
-        "Source Code": "https://github.com/phoenixproject/py-stats-toolkit"
+        "Source Code": "https://github.com/PhoenixGuardianTools/py-stats-toolkit"
     }
 ) 

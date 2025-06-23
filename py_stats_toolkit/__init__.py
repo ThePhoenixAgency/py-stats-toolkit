@@ -13,7 +13,7 @@ Modules disponibles:
 """
 
 # Version du toolkit
-__version__ = "0.1.3"
+__version__ = "1.0.0"
 
 # Imports des modules principaux avec polymorphisme
 from .advanced import AdvancedStatisticsEngine, AdvancedScoringEngine
