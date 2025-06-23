@@ -1,52 +1,85 @@
-'''
-=====================================================================
-File : __init__.py
-=====================================================================
-version : 1.0.0
-release : 15/06/2025
-author : Phoenix Project
-contact : contact@phonxproject.onmicrosoft.fr
-license : MIT
-=====================================================================
-Copyright (c) 2025, Phoenix Project
-All rights reserved.
+"""
+Py_Stats_Toolkit - Kit d'outils statistiques avancés
+====================================================
 
-Ce module initialise le package principal py_stats_toolkit. Il définit
-les imports publics et les configurations globales pour l'ensemble
-de la bibliothèque d'analyse statistique.
+Un toolkit complet pour l'analyse statistique avancée avec polymorphisme,
+incluant des modules pour les statistiques descriptives, la détection d'anomalies,
+la validation temporelle et le scoring avancé.
 
-tags : initialisation, package, configuration, bibliothèque, statistiques
-=====================================================================
-'''
+Modules disponibles:
+- advanced: Modules statistiques avancés avec polymorphisme
+- analysis: Modules d'analyse temporelle
+- detection: Modules de détection d'anomalies
+"""
 
-from .Abstracts.AbstractClassBase import StatisticalModule
-from .Abstracts.TimeSeriesModule import TimeSeriesModule
-from .Abstracts.RegressionModule import RegressionModule
-from .Abstracts.TestModule import TestModule
-from .Abstracts.VisualizationModule import VisualizationModule
-from .Abstracts.GameTheoryModule import GameTheoryModule
-from .Abstracts.FractalModule import FractalModule
-from .Abstracts.MarkovChainModule import MarkovChainModule
-from .Abstracts.AdvancedTimeSeriesModule import AdvancedTimeSeriesModule
-from .Abstracts.NetworkAnalysisModule import NetworkAnalysisModule
-from .Abstracts.GeneticAlgorithmModule import GeneticAlgorithmModule
-from .capsules.BaseCapsule import BaseCapsule
+# Version du toolkit
+__version__ = "0.1.3"
 
-__version__ = '0.1.0'
-__author__ = 'Phoenix Project'
-__license__ = 'MIT'
+# Imports des modules principaux avec polymorphisme
+from .advanced import AdvancedStatisticsEngine, AdvancedScoringEngine
+from .detection import AnomalyDetectionEngine
+from .analysis import TemporalValidationEngine
 
+# Imports des classes de base
+from .Abstracts.AbstractClassBase import StatisticalModule, TimeSeriesModule, RandomProcessModule
+
+# Fonction utilitaire pour créer une instance polymorphique
+def create_statistical_engine(engine_type: str, **kwargs):
+    """
+    Crée une instance d'engine statistique avec polymorphisme
+    
+    Args:
+        engine_type: Type d'engine ("statistics", "anomaly", "validation", "scoring")
+        **kwargs: Arguments de configuration
+        
+    Returns:
+        Instance de l'engine correspondant
+    """
+    engines = {
+        "statistics": AdvancedStatisticsEngine,
+        "anomaly": AnomalyDetectionEngine,
+        "validation": TemporalValidationEngine,
+        "scoring": AdvancedScoringEngine
+    }
+    
+    if engine_type not in engines:
+        raise ValueError(f"Type d'engine non supporté: {engine_type}. Types disponibles: {list(engines.keys())}")
+    
+    return engines[engine_type](**kwargs)
+
+# Fonction pour analyser des données avec polymorphisme
+def analyze_data(data, engine_type: str = "statistics", **kwargs):
+    """
+    Analyse des données avec polymorphisme automatique
+    
+    Args:
+        data: Données à analyser (DataFrame, Series, List ou array)
+        engine_type: Type d'engine à utiliser
+        **kwargs: Arguments additionnels
+        
+    Returns:
+        Résultats de l'analyse
+    """
+    engine = create_statistical_engine(engine_type, **kwargs)
+    return engine.process(data, **kwargs)
+
+# Exports principaux
 __all__ = [
+    # Classes d'engines avec polymorphisme
+    'AdvancedStatisticsEngine',
+    'AnomalyDetectionEngine', 
+    'TemporalValidationEngine',
+    'AdvancedScoringEngine',
+    
+    # Classes de base
     'StatisticalModule',
     'TimeSeriesModule',
-    'RegressionModule',
-    'TestModule',
-    'VisualizationModule',
-    'GameTheoryModule',
-    'FractalModule',
-    'MarkovChainModule',
-    'AdvancedTimeSeriesModule',
-    'NetworkAnalysisModule',
-    'GeneticAlgorithmModule',
-    'BaseCapsule'
+    'RandomProcessModule',
+    
+    # Fonctions utilitaires
+    'create_statistical_engine',
+    'analyze_data',
+    
+    # Version
+    '__version__'
 ] 
