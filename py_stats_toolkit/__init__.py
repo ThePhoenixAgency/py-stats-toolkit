@@ -13,7 +13,7 @@ Modules disponibles:
 """
 
 # Version du toolkit
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 # Imports des modules principaux avec polymorphisme (avec gestion d'erreurs)
 try:
