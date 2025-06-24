@@ -22,7 +22,6 @@ tags : tests, unitaires, chaînes de Markov, validation
 import pytest
 import numpy as np
 import pandas as pd
-from py_stats_toolkit.Abstracts.MarkovChainModule import MarkovChainModule
 
 class TestMarkovChainModule:
     """Tests pour la classe MarkovChainModule."""

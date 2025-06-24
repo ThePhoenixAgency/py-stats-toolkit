@@ -23,7 +23,6 @@ import pytest
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from py_stats_toolkit.Abstracts.VisualizationModule import VisualizationModule
 
 class TestVisualizationModule:
     """Tests pour la classe VisualizationModule."""

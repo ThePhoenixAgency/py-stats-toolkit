@@ -22,7 +22,6 @@ tags : tests, unitaires, algorithmes génétiques, validation
 import pytest
 import numpy as np
 import pandas as pd
-from py_stats_toolkit.Abstracts.GeneticAlgorithmModule import GeneticAlgorithmModule
 
 class TestGeneticAlgorithmModule:
     """Tests pour la classe GeneticAlgorithmModule."""

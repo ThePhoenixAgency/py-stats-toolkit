@@ -28,9 +28,6 @@ import numpy as np
 import pandas as pd
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-# Imports de la base
-from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
-
 class TestFactorielle(unittest.TestCase):
     """
     Tests pour le module d'analyse factorielle.

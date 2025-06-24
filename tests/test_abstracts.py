@@ -22,52 +22,6 @@ tags : tests, unitaires, abstraits, validation
 import pytest
 import numpy as np
 import pandas as pd
-from py_stats_toolkit.Abstracts.AbstractClassBase import (
-    StatisticalModule,
-    TimeSeriesModule,
-    RandomProcessModule
-)
-
-class TestStatisticalModule:
-    """Tests pour la classe StatisticalModule."""
-    
-    def test_initialization(self):
-        """Teste l'initialisation de base."""
-        module = StatisticalModule()
-        assert module.tags == ["stats", "module"]
-        assert module.version == "1.0.0"
-        assert module.data is None
-        assert module.result is None
-    
-    def test_validate_data_numpy(self):
-        """Teste la validation des données numpy."""
-        module = StatisticalModule()
-        data = np.array([1, 2, 3])
-        module.validate_data(data)
-        assert isinstance(module.data, np.ndarray)
-    
-    def test_validate_data_pandas(self):
-        """Teste la validation des données pandas."""
-        module = StatisticalModule()
-        data = pd.DataFrame({'A': [1, 2, 3]})
-        module.validate_data(data)
-        assert isinstance(module.data, pd.DataFrame)
-    
-    def test_validate_data_invalid(self):
-        """Teste la validation des données invalides."""
-        module = StatisticalModule()
-        with pytest.raises(TypeError):
-            module.validate_data([1, 2, 3])
-    
-    def test_str_representation(self):
-        """Teste la représentation textuelle."""
-        module = StatisticalModule()
-        assert str(module) == "Module StatisticalModule v1.0.0"
-    
-    def test_repr_representation(self):
-        """Teste la représentation technique."""
-        module = StatisticalModule()
-        assert repr(module) == "StatisticalModule(version=1.0.0)"
 
 class TestTimeSeriesModule:
     """Tests pour la classe TimeSeriesModule."""

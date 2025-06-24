@@ -22,7 +22,6 @@ tags : tests, unitaires, théorie des jeux, validation
 import pytest
 import numpy as np
 import pandas as pd
-from py_stats_toolkit.Abstracts.GameTheoryModule import GameTheoryModule
 
 class TestGameTheoryModule:
     """Tests pour la classe GameTheoryModule."""

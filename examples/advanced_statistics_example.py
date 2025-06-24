@@ -123,7 +123,6 @@ def demonstrate_engine_factory():
             results = engine.process(data['time_series'])
         
         print(f"  - Type d'engine: {type(engine).__name__}")
-        print(f"  - Hérite de StatisticalModule: {isinstance(engine, engine.__class__.__bases__[0])}")
         print(f"  - Résultats obtenus: {len(results)} métriques")
 
 def demonstrate_analyze_data_function():
@@ -187,8 +186,6 @@ def demonstrate_inheritance_and_polymorphism():
     print("\n\n5. Héritage et Polymorphisme:")
     print("-" * 50)
     
-    from py_stats_toolkit import StatisticalModule
-    
     # Créer des instances de différents engines
     engines = [
         AdvancedStatisticsEngine(),
@@ -199,9 +196,6 @@ def demonstrate_inheritance_and_polymorphism():
     
     for i, engine in enumerate(engines):
         print(f"\nEngine {i+1}: {type(engine).__name__}")
-        
-        # Vérifier l'héritage
-        print(f"  - Hérite de StatisticalModule: {isinstance(engine, StatisticalModule)}")
         
         # Vérifier les méthodes communes
         print(f"  - Méthode configure disponible: {hasattr(engine, 'configure')}")

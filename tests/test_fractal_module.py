@@ -22,7 +22,6 @@ tags : tests, unitaires, fractales, validation
 import pytest
 import numpy as np
 import pandas as pd
-from py_stats_toolkit.Abstracts.FractalModule import FractalModule
 
 class TestFractalModule:
     """Tests pour la classe FractalModule."""

@@ -28,9 +28,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 import pandas as pd
 
-# Imports de la base
-from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
-
 class TestFrequence(unittest.TestCase):
     """
     Tests pour le module de fréquences.
@@ -44,7 +41,6 @@ class TestFrequence(unittest.TestCase):
             'categorie': ['A', 'B', 'A', 'C', 'B', 'A'],
             'valeur': [1, 2, 3, 4, 5, 6]
         })
-        self.frequence = StatisticalModule()
     
     def test_analyse_frequence(self):
         """Test de l'analyse de fréquence."""

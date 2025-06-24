@@ -28,9 +28,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 import pandas as pd
 
-# Imports de la base
-from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
-
 class TestTimeSeries(unittest.TestCase):
     """
     Tests pour le module de séries temporelles.
@@ -44,7 +41,6 @@ class TestTimeSeries(unittest.TestCase):
             'date': pd.date_range(start='2020-01-01', periods=100),
             'value': np.random.normal(0, 1, 100)
         })
-        self.timeseries = StatisticalModule()
     
     def test_analyse_timeseries(self):
         """Test de l'analyse de séries temporelles."""

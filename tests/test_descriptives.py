@@ -28,10 +28,7 @@ import numpy as np
 import pandas as pd
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-# Imports de la base
-from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
-
-class TestMoyenneGlissante(StatisticalModule):
+class TestMoyenneGlissante:
     """
     Classe TestMoyenneGlissante
     
@@ -43,7 +40,6 @@ class TestMoyenneGlissante(StatisticalModule):
         """
         Initialise TestMoyenneGlissante.
         """
-        super().__init__()
         pass
     
     def configure(self, **kwargs) -> None:
@@ -206,7 +202,6 @@ class TestDescriptives(unittest.TestCase):
             'x': np.random.normal(0, 1, 100),
             'y': np.random.normal(0, 1, 100)
         })
-        self.descriptives = StatisticalModule()
     
     @pytest.fixture
     def sample_data(self):

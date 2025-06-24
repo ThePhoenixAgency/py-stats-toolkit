@@ -23,7 +23,6 @@ import pytest
 import numpy as np
 import pandas as pd
 import networkx as nx
-from py_stats_toolkit.Abstracts.NetworkAnalysisModule import NetworkAnalysisModule
 
 class TestNetworkAnalysisModule:
     """Tests pour la classe NetworkAnalysisModule."""

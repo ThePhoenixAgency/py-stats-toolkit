@@ -287,16 +287,6 @@ class TestAnomalyDetectionEngine(unittest.TestCase):
             self.assertIn(key, new_params)
             self.assertEqual(new_params[key], value)
     
-    def test_inheritance(self):
-        """Test de l'héritage de StatisticalModule"""
-        from py_stats_toolkit import StatisticalModule
-        
-        self.assertIsInstance(self.engine, StatisticalModule)
-        self.assertTrue(hasattr(self.engine, 'configure'))
-        self.assertTrue(hasattr(self.engine, 'process'))
-        self.assertTrue(hasattr(self.engine, 'get_parameters'))
-        self.assertTrue(hasattr(self.engine, 'get_results'))
-    
     def test_anomaly_detection_sensitivity(self):
         """Test de la sensibilité de détection d'anomalies"""
         # Données normales

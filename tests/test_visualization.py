@@ -28,9 +28,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 import pandas as pd
 
-# Imports de la base
-from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
-
 class TestVisualization(unittest.TestCase):
     """
     Tests pour le module de visualisation.
@@ -44,7 +41,6 @@ class TestVisualization(unittest.TestCase):
             'x': np.random.normal(0, 1, 100),
             'y': np.random.normal(0, 1, 100)
         })
-        self.visualizer = StatisticalModule()
         
         # Données de test pour les histogrammes et boîtes à moustaches
         self.single_series = pd.Series(np.random.normal(0, 1, 1000))

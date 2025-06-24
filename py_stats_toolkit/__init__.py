@@ -32,14 +32,6 @@ try:
 except ImportError:
     TemporalValidationEngine = None
 
-# Imports des classes de base
-try:
-    from .Abstracts.AbstractClassBase import StatisticalModule, TimeSeriesModule, RandomProcessModule
-except ImportError:
-    StatisticalModule = None
-    TimeSeriesModule = None
-    RandomProcessModule = None
-
 # Fonction utilitaire pour créer une instance polymorphique
 def create_statistical_engine(engine_type: str, **kwargs):
     """
@@ -91,11 +83,6 @@ __all__ = [
     'AnomalyDetectionEngine', 
     'TemporalValidationEngine',
     'AdvancedScoringEngine',
-    
-    # Classes de base
-    'StatisticalModule',
-    'TimeSeriesModule',
-    'RandomProcessModule',
     
     # Fonctions utilitaires
     'create_statistical_engine',

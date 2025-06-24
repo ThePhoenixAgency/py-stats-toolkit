@@ -28,7 +28,6 @@ import pandas as pd
 import unittest
 
 # Imports de la base
-from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
 from py_stats_toolkit.stats.probabilistes.probabilistes import Probabilistes
 
 class TestProbabilistes(unittest.TestCase):
@@ -44,7 +43,6 @@ class TestProbabilistes(unittest.TestCase):
             'x': np.random.normal(0, 1, 100),
             'y': np.random.normal(0, 1, 100)
         })
-        self.probabilistes = StatisticalModule()
         
         # Données de test pour l'analyse probabiliste
         self.data = pd.DataFrame({
@@ -53,7 +51,8 @@ class TestProbabilistes(unittest.TestCase):
     
     def test_analyse_probabiliste(self):
         """Test de l'analyse probabiliste."""
-        result = self.probabilistes.process(
+        probabilistes = Probabilistes()
+        result = probabilistes.process(
             self.data,
             method="normal",
             value_col='valeur'
@@ -66,8 +65,9 @@ class TestProbabilistes(unittest.TestCase):
     
     def test_invalid_method(self):
         """Test avec une méthode invalide."""
+        probabilistes = Probabilistes()
         with self.assertRaises(ValueError):
-            self.probabilistes.process(
+            probabilistes.process(
                 self.data,
                 method="invalid_method",
                 value_col='valeur'
@@ -75,8 +75,9 @@ class TestProbabilistes(unittest.TestCase):
     
     def test_invalid_data_type(self):
         """Test avec un type de données invalide."""
+        probabilistes = Probabilistes()
         with self.assertRaises(TypeError):
-            self.probabilistes.process(
+            probabilistes.process(
                 "invalid_data",
                 method="normal",
                 value_col='valeur'
@@ -84,8 +85,9 @@ class TestProbabilistes(unittest.TestCase):
     
     def test_missing_columns(self):
         """Test avec des colonnes manquantes."""
+        probabilistes = Probabilistes()
         with self.assertRaises(ValueError):
-            self.probabilistes.process(
+            probabilistes.process(
                 self.data,
                 method="normal",
                 value_col='invalid_col'

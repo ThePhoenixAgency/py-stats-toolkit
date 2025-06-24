@@ -14,14 +14,6 @@ def test_package_import():
     except ImportError as e:
         pytest.fail(f"Impossible d'importer py_stats_toolkit: {e}")
 
-def test_abstracts_import():
-    """Test que les classes abstraites peuvent être importées"""
-    try:
-        from py_stats_toolkit.Abstracts.AbstractClassBase import StatisticalModule
-        assert StatisticalModule is not None
-    except ImportError as e:
-        pytest.fail(f"Impossible d'importer StatisticalModule: {e}")
-
 def test_capsules_import():
     """Test que les capsules peuvent être importées"""
     try:
