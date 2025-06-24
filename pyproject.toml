@@ -57,6 +57,9 @@ Repository = "https://github.com/PhoenixGuardianTools/py-stats-toolkit.git"
 Documentation = "https://py-stats-toolkit.readthedocs.io/"
 "Bug Tracker" = "https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues"
 
+[tool.setuptools.packages.find]
+include = ["py_stats_toolkit*"]
+
 [tool.black]
 line-length = 88
 target-version = ['py38']
