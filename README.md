@@ -21,12 +21,18 @@ Py Stats Toolkit est une bibliothèque Python puissante et intuitive conçue pou
 - **Scoring Avancé** : Scores relatifs, pondérés, interprétation automatique
 
 ### 📊 Modules de Base
-- **Statistiques descriptives** : Moyenne, médiane, écart-type, etc.
+- **Statistiques descriptives** : Moyenne, médiane, écart-type, asymétrie, aplatissement
 - **Analyse de corrélation** : Pearson, Spearman, Kendall
 - **Régression** : Régression linéaire avec métriques
 - **Visualisation** : Histogrammes, boxplots, nuages de points, etc.
 - **Séries temporelles** : Analyse et prévision
 - **Probabilités** : Distributions et tests statistiques
+
+### 💾 Base de données intégrée
+- **Historique automatique** : Tous les modules sauvegardent automatiquement leurs analyses
+- **Fichiers JSON** : Stockage structuré dans le dossier `data/`
+- **Métadonnées complètes** : Timestamps, paramètres, résultats, statistiques
+- **Méthodes d'analyse** : Fonctions pour analyser les tendances d'utilisation
 
 ## 🚀 Installation
 
