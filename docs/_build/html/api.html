@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; py_stats_toolkit 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Exemples" href="exemples.html" />
+    <link rel="prev" title="Guide d’utilisation" href="guide_utilisation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            py_stats_toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="guide_utilisation.html">Guide d’utilisation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#modules-principaux">Modules principaux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#moyenneglissantemodule">MoyenneGlissanteModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#correlationmodule">CorrelationModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#probabilistesmodule">ProbabilistesModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regressionmodule">RegressionModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseriesmodule">TimeSeriesModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testsmodule">TestsModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualisationmodule">VisualisationModule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#classes-de-base">Classes de base</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#statisticalmodule">StatisticalModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">RegressionModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">TimeSeriesModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">TestsModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">VisualisationModule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utilitaires">Utilitaires</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parallelprocessor">ParallelProcessor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__delattr__"><code class="docutils literal notranslate"><span class="pre">__delattr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__dir__"><code class="docutils literal notranslate"><span class="pre">__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__eq__"><code class="docutils literal notranslate"><span class="pre">__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__format__"><code class="docutils literal notranslate"><span class="pre">__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__ge__"><code class="docutils literal notranslate"><span class="pre">__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__getattribute__"><code class="docutils literal notranslate"><span class="pre">__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__getstate__"><code class="docutils literal notranslate"><span class="pre">__getstate__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__gt__"><code class="docutils literal notranslate"><span class="pre">__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__hash__"><code class="docutils literal notranslate"><span class="pre">__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__init_subclass__"><code class="docutils literal notranslate"><span class="pre">__init_subclass__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__le__"><code class="docutils literal notranslate"><span class="pre">__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__lt__"><code class="docutils literal notranslate"><span class="pre">__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__ne__"><code class="docutils literal notranslate"><span class="pre">__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__new__"><code class="docutils literal notranslate"><span class="pre">__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce__"><code class="docutils literal notranslate"><span class="pre">__reduce__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__setattr__"><code class="docutils literal notranslate"><span class="pre">__setattr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__sizeof__"><code class="docutils literal notranslate"><span class="pre">__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__subclasshook__"><code class="docutils literal notranslate"><span class="pre">__subclasshook__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#batchprocessor">BatchProcessor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#constantes">Constantes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#voir-aussi">Voir aussi</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exemples.html">Exemples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide_utilisation.html">Guide d’utilisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/descriptives.html">Module de moyenne glissante</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/correlation.html">Module de corrélation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/probabilistes.html">Module probabiliste</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/regression.html">Module de régression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/temporelle.html">Module d’analyse temporelle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/tests.html">Module de tests statistiques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/visualisation.html">Module de visualisation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#modules-principaux">Modules principaux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#moyenneglissantemodule">MoyenneGlissanteModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#correlationmodule">CorrelationModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#probabilistesmodule">ProbabilistesModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#regressionmodule">RegressionModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timeseriesmodule">TimeSeriesModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testsmodule">TestsModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualisationmodule">VisualisationModule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#classes-de-base">Classes de base</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#statisticalmodule">StatisticalModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">RegressionModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">TimeSeriesModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">TestsModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">VisualisationModule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utilitaires">Utilitaires</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parallelprocessor">ParallelProcessor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__delattr__"><code class="docutils literal notranslate"><span class="pre">__delattr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__dir__"><code class="docutils literal notranslate"><span class="pre">__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__eq__"><code class="docutils literal notranslate"><span class="pre">__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__format__"><code class="docutils literal notranslate"><span class="pre">__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__ge__"><code class="docutils literal notranslate"><span class="pre">__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__getattribute__"><code class="docutils literal notranslate"><span class="pre">__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__getstate__"><code class="docutils literal notranslate"><span class="pre">__getstate__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__gt__"><code class="docutils literal notranslate"><span class="pre">__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__hash__"><code class="docutils literal notranslate"><span class="pre">__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__init_subclass__"><code class="docutils literal notranslate"><span class="pre">__init_subclass__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__le__"><code class="docutils literal notranslate"><span class="pre">__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__lt__"><code class="docutils literal notranslate"><span class="pre">__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__ne__"><code class="docutils literal notranslate"><span class="pre">__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__new__"><code class="docutils literal notranslate"><span class="pre">__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce__"><code class="docutils literal notranslate"><span class="pre">__reduce__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__setattr__"><code class="docutils literal notranslate"><span class="pre">__setattr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__sizeof__"><code class="docutils literal notranslate"><span class="pre">__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__subclasshook__"><code class="docutils literal notranslate"><span class="pre">__subclasshook__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#batchprocessor">BatchProcessor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#constantes">Constantes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#voir-aussi">Voir aussi</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">py_stats_toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>Cette section documente l’API complète de Py Stats Toolkit.</p>
+<section id="modules-principaux">
+<h2>Modules principaux<a class="headerlink" href="#modules-principaux" title="Link to this heading"></a></h2>
+<section id="moyenneglissantemodule">
+<h3>MoyenneGlissanteModule<a class="headerlink" href="#moyenneglissantemodule" title="Link to this heading"></a></h3>
+</section>
+<section id="correlationmodule">
+<h3>CorrelationModule<a class="headerlink" href="#correlationmodule" title="Link to this heading"></a></h3>
+</section>
+<section id="probabilistesmodule">
+<h3>ProbabilistesModule<a class="headerlink" href="#probabilistesmodule" title="Link to this heading"></a></h3>
+</section>
+<section id="regressionmodule">
+<h3>RegressionModule<a class="headerlink" href="#regressionmodule" title="Link to this heading"></a></h3>
+</section>
+<section id="timeseriesmodule">
+<h3>TimeSeriesModule<a class="headerlink" href="#timeseriesmodule" title="Link to this heading"></a></h3>
+</section>
+<section id="testsmodule">
+<h3>TestsModule<a class="headerlink" href="#testsmodule" title="Link to this heading"></a></h3>
+</section>
+<section id="visualisationmodule">
+<h3>VisualisationModule<a class="headerlink" href="#visualisationmodule" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="classes-de-base">
+<h2>Classes de base<a class="headerlink" href="#classes-de-base" title="Link to this heading"></a></h2>
+<section id="statisticalmodule">
+<h3>StatisticalModule<a class="headerlink" href="#statisticalmodule" title="Link to this heading"></a></h3>
+</section>
+<section id="id1">
+<h3>RegressionModule<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+</section>
+<section id="id2">
+<h3>TimeSeriesModule<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+</section>
+<section id="id3">
+<h3>TestsModule<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+</section>
+<section id="id4">
+<h3>VisualisationModule<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="utilitaires">
+<h2>Utilitaires<a class="headerlink" href="#utilitaires" title="Link to this heading"></a></h2>
+<section id="parallelprocessor">
+<h3>ParallelProcessor<a class="headerlink" href="#parallelprocessor" title="Link to this heading"></a></h3>
+<p id="module-py_stats_toolkit.utils.parallel.ParallelProcessor">Classe pour gérer le traitement parallèle des données statistiques.</p>
+<p>Cette classe fournit des méthodes pour exécuter des tâches en parallèle
+en utilisant soit le multiprocessing soit le multithreading selon le type
+de tâche.</p>
+<dl class="field-list simple">
+<dt class="field-odd">ivar n_workers<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nombre de workers pour le traitement parallèle</p>
+</dd>
+<dt class="field-even">vartype n_workers<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">ivar use_threading<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Si True, utilise le threading au lieu du multiprocessing</p>
+</dd>
+<dt class="field-even">vartype use_threading<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">ivar chunk_size<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Taille des chunks pour le traitement par lots</p>
+</dd>
+<dt class="field-even">vartype chunk_size<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__delattr__">
+<span class="sig-name descname"><span class="pre">__delattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__delattr__" title="Link to this definition"></a></dt>
+<dd><p>Implement delattr(self, name).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__dir__">
+<span class="sig-name descname"><span class="pre">__dir__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__dir__" title="Link to this definition"></a></dt>
+<dd><p>Default dir() implementation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__eq__" title="Link to this definition"></a></dt>
+<dd><p>Return self==value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_spec</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__format__" title="Link to this definition"></a></dt>
+<dd><p>Default object formatter.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__ge__" title="Link to this definition"></a></dt>
+<dd><p>Return self&gt;=value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__getattribute__">
+<span class="sig-name descname"><span class="pre">__getattribute__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__getattribute__" title="Link to this definition"></a></dt>
+<dd><p>Return getattr(self, name).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__getstate__" title="Link to this definition"></a></dt>
+<dd><p>Helper for pickle.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__gt__" title="Link to this definition"></a></dt>
+<dd><p>Return self&gt;value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__hash__" title="Link to this definition"></a></dt>
+<dd><p>Return hash(self).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__init_subclass__">
+<span class="sig-name descname"><span class="pre">__init_subclass__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__init_subclass__" title="Link to this definition"></a></dt>
+<dd><p>This method is called when a class is subclassed.</p>
+<p>The default implementation does nothing. It may be
+overridden to extend subclasses.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__le__" title="Link to this definition"></a></dt>
+<dd><p>Return self&lt;=value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__lt__" title="Link to this definition"></a></dt>
+<dd><p>Return self&lt;value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__ne__" title="Link to this definition"></a></dt>
+<dd><p>Return self!=value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__new__" title="Link to this definition"></a></dt>
+<dd><p>Create and return a new object.  See help(type) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce__">
+<span class="sig-name descname"><span class="pre">__reduce__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce__" title="Link to this definition"></a></dt>
+<dd><p>Helper for pickle.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce_ex__">
+<span class="sig-name descname"><span class="pre">__reduce_ex__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__reduce_ex__" title="Link to this definition"></a></dt>
+<dd><p>Helper for pickle.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__setattr__">
+<span class="sig-name descname"><span class="pre">__setattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__setattr__" title="Link to this definition"></a></dt>
+<dd><p>Implement setattr(self, name, value).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__sizeof__">
+<span class="sig-name descname"><span class="pre">__sizeof__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__sizeof__" title="Link to this definition"></a></dt>
+<dd><p>Size of object in memory, in bytes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_stats_toolkit.utils.parallel.ParallelProcessor.__subclasshook__">
+<span class="sig-name descname"><span class="pre">__subclasshook__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#py_stats_toolkit.utils.parallel.ParallelProcessor.__subclasshook__" title="Link to this definition"></a></dt>
+<dd><p>Abstract classes can override this to customize issubclass().</p>
+<p>This is invoked early on by abc.ABCMeta.__subclasscheck__().
+It should return True, False or NotImplemented.  If it returns
+NotImplemented, the normal algorithm is used.  Otherwise, it
+overrides the normal algorithm (and the outcome is cached).</p>
+</dd></dl>
+
+</section>
+<section id="batchprocessor">
+<h3>BatchProcessor<a class="headerlink" href="#batchprocessor" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Link to this heading"></a></h2>
+</section>
+<section id="constantes">
+<h2>Constantes<a class="headerlink" href="#constantes" title="Link to this heading"></a></h2>
+</section>
+<section id="types">
+<h2>Types<a class="headerlink" href="#types" title="Link to this heading"></a></h2>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+</section>
+<section id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Link to this heading"></a></h2>
+</section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading"></a></h2>
+</section>
+<section id="voir-aussi">
+<h2>Voir aussi<a class="headerlink" href="#voir-aussi" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><span class="xref std std-ref">guide_utilisation</span></p></li>
+<li><p><span class="xref std std-ref">exemples</span></p></li>
+<li><p><span class="xref std std-ref">installation</span></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="guide_utilisation.html" class="btn btn-neutral float-left" title="Guide d’utilisation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="exemples.html" class="btn btn-neutral float-right" title="Exemples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Phoenix Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

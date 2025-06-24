@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module d’analyse temporelle &mdash; py_stats_toolkit 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Module de tests statistiques" href="tests.html" />
+    <link rel="prev" title="Module de régression" href="regression.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            py_stats_toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guide_utilisation.html">Guide d’utilisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exemples.html">Exemples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide_utilisation.html">Guide d’utilisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="descriptives.html">Module de moyenne glissante</a></li>
+<li class="toctree-l1"><a class="reference internal" href="correlation.html">Module de corrélation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probabilistes.html">Module probabiliste</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Module de régression</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module d’analyse temporelle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#composantes-analysees">Composantes analysées</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilisation">Utilisation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exemple-de-base">Exemple de base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parametres">Paramètres</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#methodes">Méthodes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#process">process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-trend">get_trend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-seasonality">get_seasonality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exemples-avances">Exemples avancés</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#decomposition-de-serie-temporelle">Décomposition de série temporelle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-de-stationnarite">Test de stationnarité</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyse-d-autocorrelation">Analyse d’autocorrélation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prevision">Prévision</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bonnes-pratiques">Bonnes pratiques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notes-techniques">Notes techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#voir-aussi">Voir aussi</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Module de tests statistiques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation.html">Module de visualisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">py_stats_toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Module d’analyse temporelle</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/temporelle.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-d-analyse-temporelle">
+<h1>Module d’analyse temporelle<a class="headerlink" href="#module-d-analyse-temporelle" title="Link to this heading"></a></h1>
+<p>Le module <cite>TimeSeriesModule</cite> permet d’analyser et de modéliser des séries temporelles.</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>Ce module offre des fonctionnalités pour :</p>
+<ul class="simple">
+<li><p>Analyse de tendance</p></li>
+<li><p>Détection de saisonnalité</p></li>
+<li><p>Décomposition de séries temporelles</p></li>
+<li><p>Prévision</p></li>
+<li><p>Tests de stationnarité</p></li>
+<li><p>Transformation de données</p></li>
+</ul>
+</section>
+<section id="composantes-analysees">
+<h2>Composantes analysées<a class="headerlink" href="#composantes-analysees" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Tendance</p></li>
+<li><p>Saisonnalité</p></li>
+<li><p>Cyclicité</p></li>
+<li><p>Résidus</p></li>
+<li><p>Stationnarité</p></li>
+<li><p>Autocorrélation</p></li>
+</ul>
+</section>
+<section id="utilisation">
+<h2>Utilisation<a class="headerlink" href="#utilisation" title="Link to this heading"></a></h2>
+<section id="exemple-de-base">
+<h3>Exemple de base<a class="headerlink" href="#exemple-de-base" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.stats.temporelle</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesModule</span>
+
+<span class="c1"># Créer des données de test</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">dates</span>
+<span class="p">)</span>
+
+<span class="c1"># Créer le module</span>
+<span class="n">module</span> <span class="o">=</span> <span class="n">TimeSeriesModule</span><span class="p">()</span>
+
+<span class="c1"># Analyser la série temporelle</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Obtenir la tendance</span>
+<span class="n">trend</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_trend</span><span class="p">()</span>
+
+<span class="c1"># Obtenir la saisonnalité</span>
+<span class="n">seasonality</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_seasonality</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="parametres">
+<h3>Paramètres<a class="headerlink" href="#parametres" title="Link to this heading"></a></h3>
+<p>Le module accepte les paramètres suivants :</p>
+<ul class="simple">
+<li><p><cite>period</cite> (int, optionnel) : Période de saisonnalité</p></li>
+<li><p><cite>trend_type</cite> (str, optionnel) : Type de tendance (‘linear’, ‘polynomial’)</p></li>
+<li><p><cite>seasonal_type</cite> (str, optionnel) : Type de saisonnalité (‘additive’, ‘multiplicative’)</p></li>
+<li><p><cite>n_jobs</cite> (int, optionnel) : Nombre de jobs pour le traitement parallèle</p></li>
+<li><p><cite>batch_size</cite> (int, optionnel) : Taille des lots pour le traitement par lots</p></li>
+</ul>
+</section>
+</section>
+<section id="methodes">
+<h2>Méthodes<a class="headerlink" href="#methodes" title="Link to this heading"></a></h2>
+<section id="process">
+<h3>process<a class="headerlink" href="#process" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Analyse une série temporelle.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: Série temporelle à analyser</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionnaire contenant les résultats de l&#39;analyse</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="get-trend">
+<h3>get_trend<a class="headerlink" href="#get-trend" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_trend</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extrait la composante de tendance.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Série temporelle de la tendance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+<section id="get-seasonality">
+<h3>get_seasonality<a class="headerlink" href="#get-seasonality" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_seasonality</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extrait la composante saisonnière.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Série temporelle de la saisonnalité</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="exemples-avances">
+<h2>Exemples avancés<a class="headerlink" href="#exemples-avances" title="Link to this heading"></a></h2>
+<section id="decomposition-de-serie-temporelle">
+<h3>Décomposition de série temporelle<a class="headerlink" href="#decomposition-de-serie-temporelle" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Décomposer la série temporelle</span>
+<span class="n">decomposition</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Visualiser les composantes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">decomposition</span><span class="o">.</span><span class="n">observed</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">decomposition</span><span class="o">.</span><span class="n">trend</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="n">decomposition</span><span class="o">.</span><span class="n">seasonal</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+<span class="n">decomposition</span><span class="o">.</span><span class="n">resid</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="test-de-stationnarite">
+<h3>Test de stationnarité<a class="headerlink" href="#test-de-stationnarite" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Effectuer un test de stationnarité</span>
+<span class="n">is_stationary</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">is_stationary</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">is_stationary</span><span class="p">:</span>
+    <span class="c1"># Différencier la série</span>
+    <span class="n">diff_data</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Vérifier à nouveau la stationnarité</span>
+    <span class="n">is_stationary</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">is_stationary</span><span class="p">(</span><span class="n">diff_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="analyse-d-autocorrelation">
+<h3>Analyse d’autocorrélation<a class="headerlink" href="#analyse-d-autocorrelation" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculer l&#39;autocorrélation</span>
+<span class="n">acf</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">autocorrelation</span><span class="p">(</span><span class="n">lags</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># Visualiser l&#39;autocorrélation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">acf</span><span class="p">)),</span> <span class="n">acf</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=-</span><span class="mf">1.96</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">1.96</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Autocorrélation&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="prevision">
+<h3>Prévision<a class="headerlink" href="#prevision" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Effectuer une prévision</span>
+<span class="n">forecast</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">forecast</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Visualiser la prévision</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Données&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">forecast</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prévision&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="bonnes-pratiques">
+<h2>Bonnes pratiques<a class="headerlink" href="#bonnes-pratiques" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Préparation des données
+* Vérifiez la fréquence des données
+* Gérez les valeurs manquantes
+* Normalisez les données si nécessaire</p></li>
+<li><p>Analyse préliminaire
+* Visualisez les données
+* Testez la stationnarité
+* Identifiez les composantes</p></li>
+<li><p>Modélisation
+* Choisissez le bon modèle
+* Validez les hypothèses
+* Évaluez les performances</p></li>
+<li><p>Performance
+* Utilisez le traitement parallèle
+* Optimisez les paramètres
+* Gérez la mémoire efficacement</p></li>
+</ol>
+</section>
+<section id="notes-techniques">
+<h2>Notes techniques<a class="headerlink" href="#notes-techniques" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Le module utilise statsmodels pour l’analyse temporelle</p></li>
+<li><p>Les calculs sont effectués en parallèle pour les grands ensembles</p></li>
+<li><p>La mémoire utilisée dépend de la taille des données et des composantes</p></li>
+</ul>
+</section>
+<section id="voir-aussi">
+<h2>Voir aussi<a class="headerlink" href="#voir-aussi" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><span class="xref std std-ref">guide_utilisation</span></p></li>
+<li><p><span class="xref std std-ref">api</span></p></li>
+<li><p><span class="xref std std-ref">exemples</span></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="regression.html" class="btn btn-neutral float-left" title="Module de régression" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tests.html" class="btn btn-neutral float-right" title="Module de tests statistiques" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Phoenix Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

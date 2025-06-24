@@ -1,4 +1,5 @@
 # Fonctions à utiliser avec le multiprocessing :
+import unittest
 def square(x):
     return {'squared': x ** 2}
 
