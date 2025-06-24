@@ -59,6 +59,7 @@ Documentation = "https://py-stats-toolkit.readthedocs.io/"
 
 [tool.setuptools.packages.find]
 include = ["py_stats_toolkit*"]
+namespaces = false
 
 [tool.black]
 line-length = 88

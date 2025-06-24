@@ -31,7 +31,10 @@ jobs:
     - name: Verify package installation
       run: |
         python -c "import py_stats_toolkit; print('Package imported successfully')"
+        python -c "print('Available modules:'); import py_stats_toolkit; print(dir(py_stats_toolkit))"
         python -c "from py_stats_toolkit.advanced import AdvancedStatisticsEngine; print('Advanced module imported successfully')"
+        python -c "from py_stats_toolkit.analysis import TemporalValidationEngine; print('Analysis module imported successfully')"
+        python -c "from py_stats_toolkit.detection import AnomalyDetectionEngine; print('Detection module imported successfully')"
     
     - name: Run tests
       run: |
