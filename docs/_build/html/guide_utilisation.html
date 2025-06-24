@@ -56,6 +56,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#creation-de-donnees">Création de données</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#base-de-donnees-et-historique">Base de Données et Historique</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sauvegarde-automatique">Sauvegarde Automatique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyse-des-tendances">Analyse des Tendances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules-utilitaires">Modules Utilitaires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#script-d-analyse-de-la-base">Script d’Analyse de la Base</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#architecture-polymorphique">Architecture Polymorphique</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#support-multiples-types-de-donnees">Support Multiples Types de Données</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#factory-pattern">Factory Pattern</a></li>
@@ -126,6 +133,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#premiers-pas">Premiers pas</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#importation">Importation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#creation-de-donnees">Création de données</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#base-de-donnees-et-historique">Base de Données et Historique</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sauvegarde-automatique">Sauvegarde Automatique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyse-des-tendances">Analyse des Tendances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules-utilitaires">Modules Utilitaires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#script-d-analyse-de-la-base">Script d’Analyse de la Base</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#architecture-polymorphique">Architecture Polymorphique</a><ul>
@@ -217,7 +231,7 @@
              
   <section id="guide-d-utilisation">
 <h1>Guide d’utilisation<a class="headerlink" href="#guide-d-utilisation" title="Link to this heading"></a></h1>
-<p>Ce guide explique comment utiliser Py Stats Toolkit pour vos analyses statistiques avancées avec l’architecture polymorphique.</p>
+<p>Ce guide explique comment utiliser Py Stats Toolkit pour vos analyses statistiques avancées avec l’architecture polymorphique et les fonctionnalités d’historique intégrées.</p>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <section id="installation-de-base">
@@ -254,6 +268,16 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
     <span class="n">TemporalValidationEngine</span><span class="p">,</span>
     <span class="n">AdvancedScoringEngine</span>
 <span class="p">)</span>
+
+<span class="c1"># Modules de base avec historique</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.stats.descriptives.basic_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasicStatistics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.stats.correlation.correlation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Correlation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.stats.regression.regression</span><span class="w"> </span><span class="kn">import</span> <span class="n">Regression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.visualization.basic_plots</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasicPlots</span>
+
+<span class="c1"># Modules utilitaires avec historique</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.utils.data_processor</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataProcessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.utils.data_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataValidator</span>
 </pre></div>
 </div>
 </section>
@@ -274,6 +298,82 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <span class="p">})</span>
 </pre></div>
 </div>
+</section>
+</section>
+<section id="base-de-donnees-et-historique">
+<h2>Base de Données et Historique<a class="headerlink" href="#base-de-donnees-et-historique" title="Link to this heading"></a></h2>
+<section id="sauvegarde-automatique">
+<h3>Sauvegarde Automatique<a class="headerlink" href="#sauvegarde-automatique" title="Link to this heading"></a></h3>
+<p>Tous les modules de Py Stats Toolkit sauvegardent automatiquement leur historique d’analyses :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistiques descriptives avec historique automatique</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">BasicStatistics</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data_df</span><span class="p">)</span>
+
+<span class="c1"># L&#39;analyse est automatiquement sauvegardée dans data/basic_statistics_history.json</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analyse sauvegardée automatiquement&quot;</span><span class="p">)</span>
+
+<span class="c1"># Afficher l&#39;historique des analyses</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">get_statistics_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total d&#39;analyses: </span><span class="si">{</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;total_analyses&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dernière analyse: </span><span class="si">{</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;last_analysis&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="analyse-des-tendances">
+<h3>Analyse des Tendances<a class="headerlink" href="#analyse-des-tendances" title="Link to this heading"></a></h3>
+<p>Utilisez les méthodes d’historique pour analyser les tendances d’utilisation :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Corrélation avec historique</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">Correlation</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">corr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">x_col</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">y_col</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des corrélations</span>
+<span class="n">corr_history</span> <span class="o">=</span> <span class="n">corr</span><span class="o">.</span><span class="n">get_correlation_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Méthodes utilisées: </span><span class="si">{</span><span class="n">corr_history</span><span class="p">[</span><span class="s1">&#39;most_common_methods&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Paires les plus corrélées: </span><span class="si">{</span><span class="n">corr_history</span><span class="p">[</span><span class="s1">&#39;most_correlated_pairs&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Régression avec historique</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">Regression</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">feature_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des régressions</span>
+<span class="n">reg_history</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">get_regression_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² moyen: </span><span class="si">{</span><span class="n">reg_history</span><span class="p">[</span><span class="s1">&#39;average_r2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Meilleurs modèles: </span><span class="si">{</span><span class="n">reg_history</span><span class="p">[</span><span class="s1">&#39;best_models&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="modules-utilitaires">
+<h3>Modules Utilitaires<a class="headerlink" href="#modules-utilitaires" title="Link to this heading"></a></h3>
+<p>Validation et traitement de données avec historique :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Validation de données</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">DataValidator</span><span class="p">()</span>
+<span class="n">validation</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">validation_type</span><span class="o">=</span><span class="s1">&#39;comprehensive&#39;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des validations</span>
+<span class="n">val_history</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">get_validation_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Taux de succès: </span><span class="si">{</span><span class="n">val_history</span><span class="p">[</span><span class="s1">&#39;success_rate&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Traitement de données</span>
+<span class="n">processor</span> <span class="o">=</span> <span class="n">DataProcessor</span><span class="p">()</span>
+<span class="n">processed</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data_df</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s1">&#39;standardize&#39;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des traitements</span>
+<span class="n">proc_history</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_processing_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Opérations effectuées: </span><span class="si">{</span><span class="n">proc_history</span><span class="p">[</span><span class="s1">&#39;most_common_operations&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="script-d-analyse-de-la-base">
+<h3>Script d’Analyse de la Base<a class="headerlink" href="#script-d-analyse-de-la-base" title="Link to this heading"></a></h3>
+<p>Utilisez le script intégré pour analyser l’état complet de la base de données :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>show_database_summary.py
+</pre></div>
+</div>
+<p>Ce script affiche :
+- Total d’enregistrements par module
+- Taille des fichiers d’historique
+- Dates de dernière mise à jour
+- Statistiques globales de la base</p>
 </section>
 </section>
 <section id="architecture-polymorphique">

@@ -1,7 +1,7 @@
 Guide d'utilisation
 =================
 
-Ce guide explique comment utiliser Py Stats Toolkit pour vos analyses statistiques avancées avec l'architecture polymorphique.
+Ce guide explique comment utiliser Py Stats Toolkit pour vos analyses statistiques avancées avec l'architecture polymorphique et les fonctionnalités d'historique intégrées.
 
 Installation
 ----------
@@ -49,6 +49,16 @@ Importation
        TemporalValidationEngine,
        AdvancedScoringEngine
    )
+   
+   # Modules de base avec historique
+   from py_stats_toolkit.stats.descriptives.basic_stats import BasicStatistics
+   from py_stats_toolkit.stats.correlation.correlation import Correlation
+   from py_stats_toolkit.stats.regression.regression import Regression
+   from py_stats_toolkit.visualization.basic_plots import BasicPlots
+   
+   # Modules utilitaires avec historique
+   from py_stats_toolkit.utils.data_processor import DataProcessor
+   from py_stats_toolkit.utils.data_validator import DataValidator
 
 Création de données
 ~~~~~~~~~~~~~~~
@@ -68,6 +78,91 @@ Création de données
        'B': np.random.normal(2, 1.5, 1000),
        'C': np.random.normal(-1, 0.5, 1000)
    })
+
+Base de Données et Historique
+---------------------------
+
+Sauvegarde Automatique
+~~~~~~~~~~~~~~~~~~~~
+
+Tous les modules de Py Stats Toolkit sauvegardent automatiquement leur historique d'analyses :
+
+.. code-block:: python
+
+   # Statistiques descriptives avec historique automatique
+   stats = BasicStatistics()
+   result = stats.process(data_df)
+   
+   # L'analyse est automatiquement sauvegardée dans data/basic_statistics_history.json
+   print("Analyse sauvegardée automatiquement")
+   
+   # Afficher l'historique des analyses
+   history = stats.get_statistics_history()
+   print(f"Total d'analyses: {history['total_analyses']}")
+   print(f"Dernière analyse: {history['last_analysis']}")
+
+Analyse des Tendances
+~~~~~~~~~~~~~~~~~~~
+
+Utilisez les méthodes d'historique pour analyser les tendances d'utilisation :
+
+.. code-block:: python
+
+   # Corrélation avec historique
+   corr = Correlation()
+   result = corr.process(data_df, x_col='A', y_col='B', method='pearson')
+   
+   # Analyser l'historique des corrélations
+   corr_history = corr.get_correlation_history()
+   print(f"Méthodes utilisées: {corr_history['most_common_methods']}")
+   print(f"Paires les plus corrélées: {corr_history['most_correlated_pairs']}")
+   
+   # Régression avec historique
+   reg = Regression()
+   result = reg.process(data_df, feature_cols=['A', 'B'], target_col='C')
+   
+   # Analyser l'historique des régressions
+   reg_history = reg.get_regression_history()
+   print(f"R² moyen: {reg_history['average_r2']:.4f}")
+   print(f"Meilleurs modèles: {reg_history['best_models']}")
+
+Modules Utilitaires
+~~~~~~~~~~~~~~~~~~
+
+Validation et traitement de données avec historique :
+
+.. code-block:: python
+
+   # Validation de données
+   validator = DataValidator()
+   validation = validator.process(data_df, validation_type='comprehensive')
+   
+   # Analyser l'historique des validations
+   val_history = validator.get_validation_history()
+   print(f"Taux de succès: {val_history['success_rate']:.2%}")
+   
+   # Traitement de données
+   processor = DataProcessor()
+   processed = processor.process(data_df, operation='standardize')
+   
+   # Analyser l'historique des traitements
+   proc_history = processor.get_processing_history()
+   print(f"Opérations effectuées: {proc_history['most_common_operations']}")
+
+Script d'Analyse de la Base
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Utilisez le script intégré pour analyser l'état complet de la base de données :
+
+.. code-block:: bash
+
+   python show_database_summary.py
+
+Ce script affiche :
+- Total d'enregistrements par module
+- Taille des fichiers d'historique
+- Dates de dernière mise à jour
+- Statistiques globales de la base
 
 Architecture Polymorphique
 ------------------------

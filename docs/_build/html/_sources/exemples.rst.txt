@@ -1,7 +1,141 @@
 Exemples
 =======
 
-Cette section présente des exemples d'utilisation de Py Stats Toolkit avec l'architecture polymorphique et les modules avancés.
+Cette section présente des exemples d'utilisation de Py Stats Toolkit avec l'architecture polymorphique, les modules avancés et les fonctionnalités d'historique intégrées.
+
+Fonctionnalités d'Historique
+---------------------------
+
+Modules de Base avec Historique
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   import numpy as np
+   import pandas as pd
+   from py_stats_toolkit.stats.descriptives.basic_stats import BasicStatistics
+   from py_stats_toolkit.stats.correlation.correlation import Correlation
+   from py_stats_toolkit.stats.regression.regression import Regression
+
+   # Données de test
+   data = pd.DataFrame({
+       'x': np.random.normal(0, 1, 100),
+       'y': np.random.normal(0, 1, 100),
+       'z': np.random.normal(0, 1, 100)
+   })
+
+   # Statistiques descriptives avec historique automatique
+   stats = BasicStatistics()
+   result = stats.process(data)
+   print(f"Moyenne: {result['mean']:.4f}")
+   
+   # Afficher l'historique
+   history = stats.get_statistics_history()
+   print(f"Total d'analyses: {history['total_analyses']}")
+   print(f"Points de données moyens: {history['average_data_points']:.1f}")
+
+   # Corrélation avec historique
+   corr = Correlation()
+   result = corr.process(data, x_col='x', y_col='y', method='pearson')
+   print(f"Coefficient: {result['Coefficient']:.4f}")
+   
+   # Analyser l'historique des corrélations
+   corr_history = corr.get_correlation_history()
+   print(f"Méthodes utilisées: {corr_history['most_common_methods']}")
+
+   # Régression avec historique
+   reg = Regression()
+   result = reg.process(data, feature_cols=['x', 'y'], target_col='z')
+   print(f"R²: {result['R²']:.4f}")
+   
+   # Analyser l'historique des régressions
+   reg_history = reg.get_regression_history()
+   print(f"R² moyen: {reg_history['average_r2']:.4f}")
+
+Modules Utilitaires avec Historique
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   from py_stats_toolkit.utils.data_processor import DataProcessor
+   from py_stats_toolkit.utils.data_validator import DataValidator
+
+   # Validation de données
+   validator = DataValidator()
+   validation = validator.process(data, validation_type='comprehensive')
+   
+   print(f"Données valides: {validation['is_valid']}")
+   print(f"Problèmes détectés: {len(validation['issues'])}")
+   print(f"Avertissements: {len(validation['warnings'])}")
+   
+   # Analyser l'historique des validations
+   val_history = validator.get_validation_history()
+   print(f"Taux de succès: {val_history['success_rate']:.2%}")
+
+   # Traitement de données
+   processor = DataProcessor()
+   
+   # Standardisation
+   standardized = processor.process(data, operation='standardize')
+   print(f"Standardisation: {standardized['operation_info']}")
+   
+   # Normalisation
+   normalized = processor.process(data, operation='normalize')
+   print(f"Normalisation: {normalized['operation_info']}")
+   
+   # Analyser l'historique des traitements
+   proc_history = processor.get_processing_history()
+   print(f"Opérations effectuées: {proc_history['most_common_operations']}")
+
+Workflow Complet avec Historique
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   # Workflow complet : Validation → Traitement → Analyse
+   
+   # 1. Validation des données
+   validator = DataValidator()
+   validation = validator.process(data, validation_type='comprehensive')
+   
+   if not validation['is_valid']:
+       print("Problèmes détectés:", validation['issues'])
+   else:
+       print("✅ Données validées avec succès")
+   
+   # 2. Traitement des données
+   processor = DataProcessor()
+   processed_data = processor.process(data, operation='standardize')
+   
+   print(f"✅ Données traitées: {processed_data['operation_info']}")
+   
+   # 3. Analyse statistique
+   stats = BasicStatistics()
+   result = stats.process(processed_data['processed_data'])
+   
+   print(f"✅ Analyse terminée - Moyenne: {result['mean']:.4f}")
+   
+   # 4. Résumé de l'historique
+   print("\n📊 Résumé de l'historique:")
+   print(f"Validations: {validator.get_validation_history()['total_validations']}")
+   print(f"Traitements: {processor.get_processing_history()['total_operations']}")
+   print(f"Analyses: {stats.get_statistics_history()['total_analyses']}")
+
+Script d'Analyse de la Base
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   # Utilisation du script d'analyse de la base de données
+   import subprocess
+   import sys
+   
+   # Exécuter le script d'analyse
+   result = subprocess.run([sys.executable, 'show_database_summary.py'], 
+                         capture_output=True, text=True)
+   
+   print("Résumé de la base de données:")
+   print(result.stdout)
 
 Architecture Polymorphique
 ------------------------

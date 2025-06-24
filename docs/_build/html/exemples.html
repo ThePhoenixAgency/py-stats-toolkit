@@ -47,6 +47,13 @@
 <li class="toctree-l1"><a class="reference internal" href="guide_utilisation.html">Guide d’utilisation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exemples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fonctionnalites-d-historique">Fonctionnalités d’Historique</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules-de-base-avec-historique">Modules de Base avec Historique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules-utilitaires-avec-historique">Modules Utilitaires avec Historique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workflow-complet-avec-historique">Workflow Complet avec Historique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#script-d-analyse-de-la-base">Script d’Analyse de la Base</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#architecture-polymorphique">Architecture Polymorphique</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#support-multiples-types-de-donnees">Support Multiples Types de Données</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#factory-pattern-et-analyse-automatique">Factory Pattern et Analyse Automatique</a></li>
@@ -134,7 +141,137 @@
              
   <section id="exemples">
 <h1>Exemples<a class="headerlink" href="#exemples" title="Link to this heading"></a></h1>
-<p>Cette section présente des exemples d’utilisation de Py Stats Toolkit avec l’architecture polymorphique et les modules avancés.</p>
+<p>Cette section présente des exemples d’utilisation de Py Stats Toolkit avec l’architecture polymorphique, les modules avancés et les fonctionnalités d’historique intégrées.</p>
+<section id="fonctionnalites-d-historique">
+<h2>Fonctionnalités d’Historique<a class="headerlink" href="#fonctionnalites-d-historique" title="Link to this heading"></a></h2>
+<section id="modules-de-base-avec-historique">
+<h3>Modules de Base avec Historique<a class="headerlink" href="#modules-de-base-avec-historique" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.stats.descriptives.basic_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">BasicStatistics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.stats.correlation.correlation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Correlation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.stats.regression.regression</span><span class="w"> </span><span class="kn">import</span> <span class="n">Regression</span>
+
+<span class="c1"># Données de test</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1"># Statistiques descriptives avec historique automatique</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">BasicStatistics</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moyenne: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Afficher l&#39;historique</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">get_statistics_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total d&#39;analyses: </span><span class="si">{</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;total_analyses&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Points de données moyens: </span><span class="si">{</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;average_data_points&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Corrélation avec historique</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">Correlation</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">corr</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x_col</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y_col</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coefficient: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;Coefficient&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des corrélations</span>
+<span class="n">corr_history</span> <span class="o">=</span> <span class="n">corr</span><span class="o">.</span><span class="n">get_correlation_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Méthodes utilisées: </span><span class="si">{</span><span class="n">corr_history</span><span class="p">[</span><span class="s1">&#39;most_common_methods&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Régression avec historique</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">Regression</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">feature_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="n">target_col</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R²: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;R²&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des régressions</span>
+<span class="n">reg_history</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">get_regression_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² moyen: </span><span class="si">{</span><span class="n">reg_history</span><span class="p">[</span><span class="s1">&#39;average_r2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="modules-utilitaires-avec-historique">
+<h3>Modules Utilitaires avec Historique<a class="headerlink" href="#modules-utilitaires-avec-historique" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.utils.data_processor</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataProcessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">py_stats_toolkit.utils.data_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataValidator</span>
+
+<span class="c1"># Validation de données</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">DataValidator</span><span class="p">()</span>
+<span class="n">validation</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">validation_type</span><span class="o">=</span><span class="s1">&#39;comprehensive&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Données valides: </span><span class="si">{</span><span class="n">validation</span><span class="p">[</span><span class="s1">&#39;is_valid&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Problèmes détectés: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">validation</span><span class="p">[</span><span class="s1">&#39;issues&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avertissements: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">validation</span><span class="p">[</span><span class="s1">&#39;warnings&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des validations</span>
+<span class="n">val_history</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">get_validation_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Taux de succès: </span><span class="si">{</span><span class="n">val_history</span><span class="p">[</span><span class="s1">&#39;success_rate&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Traitement de données</span>
+<span class="n">processor</span> <span class="o">=</span> <span class="n">DataProcessor</span><span class="p">()</span>
+
+<span class="c1"># Standardisation</span>
+<span class="n">standardized</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s1">&#39;standardize&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standardisation: </span><span class="si">{</span><span class="n">standardized</span><span class="p">[</span><span class="s1">&#39;operation_info&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Normalisation</span>
+<span class="n">normalized</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s1">&#39;normalize&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Normalisation: </span><span class="si">{</span><span class="n">normalized</span><span class="p">[</span><span class="s1">&#39;operation_info&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Analyser l&#39;historique des traitements</span>
+<span class="n">proc_history</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">get_processing_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Opérations effectuées: </span><span class="si">{</span><span class="n">proc_history</span><span class="p">[</span><span class="s1">&#39;most_common_operations&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="workflow-complet-avec-historique">
+<h3>Workflow Complet avec Historique<a class="headerlink" href="#workflow-complet-avec-historique" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Workflow complet : Validation → Traitement → Analyse</span>
+
+<span class="c1"># 1. Validation des données</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">DataValidator</span><span class="p">()</span>
+<span class="n">validation</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">validation_type</span><span class="o">=</span><span class="s1">&#39;comprehensive&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">validation</span><span class="p">[</span><span class="s1">&#39;is_valid&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Problèmes détectés:&quot;</span><span class="p">,</span> <span class="n">validation</span><span class="p">[</span><span class="s1">&#39;issues&#39;</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Données validées avec succès&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Traitement des données</span>
+<span class="n">processor</span> <span class="o">=</span> <span class="n">DataProcessor</span><span class="p">()</span>
+<span class="n">processed_data</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s1">&#39;standardize&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Données traitées: </span><span class="si">{</span><span class="n">processed_data</span><span class="p">[</span><span class="s1">&#39;operation_info&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Analyse statistique</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">BasicStatistics</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">processed_data</span><span class="p">[</span><span class="s1">&#39;processed_data&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Analyse terminée - Moyenne: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 4. Résumé de l&#39;historique</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Résumé de l&#39;historique:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validations: </span><span class="si">{</span><span class="n">validator</span><span class="o">.</span><span class="n">get_validation_history</span><span class="p">()[</span><span class="s1">&#39;total_validations&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Traitements: </span><span class="si">{</span><span class="n">processor</span><span class="o">.</span><span class="n">get_processing_history</span><span class="p">()[</span><span class="s1">&#39;total_operations&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Analyses: </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get_statistics_history</span><span class="p">()[</span><span class="s1">&#39;total_analyses&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="script-d-analyse-de-la-base">
+<h3>Script d’Analyse de la Base<a class="headerlink" href="#script-d-analyse-de-la-base" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Utilisation du script d&#39;analyse de la base de données</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="c1"># Exécuter le script d&#39;analyse</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">&#39;show_database_summary.py&#39;</span><span class="p">],</span>
+                      <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Résumé de la base de données:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="architecture-polymorphique">
 <h2>Architecture Polymorphique<a class="headerlink" href="#architecture-polymorphique" title="Link to this heading"></a></h2>
 <section id="support-multiples-types-de-donnees">
