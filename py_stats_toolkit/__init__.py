@@ -15,13 +15,30 @@ Modules disponibles:
 # Version du toolkit
 __version__ = "1.0.0"
 
-# Imports des modules principaux avec polymorphisme
-from .advanced import AdvancedStatisticsEngine, AdvancedScoringEngine
-from .detection import AnomalyDetectionEngine
-from .analysis import TemporalValidationEngine
+# Imports des modules principaux avec polymorphisme (avec gestion d'erreurs)
+try:
+    from .advanced import AdvancedStatisticsEngine, AdvancedScoringEngine
+except ImportError:
+    AdvancedStatisticsEngine = None
+    AdvancedScoringEngine = None
+
+try:
+    from .detection import AnomalyDetectionEngine
+except ImportError:
+    AnomalyDetectionEngine = None
+
+try:
+    from .analysis import TemporalValidationEngine
+except ImportError:
+    TemporalValidationEngine = None
 
 # Imports des classes de base
-from .Abstracts.AbstractClassBase import StatisticalModule, TimeSeriesModule, RandomProcessModule
+try:
+    from .Abstracts.AbstractClassBase import StatisticalModule, TimeSeriesModule, RandomProcessModule
+except ImportError:
+    StatisticalModule = None
+    TimeSeriesModule = None
+    RandomProcessModule = None
 
 # Fonction utilitaire pour créer une instance polymorphique
 def create_statistical_engine(engine_type: str, **kwargs):
@@ -45,7 +62,11 @@ def create_statistical_engine(engine_type: str, **kwargs):
     if engine_type not in engines:
         raise ValueError(f"Type d'engine non supporté: {engine_type}. Types disponibles: {list(engines.keys())}")
     
-    return engines[engine_type](**kwargs)
+    engine_class = engines[engine_type]
+    if engine_class is None:
+        raise ImportError(f"Le module pour l'engine '{engine_type}' n'est pas disponible")
+    
+    return engine_class(**kwargs)
 
 # Fonction pour analyser des données avec polymorphisme
 def analyze_data(data, engine_type: str = "statistics", **kwargs):
