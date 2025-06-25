@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""
+Script automatisé pour build et publication PyPI (sans release GitHub)
+Basé sur publish_all.py mais 100% automatisé
+"""
+
 import subprocess
 import sys
 import os
@@ -54,6 +60,8 @@ def run(cmd, check=True, timeout=300):
         
         if check and proc.returncode != 0:
             print(f"{RED}Erreur lors de l'exécution : {cmd}{ENDC}")
+            if stderr:
+                print(f"{RED}Détails: {stderr}{ENDC}")
             cleanup_processes()
             sys.exit(proc.returncode)
             
@@ -70,32 +78,34 @@ def run(cmd, check=True, timeout=300):
         sys.exit(1)
 
 def install_deps():
-    run("python -m pip install --upgrade pip build sphinx sphinx-rtd-theme twine", check=True)
+    print(f"{GREEN}🔄 Installation des dépendances...{ENDC}")
+    run("python -m pip install --upgrade pip build twine", check=True)
 
 def build_package():
+    print(f"{GREEN}🔄 Construction du package...{ENDC}")
     run("python -m build", check=True)
 
-def build_docs():
-    run("sphinx-build -b html docs docs/_build/html", check=True)
-
-def git_push_docs():
-    run("git add -f docs/_build/html", check=True)
-    run("git commit -m 'Mise à jour de la documentation HTML après build'", check=False)
-    run("git push", check=True)
+def check_package():
+    print(f"{GREEN}🔄 Vérification du package...{ENDC}")
+    run("python -m twine check dist/*", check=True)
 
 def publish_pypi():
+    print(f"{GREEN}🔄 Publication sur PyPI...{ENDC}")
     twine_password = os.environ.get('TWINE_PASSWORD')
     if twine_password:
+        # Pour Windows PowerShell
         run("python -m twine upload -u __token__ -p $env:TWINE_PASSWORD dist/*", check=True)
     elif os.path.exists(os.path.expanduser('~/.pypirc')):
         run("python -m twine upload dist/*", check=True)
     else:
-        print(f"{RED}Aucun token PyPI trouvé dans TWINE_PASSWORD ni de fichier .pypirc détecté.\nLa publication ne peut pas continuer sans authentification.{ENDC}")
+        print(f"{RED}Aucun token PyPI trouvé dans TWINE_PASSWORD ni de fichier .pypirc détecté.{ENDC}")
+        print(f"{RED}La publication ne peut pas continuer sans authentification.{ENDC}")
         sys.exit(1)
 
 def main():
     try:
-        print(f"{GREEN}🚀 Début du processus de publication...{ENDC}")
+        print(f"{GREEN}🚀 Début du processus de publication automatisé...{ENDC}")
+        print("=" * 60)
         
         install_deps()
         print(f"{GREEN}✅ Dépendances installées{ENDC}")
@@ -103,19 +113,21 @@ def main():
         build_package()
         print(f"{GREEN}✅ Package construit{ENDC}")
         
-        build_docs()
-        print(f"{GREEN}✅ Documentation générée{ENDC}")
+        check_package()
+        print(f"{GREEN}✅ Package vérifié{ENDC}")
         
-        git_push_docs()
-        print(f"{GREEN}✅ Documentation poussée sur Git{ENDC}")
+        publish_pypi()
+        print(f"{GREEN}✅ Package publié sur PyPI{ENDC}")
         
-        print(f"{YELLOW}Vérifie que tout est OK dans dist/ et docs/_build/html avant de publier.{ENDC}")
-        confirm = input(f"{YELLOW}Souhaites-tu publier sur PyPI ? (o/n) : {ENDC}").strip().lower()
-        if confirm == 'o':
-            publish_pypi()
-            print(f"{GREEN}🎉 Publication terminée avec succès !{ENDC}")
-        else:
-            print(f"{RED}Publication annulée.{ENDC}")
+        print("\n" + "=" * 60)
+        print(f"{GREEN}🎉 Publication terminée avec succès !{ENDC}")
+        print(f"{YELLOW}Le package est maintenant disponible sur PyPI.{ENDC}")
+        print(f"{YELLOW}Cela peut prendre quelques minutes pour apparaître.{ENDC}")
+        
+        print(f"\n🔗 Liens utiles:")
+        print(f"- PyPI: https://pypi.org/project/py-stats-toolkit/")
+        print(f"- GitHub: https://github.com/PhoenixGuardianTools/py-stats-toolkit")
+        
     finally:
         cleanup_processes()
 
