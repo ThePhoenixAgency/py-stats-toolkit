@@ -5,6 +5,26 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère à [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2025-01-27
+
+### Added
+- Script `publish_automated.py` pour publication PyPI 100% automatisée
+- Workflow GitHub Actions simplifié utilisant `release_and_publish.py`
+- Publication automatique sans interaction utilisateur
+- Gestion d'erreurs robuste avec couleurs dans les scripts
+
+### Changed
+- Remplacement de `publish_all.py` par `publish_automated.py` (plus simple)
+- Workflow GitHub Actions optimisé pour l'automatisation complète
+- Amélioration des messages de confirmation dans tous les scripts
+
+### Removed
+- Script `publish_all.py` (remplacé par `publish_automated.py`)
+
+### Fixed
+- Automatisation complète de la publication PyPI
+- Suppression des interactions utilisateur dans les scripts de publication
+
 ## [1.0.2] - 2025-01-27
 
 ### Added

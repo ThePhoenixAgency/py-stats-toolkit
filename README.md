@@ -1,96 +1,176 @@
-# Py_Stats_Toolkit
+# Py-Stats-Toolkit
 
-## Description
+Un toolkit Python complet pour l'analyse statistique et le traitement des données, conçu pour être simple d'utilisation tout en offrant des fonctionnalités avancées.
 
-Py_Stats_Toolkit est une bibliothèque Python complète pour l'analyse statistique avancée. Elle offre une architecture modulaire avec polymorphisme, permettant une utilisation flexible et extensible pour l'analyse de données.
+## 🚀 Installation
 
-## Installation
+### Installation depuis PyPI (recommandé)
 
 ```bash
-pip install py-stats-toolkit
+pip install py-stats-toolkit==1.0.3
 ```
 
-## Utilisation rapide
+### Installation depuis les sources
+
+```bash
+git clone https://github.com/PhoenixGuardianTools/py-stats-toolkit.git
+cd py-stats-toolkit
+pip install -e .
+```
+
+## 📦 Fonctionnalités
+
+### Statistiques Descriptives
+- Calcul automatique de toutes les statistiques descriptives
+- Gestion des valeurs manquantes
+- Validation des données
+
+### Régression Linéaire
+- Régression linéaire simple et multiple
+- Validation des hypothèses
+- Diagnostics complets
+
+### Analyse de Corrélation
+- Matrices de corrélation
+- Tests de significativité
+- Visualisations avancées
+
+### Visualisation
+- Graphiques statistiques professionnels
+- Personnalisation complète
+- Export en haute qualité
+
+## 🔧 Utilisation Rapide
 
 ```python
+from py_stats_toolkit.stats import descriptives, regression, correlation
+from py_stats_toolkit.visualization import plots
 import pandas as pd
-from py_stats_toolkit import DescriptiveStatistics, LinearRegression, CorrelationAnalysis, DataVisualizer
 
-# Créer des données d'exemple
-data = pd.DataFrame({
-    'x': [1, 2, 3, 4, 5],
-    'y': [2, 4, 5, 4, 5]
-})
+# Charger vos données
+data = pd.read_csv('votre_fichier.csv')
 
 # Statistiques descriptives
-stats = DescriptiveStatistics()
-result = stats.analyze(data)
-print(result)
+stats = descriptives.calculate_descriptive_statistics(data)
+print(stats)
 
 # Régression linéaire
-reg = LinearRegression()
-reg_result = reg.analyze(data, target='y')
-print(reg_result)
-
-# Analyse de corrélation
-corr = CorrelationAnalysis()
-corr_result = corr.analyze(data)
-print(corr_result)
+model = regression.linear_regression(data, 'variable_cible', ['var1', 'var2'])
+print(model.summary())
 
 # Visualisation
-viz = DataVisualizer()
-viz.plot_correlation_matrix(data)
+plots.create_correlation_matrix(data)
 ```
 
-## Utilisation avancée avec polymorphisme
+## 🛠️ Scripts Utilitaires
 
-```python
-from py_stats_toolkit import create_analysis_module, analyze_data
+### Publication Automatisée
 
-# Créer un module d'analyse avec polymorphisme
-module = create_analysis_module("descriptives", precision=2)
+Le projet inclut plusieurs scripts pour automatiser la publication :
 
-# Analyser des données automatiquement
-result = analyze_data(data, module_type="regression", target='y')
+#### `publish_automated.py` (Recommandé)
+Publication PyPI 100% automatisée sans interaction utilisateur :
+
+```bash
+# Avec token PyPI
+set TWINE_PASSWORD=ton_token_pypi
+python publish_automated.py
+
+# Ou avec fichier .pypirc
+python publish_automated.py
 ```
 
-## Modules disponibles
+#### `build_and_ready.py`
+Prépare le package pour publication manuelle :
 
-- **DescriptiveStatistics** : Statistiques descriptives de base
-- **LinearRegression** : Régression linéaire avec validation
-- **CorrelationAnalysis** : Analyse de corrélation multivariée
-- **DataVisualizer** : Visualisations statistiques avancées
-- **DataProcessor** : Traitement et nettoyage de données
-- **DataValidator** : Validation et vérification de données
+```bash
+python build_and_ready.py
+```
 
-## Documentation
+#### `release_and_publish.py`
+Publication complète avec release GitHub (nécessite GITHUB_TOKEN) :
 
-Pour plus d'informations, consultez la [documentation complète](https://py-stats-toolkit.readthedocs.io/).
+```bash
+set GITHUB_TOKEN=ton_token_github
+set TWINE_PASSWORD=ton_token_pypi
+python release_and_publish.py
+```
 
-## Contribution
+#### `clean_cache.py`
+Nettoie tous les fichiers cache et temporaires :
 
-Les contributions sont les bienvenues ! Consultez notre guide de contribution pour plus de détails.
+```bash
+python clean_cache.py
+```
 
-## Licence
+## 🔄 Workflow GitHub Actions
 
-Ce projet est sous licence MIT.
+Le projet utilise GitHub Actions pour l'automatisation :
 
-## Contact
+1. **Création d'une release** sur GitHub
+2. **Déclenchement automatique** du workflow
+3. **Build et tests** automatiques
+4. **Publication PyPI** automatique
 
-- **Auteur** : Phoenix Project
-- **Email** : contact@phonxproject.onmicrosoft.fr
-- **Version** : 1.0.1
+## 📚 Documentation
 
-## Changelog
+- [Documentation complète](https://py-stats-toolkit.readthedocs.io/)
+- [Exemples d'utilisation](https://github.com/PhoenixGuardianTools/py-stats-toolkit/tree/main/examples)
+- [Guide de contribution](CONTRIBUTING.md)
 
-### Version 1.0.1
-- Structure PyPI conforme
-- Modules autonomes et fonctionnels
-- Tests indépendants
-- Documentation mise à jour
-- Nettoyage complet des dépendances obsolètes
+## 🧪 Tests
 
-### Version 1.0.0
-- Version initiale
-- Modules de base implémentés
-- Architecture modulaire complète 
+```bash
+# Installation des dépendances de développement
+pip install -r requirements-dev.txt
+
+# Exécution des tests
+python -m pytest tests/
+
+# Avec couverture
+python -m pytest tests/ --cov=py_stats_toolkit --cov-report=html
+```
+
+## 📋 Dépendances
+
+### Dépendances principales
+- numpy >= 1.20.0
+- pandas >= 1.3.0
+- scipy >= 1.7.0
+- matplotlib >= 3.4.0
+- seaborn >= 0.11.0
+- statsmodels >= 0.13.0
+- scikit-learn >= 1.0.0
+- networkx >= 2.6.0
+- deap >= 1.3.0
+
+### Dépendances de développement
+- pytest >= 7.0.0
+- black >= 22.0.0
+- isort >= 5.0.0
+- flake8 >= 4.0.0
+- mypy >= 0.900
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! Consultez notre [guide de contribution](CONTRIBUTING.md) pour plus de détails.
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 🔗 Liens Utiles
+
+- [PyPI](https://pypi.org/project/py-stats-toolkit/)
+- [GitHub](https://github.com/PhoenixGuardianTools/py-stats-toolkit)
+- [Issues](https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues)
+- [Releases](https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases)
+
+## 📞 Contact
+
+- Email : autopublisher.ai@gmail.com
+- GitHub : [PhoenixGuardianTools](https://github.com/PhoenixGuardianTools)
+
+---
+
+**Version actuelle : 1.0.3** - Automatisation complète de la publication 
