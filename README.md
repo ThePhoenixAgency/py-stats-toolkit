@@ -8,13 +8,10 @@ Py_Stats_Toolkit est une bibliothèque Python complète pour l'analyse statistiq
 
 ## Fonctionnalités principales
 
-- **Statistiques descriptives avancées** : Moyenne, médiane, écart-type, asymétrie, aplatissement
+- **Statistiques descriptives** : Moyenne, médiane, écart-type, quartiles
 - **Analyse de corrélation** : Pearson, Spearman, Kendall
-- **Régression** : Linéaire, multiple, polynomiale
-- **Analyse temporelle** : Validation temporelle, détection de saisonnalité
-- **Détection d'anomalies** : Algorithmes avancés de détection
-- **Scoring avancé** : Système de scoring multi-critères
-- **Visualisation** : Graphiques intégrés
+- **Régression** : Linéaire avec sklearn
+- **Visualisation** : Histogrammes, scatter plots, boxplots, heatmaps
 - **Utilitaires** : Traitement et validation de données
 
 ## Installation
@@ -25,13 +22,12 @@ pip install py-stats-toolkit
 
 ## Utilisation rapide
 
-### Exemple autonome (sans dépendance au package)
+### Exemple avec les modules du toolkit
 
 ```python
 import numpy as np
 import pandas as pd
-from scipy import stats
-from sklearn.linear_model import LinearRegression
+from py_stats_toolkit import DescriptiveStatistics, LinearRegression, CorrelationAnalysis, DataVisualizer
 
 # Création de données de test
 np.random.seed(42)
@@ -41,84 +37,67 @@ data = pd.DataFrame({
 })
 
 # Statistiques descriptives
-print("Statistiques descriptives :")
-print(f"Moyenne x: {data['x'].mean():.4f}")
-print(f"Écart-type x: {data['x'].std():.4f}")
+stats = DescriptiveStatistics()
+result_stats = stats.analyze(data['x'])
+print(f"Statistiques: {result_stats}")
 
 # Corrélation
-corr, p_value = stats.pearsonr(data['x'], data['y'])
-print(f"Corrélation: {corr:.4f}")
+corr = CorrelationAnalysis()
+result_corr = corr.analyze(data)
+print(f"Corrélation: {result_corr}")
 
 # Régression linéaire
-model = LinearRegression()
-model.fit(data[['x']], data['y'])
-print(f"Coefficient: {model.coef_[0]:.4f}")
-print(f"Intercept: {model.intercept_:.4f}")
+reg = LinearRegression()
+result_reg = reg.analyze(data[['x']], data['y'])
+print(f"Régression: {result_reg}")
+
+# Visualisation
+viz = DataVisualizer()
+result_viz = viz.analyze(data, plot_type='scatter')
+print(f"Visualisation créée")
 ```
 
-### Exemple avec classes autonomes
+### Exemple avec polymorphisme
 
 ```python
-import numpy as np
-import pandas as pd
-from scipy import stats
+from py_stats_toolkit import create_analysis_module, analyze_data
 
-class BasicStatistics:
-    def process(self, data):
-        return {
-            'mean': data.mean(),
-            'std': data.std(),
-            'median': data.median()
-        }
+# Création automatique de module
+stats_module = create_analysis_module('descriptives')
+result = stats_module.analyze(data)
 
-class CorrelationAnalysis:
-    def process(self, data, x_col='x', y_col='y'):
-        x, y = data[x_col], data[y_col]
-        corr, p_value = stats.pearsonr(x, y)
-        return {'correlation': corr, 'p_value': p_value}
-
-# Utilisation
-stats_engine = BasicStatistics()
-corr_engine = CorrelationAnalysis()
-
-result_stats = stats_engine.process(data['x'])
-result_corr = corr_engine.process(data, 'x', 'y')
-
-print(f"Statistiques: {result_stats}")
-print(f"Corrélation: {result_corr}")
+# Analyse directe avec polymorphisme
+result = analyze_data(data, module_type='correlation')
 ```
 
 ## Modules disponibles
 
-### Statistiques de base
+### Statistiques descriptives (`stats.descriptives`)
 - Calcul de moyennes, médianes, écarts-types
+- Quartiles et percentiles
 - Analyse de distribution
-- Tests de normalité
 
-### Corrélation
+### Corrélation (`stats.correlation`)
 - Corrélation de Pearson
 - Corrélation de Spearman
 - Matrices de corrélation
+- Auto-corrélation
 
-### Régression
-- Régression linéaire simple
-- Régression multiple
-- Régression polynomiale
+### Régression (`stats.regression`)
+- Régression linéaire avec sklearn
+- Métriques d'évaluation (MSE, R²)
+- Prédictions
 
-### Analyse temporelle
-- Validation de cohérence temporelle
-- Détection de saisonnalité
-- Analyse de tendances
+### Visualisation (`visualization`)
+- Histogrammes
+- Scatter plots
+- Boxplots
+- Heatmaps de corrélation
 
-### Détection d'anomalies
-- Algorithmes statistiques
-- Détection de valeurs aberrantes
-- Analyse de patterns
-
-### Scoring avancé
-- Scores multi-critères
-- Pondération personnalisable
-- Historique des scores
+### Utilitaires (`utils`)
+- Traitement de données
+- Validation de données
+- Nettoyage automatique
 
 ## Architecture
 
@@ -129,19 +108,6 @@ Le toolkit utilise une architecture modulaire avec polymorphisme :
 - **Utilitaires** : Fonctions d'aide pour le traitement de données
 - **Visualisation** : Intégration avec matplotlib et seaborn
 
-## Configuration
-
-Le toolkit peut être configuré via des fichiers de configuration ou des paramètres d'initialisation :
-
-```python
-# Configuration personnalisée
-config = {
-    'min_data_points': 10,
-    'correlation_threshold': 0.7,
-    'anomaly_threshold': 0.8
-}
-```
-
 ## Tests
 
 Pour exécuter les tests :
@@ -149,6 +115,8 @@ Pour exécuter les tests :
 ```bash
 python -m pytest tests/
 ```
+
+Les tests sont autonomes et ne dépendent pas du package installé.
 
 ## Documentation
 
@@ -176,9 +144,11 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 ## Changelog
 
 ### Version 1.0.1
-- Corrections et améliorations post-release
-- Nettoyage des dépendances
-- Amélioration de la documentation
+- Structure PyPI conforme
+- Modules autonomes et fonctionnels
+- Tests indépendants
+- Documentation mise à jour
+- Nettoyage complet des dépendances obsolètes
 
 ### Version 1.0.0
 - Version initiale
