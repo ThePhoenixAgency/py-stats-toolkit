@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script complet pour la release et publication automatique
+Script complet pour la release, publication GitHub et publication PyPI
 """
 
 import os
@@ -124,9 +124,23 @@ pip install py-stats-toolkit==1.0.2
         print(f"❌ Erreur: {e}")
         return False
 
+def publish_pypi():
+    """Publie le package sur PyPI en utilisant twine et le token d'environnement ou .pypirc"""
+    print("\n🔄 Publication sur PyPI...")
+    twine_password = os.environ.get('TWINE_PASSWORD')
+    if twine_password:
+        # Pour Windows PowerShell, $env:TWINE_PASSWORD fonctionne, sinon %TWINE_PASSWORD% sous cmd
+        cmd = "python -m twine upload -u __token__ -p $env:TWINE_PASSWORD dist/*"
+        return run_command(cmd, "Publication PyPI avec TWINE_PASSWORD")
+    elif os.path.exists(os.path.expanduser('~/.pypirc')):
+        return run_command("python -m twine upload dist/*", "Publication PyPI avec .pypirc")
+    else:
+        print("❌ Aucun token PyPI trouvé dans TWINE_PASSWORD ni de fichier .pypirc détecté. La publication ne peut pas continuer sans authentification.")
+        return False
+
 def main():
     """Fonction principale"""
-    print("🚀 Début du processus de release et publication...")
+    print("🚀 Début du processus de release, publication GitHub et PyPI...")
     print("=" * 60)
     
     # 1. Vérifier le statut Git
@@ -154,10 +168,15 @@ def main():
         print("4. Remplissez les informations et publiez")
         return False
     
+    # 5. Publier sur PyPI
+    if not publish_pypi():
+        print("❌ Échec de la publication PyPI")
+        return False
+    
     print("\n" + "=" * 60)
     print("🎉 Processus terminé avec succès!")
-    print("📤 La publication sur PyPI se fera automatiquement via GitHub Actions")
-    print("⏱️  Cela peut prendre quelques minutes...")
+    print("📤 La publication sur PyPI est terminée.")
+    print("⏱️  Cela peut prendre quelques minutes pour apparaître sur PyPI...")
     print("\n🔗 Liens utiles:")
     print("- Release GitHub: https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases")
     print("- PyPI: https://pypi.org/project/py-stats-toolkit/")
