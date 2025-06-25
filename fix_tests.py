@@ -61,27 +61,30 @@ def fix_test_file(file_path):
     
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(content)
-    
-    print(f"Corrigé: {file_path}")
 
 def main():
     """Fonction principale"""
+    print("🔧 Correction automatique des tests...")
+    
     tests_dir = Path('tests')
     
     if not tests_dir.exists():
-        print("Dossier tests non trouvé")
+        print("❌ Dossier tests non trouvé")
         return
     
     # Lister tous les fichiers de test
     test_files = list(tests_dir.glob('test_*.py'))
     
-    print(f"Trouvé {len(test_files)} fichiers de test")
-    
+    corrected_count = 0
     for test_file in test_files:
         try:
             fix_test_file(test_file)
+            corrected_count += 1
         except Exception as e:
-            print(f"Erreur lors de la correction de {test_file}: {e}")
+            pass
+    
+    print(f"✅ {corrected_count}/{len(test_files)} fichiers de test corrigés")
+    print("🎉 Correction terminée !")
 
 if __name__ == '__main__':
     main() 

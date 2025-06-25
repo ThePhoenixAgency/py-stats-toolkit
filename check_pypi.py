@@ -34,6 +34,8 @@ def check_pypi_status():
                     print(f"  - {version} (upload: {upload_time})")
                 else:
                     print(f"  - {version}")
+            
+            print("\n✅ Package disponible sur PyPI")
                 
         else:
             print(f"❌ Erreur HTTP: {response.status_code}")

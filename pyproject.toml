@@ -8,14 +8,13 @@ version = "1.0.1"
 description = "Un toolkit Python pour l'analyse statistique et le traitement des données"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
-    {name = "Phoenix Project", email = "contact@phonxproject.onmicrosoft.fr"}
+    {name = "Phoenix Project", email = "autopublisher.ai@gmail.com"}
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -57,9 +56,8 @@ Repository = "https://github.com/PhoenixGuardianTools/py-stats-toolkit.git"
 Documentation = "https://py-stats-toolkit.readthedocs.io/"
 "Bug Tracker" = "https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues"
 
-[tool.setuptools.packages.find]
-include = ["py_stats_toolkit*"]
-namespaces = false
+[tool.setuptools]
+packages = {find = {}}
 
 [tool.black]
 line-length = 88

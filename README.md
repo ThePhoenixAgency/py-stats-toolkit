@@ -1,18 +1,8 @@
 # Py_Stats_Toolkit
 
-Un toolkit Python avancé pour l'analyse statistique avec polymorphisme et modularité.
-
 ## Description
 
-Py_Stats_Toolkit est une bibliothèque Python complète pour l'analyse statistique avancée. Elle offre une architecture modulaire avec polymorphisme, permettant une utilisation flexible et extensible pour divers types d'analyses statistiques.
-
-## Fonctionnalités principales
-
-- **Statistiques descriptives** : Moyenne, médiane, écart-type, quartiles
-- **Analyse de corrélation** : Pearson, Spearman, Kendall
-- **Régression** : Linéaire avec sklearn
-- **Visualisation** : Histogrammes, scatter plots, boxplots, heatmaps
-- **Utilitaires** : Traitement et validation de données
+Py_Stats_Toolkit est une bibliothèque Python complète pour l'analyse statistique avancée. Elle offre une architecture modulaire avec polymorphisme, permettant une utilisation flexible et extensible pour l'analyse de données.
 
 ## Installation
 
@@ -22,118 +12,68 @@ pip install py-stats-toolkit
 
 ## Utilisation rapide
 
-### Exemple avec les modules du toolkit
-
 ```python
-import numpy as np
 import pandas as pd
 from py_stats_toolkit import DescriptiveStatistics, LinearRegression, CorrelationAnalysis, DataVisualizer
 
-# Création de données de test
-np.random.seed(42)
+# Créer des données d'exemple
 data = pd.DataFrame({
-    'x': np.random.normal(0, 1, 100),
-    'y': 2 * np.random.normal(0, 1, 100) + 1 + np.random.normal(0, 0.1, 100)
+    'x': [1, 2, 3, 4, 5],
+    'y': [2, 4, 5, 4, 5]
 })
 
 # Statistiques descriptives
 stats = DescriptiveStatistics()
-result_stats = stats.analyze(data['x'])
-print(f"Statistiques: {result_stats}")
-
-# Corrélation
-corr = CorrelationAnalysis()
-result_corr = corr.analyze(data)
-print(f"Corrélation: {result_corr}")
+result = stats.analyze(data)
+print(result)
 
 # Régression linéaire
 reg = LinearRegression()
-result_reg = reg.analyze(data[['x']], data['y'])
-print(f"Régression: {result_reg}")
+reg_result = reg.analyze(data, target='y')
+print(reg_result)
+
+# Analyse de corrélation
+corr = CorrelationAnalysis()
+corr_result = corr.analyze(data)
+print(corr_result)
 
 # Visualisation
 viz = DataVisualizer()
-result_viz = viz.analyze(data, plot_type='scatter')
-print(f"Visualisation créée")
+viz.plot_correlation_matrix(data)
 ```
 
-### Exemple avec polymorphisme
+## Utilisation avancée avec polymorphisme
 
 ```python
 from py_stats_toolkit import create_analysis_module, analyze_data
 
-# Création automatique de module
-stats_module = create_analysis_module('descriptives')
-result = stats_module.analyze(data)
+# Créer un module d'analyse avec polymorphisme
+module = create_analysis_module("descriptives", precision=2)
 
-# Analyse directe avec polymorphisme
-result = analyze_data(data, module_type='correlation')
+# Analyser des données automatiquement
+result = analyze_data(data, module_type="regression", target='y')
 ```
 
 ## Modules disponibles
 
-### Statistiques descriptives (`stats.descriptives`)
-- Calcul de moyennes, médianes, écarts-types
-- Quartiles et percentiles
-- Analyse de distribution
-
-### Corrélation (`stats.correlation`)
-- Corrélation de Pearson
-- Corrélation de Spearman
-- Matrices de corrélation
-- Auto-corrélation
-
-### Régression (`stats.regression`)
-- Régression linéaire avec sklearn
-- Métriques d'évaluation (MSE, R²)
-- Prédictions
-
-### Visualisation (`visualization`)
-- Histogrammes
-- Scatter plots
-- Boxplots
-- Heatmaps de corrélation
-
-### Utilitaires (`utils`)
-- Traitement de données
-- Validation de données
-- Nettoyage automatique
-
-## Architecture
-
-Le toolkit utilise une architecture modulaire avec polymorphisme :
-
-- **Classes de base** : Interfaces communes pour tous les modules
-- **Moteurs spécialisés** : Implémentations spécifiques pour chaque type d'analyse
-- **Utilitaires** : Fonctions d'aide pour le traitement de données
-- **Visualisation** : Intégration avec matplotlib et seaborn
-
-## Tests
-
-Pour exécuter les tests :
-
-```bash
-python -m pytest tests/
-```
-
-Les tests sont autonomes et ne dépendent pas du package installé.
+- **DescriptiveStatistics** : Statistiques descriptives de base
+- **LinearRegression** : Régression linéaire avec validation
+- **CorrelationAnalysis** : Analyse de corrélation multivariée
+- **DataVisualizer** : Visualisations statistiques avancées
+- **DataProcessor** : Traitement et nettoyage de données
+- **DataValidator** : Validation et vérification de données
 
 ## Documentation
 
-La documentation complète est disponible dans le dossier `docs/` :
-
-- Guide d'installation
-- Guide d'utilisation
-- Exemples détaillés
-- Documentation API
+Pour plus d'informations, consultez la [documentation complète](https://py-stats-toolkit.readthedocs.io/).
 
 ## Contribution
 
-Les contributions sont les bienvenues ! Veuillez consulter le fichier `CONTRIBUTING.md` pour plus d'informations.
+Les contributions sont les bienvenues ! Consultez notre guide de contribution pour plus de détails.
 
 ## Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet est sous licence MIT.
 
 ## Contact
 

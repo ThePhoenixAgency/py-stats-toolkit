@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script pour afficher un résumé complet de la base de données Py_Stats_Toolkit
+Script pour afficher un résumé complet de la base de données Stats Toolkit
 """
 
 import json
@@ -56,7 +56,7 @@ def analyze_history_file(file_path, module_name):
 def main():
     """Fonction principale"""
     print("=" * 80)
-    print("RÉSUMÉ DE LA BASE DE DONNÉES PY_STATS_TOOLKIT")
+    print("RÉSUMÉ DE LA BASE DE DONNÉES STATS TOOLKIT")
     print("=" * 80)
     
     data_dir = Path("data")

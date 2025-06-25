@@ -1,46 +1,36 @@
 name: Publish to PyPI
 
 on:
-  workflow_dispatch:  # Permet de déclencher manuellement
-  push:
-    tags:
-      - 'v*'  # Déclenche sur les tags de version
+  release:
+    types: [published]
 
 jobs:
-  build-and-publish:
+  deploy:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
+    - uses: actions/checkout@v3
+    
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v4
       with:
         python-version: '3.11'
-        
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build twine pytest pytest-cov
-        
-    - name: Install package in development mode
-      run: |
-        pip install -e .
-        
+        pip install build twine
+    
+    - name: Build package
+      run: python -m build
+    
     - name: Run tests
       run: |
-        python -m pytest tests/ --cov=py_stats_toolkit --cov-report=xml
-        
-    - name: Build and publish
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        python -m pytest tests/ --cov=stats_toolkit --cov-report=xml
+    
+    - name: Publish to PyPI
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        python publish_all.py
-        
-    - name: Success message
-      run: |
-        echo "✅ Publication sur PyPI réussie !"
-        echo "📦 Package: py-stats-toolkit"
-        echo "🔗 URL: https://pypi.org/project/py-stats-toolkit/" 
+      run: twine upload dist/* 

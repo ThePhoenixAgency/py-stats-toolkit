@@ -38,8 +38,6 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 def run(cmd, check=True, timeout=300):
     """Exécuter une commande avec gestion d'erreur et timeout"""
-    print(f"{YELLOW}>> {cmd}{ENDC}")
-    
     try:
         # Utiliser subprocess.Popen pour un meilleur contrôle
         proc = subprocess.Popen(
@@ -53,12 +51,6 @@ def run(cmd, check=True, timeout=300):
         
         # Attendre la fin avec timeout
         stdout, stderr = proc.communicate(timeout=timeout)
-        
-        # Afficher la sortie
-        if stdout:
-            print(stdout)
-        if stderr:
-            print(f"{YELLOW}Stderr: {stderr}{ENDC}")
         
         if check and proc.returncode != 0:
             print(f"{RED}Erreur lors de l'exécution : {cmd}{ENDC}")
@@ -78,31 +70,24 @@ def run(cmd, check=True, timeout=300):
         sys.exit(1)
 
 def install_deps():
-    print(f"{GREEN}Installation des dépendances nécessaires...{ENDC}")
     run("python -m pip install --upgrade pip build sphinx sphinx-rtd-theme twine", check=True)
 
 def build_package():
-    print(f"{GREEN}Génération du package (dist/)...{ENDC}")
     run("python -m build", check=True)
 
 def build_docs():
-    print(f"{GREEN}Génération de la documentation Sphinx...{ENDC}")
     run("sphinx-build -b html docs docs/_build/html", check=True)
 
 def git_push_docs():
-    print(f"{GREEN}Commit et push de la documentation générée...{ENDC}")
     run("git add -f docs/_build/html", check=True)
     run("git commit -m 'Mise à jour de la documentation HTML après build'", check=False)
     run("git push", check=True)
 
 def publish_pypi():
-    print(f"{GREEN}Publication sur PyPI...{ENDC}")
     twine_password = os.environ.get('TWINE_PASSWORD')
     if twine_password:
-        print(f"{GREEN}Utilisation du token PyPI depuis la variable d'environnement TWINE_PASSWORD.{ENDC}")
         run("python -m twine upload -u __token__ -p $env:TWINE_PASSWORD dist/*", check=True)
     elif os.path.exists(os.path.expanduser('~/.pypirc')):
-        print(f"{GREEN}Utilisation du fichier .pypirc pour l'authentification PyPI.{ENDC}")
         run("python -m twine upload dist/*", check=True)
     else:
         print(f"{RED}Aucun token PyPI trouvé dans TWINE_PASSWORD ni de fichier .pypirc détecté.\nLa publication ne peut pas continuer sans authentification.{ENDC}")
@@ -110,15 +95,25 @@ def publish_pypi():
 
 def main():
     try:
+        print(f"{GREEN}🚀 Début du processus de publication...{ENDC}")
+        
         install_deps()
+        print(f"{GREEN}✅ Dépendances installées{ENDC}")
+        
         build_package()
+        print(f"{GREEN}✅ Package construit{ENDC}")
+        
         build_docs()
+        print(f"{GREEN}✅ Documentation générée{ENDC}")
+        
         git_push_docs()
+        print(f"{GREEN}✅ Documentation poussée sur Git{ENDC}")
+        
         print(f"{YELLOW}Vérifie que tout est OK dans dist/ et docs/_build/html avant de publier.{ENDC}")
         confirm = input(f"{YELLOW}Souhaites-tu publier sur PyPI ? (o/n) : {ENDC}").strip().lower()
         if confirm == 'o':
             publish_pypi()
-            print(f"{GREEN}Publication terminée !{ENDC}")
+            print(f"{GREEN}🎉 Publication terminée avec succès !{ENDC}")
         else:
             print(f"{RED}Publication annulée.{ENDC}")
     finally:
