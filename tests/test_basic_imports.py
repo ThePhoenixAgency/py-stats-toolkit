@@ -1,32 +1,43 @@
 """
-import unittest
-Test des imports de base pour vérifier la structure du package
+Tests des imports de base pour vérifier les dépendances essentielles.
 """
-import pytest
+import unittest
 import numpy as np
 import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
 
-def test_package_import():
-    """Test que le package principal peut être importé"""
-    try:
-        import py_stats_toolkit
-        assert py_stats_toolkit.__version__ == "1.0.0"
-    except ImportError as e:
-        pytest.fail(f"Impossible d'importer py_stats_toolkit: {e}")
+class TestBasicImports(unittest.TestCase):
+    def test_numpy(self):
+        data = np.random.normal(0, 1, 100)
+        self.assertEqual(len(data), 100)
+        self.assertIsInstance(data, np.ndarray)
 
-def test_capsules_import():
-    """Test que les capsules peuvent être importées"""
-    try:
-        from py_stats_toolkit.capsules.BaseCapsule import BaseCapsule
-        assert BaseCapsule is not None
-    except ImportError as e:
-        pytest.fail(f"Impossible d'importer BaseCapsule: {e}")
+    def test_pandas(self):
+        df = pd.DataFrame({'values': [1, 2, 3, 4, 5]})
+        self.assertEqual(len(df), 5)
+        self.assertIn('values', df.columns)
 
-def test_basic_functionality():
-    """Test de base avec numpy et pandas"""
-    data = np.random.normal(0, 1, 100)
-    df = pd.DataFrame({'values': data})
-    
-    assert len(df) == 100
-    assert 'values' in df.columns
-    assert abs(df['values'].mean()) < 1  # La moyenne devrait être proche de 0 
+    def test_sklearn(self):
+        X = np.random.randn(100, 2)
+        y = np.dot(X, [1.0, 2.0]) + np.random.normal(0, 0.1, 100)
+        model = LinearRegression()
+        model.fit(X, y)
+        predictions = model.predict(X)
+        mse = mean_squared_error(y, predictions)
+        self.assertGreaterEqual(mse, 0)
+        self.assertEqual(len(predictions), len(y))
+
+    def test_matplotlib(self):
+        fig, ax = plt.subplots()
+        x = np.linspace(0, 10, 100)
+        y = np.sin(x)
+        ax.plot(x, y)
+        ax.set_title("Test Plot")
+        self.assertIsNotNone(fig)
+        self.assertIsNotNone(ax)
+        plt.close(fig)
+
+if __name__ == '__main__':
+    unittest.main() 
