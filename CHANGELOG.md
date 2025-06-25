@@ -5,50 +5,58 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère à [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.1] - 2025-01-15
+## [1.0.2] - 2025-01-27
 
-### Ajouté
-- Structure PyPI conforme et complète
-- Modules autonomes et fonctionnels
-- Tests indépendants sans dépendance au package
-- Documentation mise à jour avec exemples corrects
+### Added
+- Script `clean_cache.py` pour nettoyage automatique des fichiers cache
+- Messages de confirmation améliorés dans tous les scripts utilitaires
 
-### Modifié
-- Nettoyage complet des dépendances obsolètes
-- Suppression des imports circulaires
-- Correction du module data_processor.py
-- Mise à jour du README avec exemples conformes
+### Changed
+- Correction de la configuration de licence dans `pyproject.toml` (format SPDX)
+- Mise à jour de l'email de contact vers `autopublisher.ai@gmail.com`
+- Amélioration des workflows GitHub Actions
+- Suppression de `setup.py` redondant
 
-### Supprimé
-- Toutes les références aux modules Abstracts supprimés
-- Classes de base obsolètes
-- Imports relatifs problématiques
-- Tests dépendants du package
+### Fixed
+- Conformité PyPI complète
+- Suppression de tous les fichiers cache et temporaires
+- Correction des warnings de dépréciation setuptools
 
-### Corrigé
-- Erreurs d'import dans les modules
-- Problèmes de build PyPI
-- Tests qui échouaient
-- Documentation obsolète
+## [1.0.1] - 2025-01-26
 
-## [1.0.0] - 2025-01-15
+### Added
+- Support pour Python 3.11
+- Nouvelles dépendances : networkx, deap
+- Documentation améliorée
 
-### Ajouté
-- Version initiale du toolkit
-- Modules de base implémentés
-- Architecture modulaire complète
-- Système de polymorphisme
-- Tests de base
-- Documentation initiale
+### Changed
+- Mise à jour des dépendances minimales
+- Amélioration de la structure du package
+
+## [1.0.0] - 2025-01-25
+
+### Added
+- Première version stable
+- Modules de statistiques descriptives
+- Modules de régression linéaire
+- Modules d'analyse de corrélation
+- Modules de visualisation
+- Utilitaires de traitement de données
+- Architecture modulaire avec polymorphisme
+
+### Features
+- Statistiques descriptives complètes
+- Régression linéaire avec validation
+- Analyse de corrélation multivariée
+- Visualisations statistiques avancées
+- Traitement et nettoyage de données
+- Validation et vérification de données
 
 ## [0.1.3] - 2024-03-19
 
 ### Ajouté
 - Configuration initiale du workflow GitHub Actions pour la publication automatique sur PyPI
 - Documentation des changements dans le CHANGELOG
-
-### Modifié
-- Mise à jour des dépendances pour assurer la compatibilité
 
 ## [0.1.2] - 2024-03-19
 

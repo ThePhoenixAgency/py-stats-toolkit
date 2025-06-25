@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-stats-toolkit"
-version = "1.0.1"
+version = "1.0.2"
 description = "Un toolkit Python pour l'analyse statistique et le traitement des données"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -56,8 +56,9 @@ Repository = "https://github.com/PhoenixGuardianTools/py-stats-toolkit.git"
 Documentation = "https://py-stats-toolkit.readthedocs.io/"
 "Bug Tracker" = "https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues"
 
-[tool.setuptools]
-packages = {find = {}}
+[tool.setuptools.packages.find]
+include = ["py_stats_toolkit*"]
+namespaces = false
 
 [tool.black]
 line-length = 88
