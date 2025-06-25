@@ -54,6 +54,7 @@ def create_github_release():
     if not github_token:
         print("❌ Erreur: GITHUB_TOKEN non défini")
         print("💡 Définissez votre token GitHub: set GITHUB_TOKEN=your_token_here")
+        print("   Ou utilisez un token personnel GitHub avec permissions 'repo'")
         return False
     
     # URL de l'API GitHub

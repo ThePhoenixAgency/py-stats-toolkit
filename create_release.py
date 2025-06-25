@@ -22,6 +22,7 @@ def create_github_release():
     if not github_token:
         print("❌ Erreur: GITHUB_TOKEN non défini dans les variables d'environnement")
         print("💡 Pour définir le token: set GITHUB_TOKEN=your_token_here")
+        print("   Ou utilisez un token personnel GitHub avec permissions 'repo'")
         return False
     
     # URL de l'API GitHub
