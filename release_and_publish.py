@@ -46,7 +46,7 @@ def create_github_release():
     # Configuration
     repo_owner = "PhoenixGuardianTools"
     repo_name = "py-stats-toolkit"
-    tag_name = "v1.0.2"
+    tag_name = "v1.0.4"
     
     # Le token GitHub doit être dans les variables d'environnement
     github_token = os.getenv('GITHUB_TOKEN')
@@ -64,26 +64,30 @@ def create_github_release():
     release_data = {
         "tag_name": tag_name,
         "name": f"Release {tag_name}",
-        "body": f"""## 🚀 Release {tag_name} - Nettoyage complet et conformité PyPI
+        "body": f"""## 🚀 Release {tag_name} - Badges de qualité et conformité complète
 
 ### ✨ Nouvelles fonctionnalités
-- Script `clean_cache.py` pour nettoyage automatique des fichiers cache
-- Messages de confirmation améliorés dans tous les scripts utilitaires
+- Ajout de badges de compliance dans le README
+- Section dédiée à la qualité du code avec standards de qualité
+- Documentation complète des outils de qualité utilisés
 
 ### 🔧 Améliorations
-- Correction de la configuration de licence dans `pyproject.toml` (format SPDX)
-- Mise à jour de l'email de contact vers `autopublisher.ai@gmail.com`
-- Amélioration des workflows GitHub Actions
-- Suppression de `setup.py` redondant
+- Badges pour Black (formatage), isort (imports), flake8 (linting)
+- Badges pour MyPy (type checking), Bandit (sécurité), Pytest (tests)
+- Badge de couverture de code avec Codecov
+- Section explicative des standards de qualité
 
-### 🐛 Corrections
-- Conformité PyPI complète
-- Suppression de tous les fichiers cache et temporaires
-- Correction des warnings de dépréciation setuptools
+### 🏆 Qualité du Code
+- **Black** : Formatage automatique selon PEP8
+- **isort** : Organisation automatique des imports
+- **Flake8** : Détection des erreurs de style et qualité
+- **MyPy** : Vérification statique des types
+- **Bandit** : Analyse de sécurité pour vulnérabilités
+- **Pytest** : Framework de tests avec couverture
 
 ### 📦 Installation
 ```bash
-pip install py-stats-toolkit==1.0.2
+pip install py-stats-toolkit==1.0.4
 ```
 
 ### 🔗 Liens

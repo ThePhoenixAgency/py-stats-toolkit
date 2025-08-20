@@ -217,4 +217,4 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 ---
 
-**Version actuelle : 1.0.3** - Automatisation complète de la publication 
+**Version actuelle : 1.0.4** - Badges de qualité et conformité complète 
