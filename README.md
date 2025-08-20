@@ -2,6 +2,18 @@
 
 Un toolkit Python complet pour l'analyse statistique et le traitement des données, conçu pour être simple d'utilisation tout en offrant des fonctionnalités avancées.
 
+## 🏆 Qualité du Code
+
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Linting: flake8](https://img.shields.io/badge/linting-flake8-yellowgreen)](https://flake8.pycqa.org/)
+[![Type checking: mypy](https://img.shields.io/badge/type%20checking-mypy-blue)](https://mypy-lang.org/)
+[![Security: bandit](https://img.shields.io/badge/security-bandit-green)](https://bandit.readthedocs.io/)
+[![Tests](https://img.shields.io/badge/tests-pytest-orange)](https://docs.pytest.org/)
+[![Coverage](https://img.shields.io/badge/coverage-codecov-brightgreen)](https://codecov.io/)
+
 ## 🚀 Installation
 
 ### Installation depuis PyPI (recommandé)
@@ -118,7 +130,9 @@ Le projet utilise GitHub Actions pour l'automatisation :
 - [Exemples d'utilisation](https://github.com/PhoenixGuardianTools/py-stats-toolkit/tree/main/examples)
 - [Guide de contribution](CONTRIBUTING.md)
 
-## 🧪 Tests
+## 🧪 Tests et Qualité du Code
+
+### Tests
 
 ```bash
 # Installation des dépendances de développement
@@ -130,6 +144,36 @@ python -m pytest tests/
 # Avec couverture
 python -m pytest tests/ --cov=py_stats_toolkit --cov-report=html
 ```
+
+### Contrôle de Qualité
+
+Le projet suit les meilleures pratiques Python avec plusieurs outils de qualité :
+
+```bash
+# Formatage du code avec Black
+black .
+
+# Tri des imports avec isort
+isort .
+
+# Linting PEP8 avec flake8
+flake8 .
+
+# Vérification des types avec mypy
+mypy py_stats_toolkit/
+
+# Analyse de sécurité avec bandit
+bandit -r py_stats_toolkit/
+```
+
+### Standards de Qualité
+
+- **Black** : Formatage automatique du code selon les standards PEP8
+- **isort** : Organisation automatique des imports
+- **Flake8** : Détection des erreurs de style et de qualité
+- **MyPy** : Vérification statique des types
+- **Bandit** : Analyse de sécurité pour détecter les vulnérabilités
+- **Pytest** : Framework de tests complet avec couverture
 
 ## 📋 Dépendances
 
