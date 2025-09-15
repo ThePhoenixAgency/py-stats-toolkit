@@ -63,7 +63,7 @@ def main():
     print("   - py_stats_toolkit-1.0.2-py3-none-any.whl")
     
     print("\n🚀 Étapes pour publier:")
-    print("1. Allez sur: https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases")
+    print("1. Allez sur: https://github.com/ThePhoenixAgency/py-stats-toolkit/releases")
     print("2. Cliquez sur 'Create a new release'")
     print("3. Sélectionnez le tag v1.0.2")
     print("4. Remplissez les informations de la release")
@@ -71,8 +71,8 @@ def main():
     print("6. La publication PyPI se fera automatiquement via GitHub Actions")
     
     print("\n🔗 Liens utiles:")
-    print("- Releases: https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases")
-    print("- Actions: https://github.com/PhoenixGuardianTools/py-stats-toolkit/actions")
+    print("- Releases: https://github.com/ThePhoenixAgency/py-stats-toolkit/releases")
+    print("- Actions: https://github.com/ThePhoenixAgency/py-stats-toolkit/actions")
     print("- PyPI: https://pypi.org/project/py-stats-toolkit/")
     
     return True

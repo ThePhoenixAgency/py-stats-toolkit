@@ -44,7 +44,7 @@ def create_github_release():
     """Crée une release GitHub via l'API"""
     
     # Configuration
-    repo_owner = "PhoenixGuardianTools"
+    repo_owner = "ThePhoenixAgency"
     repo_name = "py-stats-toolkit"
     tag_name = "v1.0.4"
     
@@ -93,7 +93,7 @@ pip install py-stats-toolkit==1.0.4
 ### 🔗 Liens
 - [Documentation](https://py-stats-toolkit.readthedocs.io/)
 - [PyPI](https://pypi.org/project/py-stats-toolkit/)
-- [Issues](https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues)
+- [Issues](https://github.com/ThePhoenixAgency/py-stats-toolkit/issues)
 
 ---
 *Release créée automatiquement le {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*""",
@@ -166,7 +166,7 @@ def main():
     if not create_github_release():
         print("❌ Échec de la création de la release GitHub")
         print("\n💡 Pour créer la release manuellement:")
-        print("1. Allez sur https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases")
+        print("1. Allez sur https://github.com/ThePhoenixAgency/py-stats-toolkit/releases")
         print("2. Cliquez sur 'Create a new release'")
         print("3. Sélectionnez le tag v1.0.2")
         print("4. Remplissez les informations et publiez")
@@ -182,9 +182,9 @@ def main():
     print("📤 La publication sur PyPI est terminée.")
     print("⏱️  Cela peut prendre quelques minutes pour apparaître sur PyPI...")
     print("\n🔗 Liens utiles:")
-    print("- Release GitHub: https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases")
+    print("- Release GitHub: https://github.com/ThePhoenixAgency/py-stats-toolkit/releases")
     print("- PyPI: https://pypi.org/project/py-stats-toolkit/")
-    print("- Actions: https://github.com/PhoenixGuardianTools/py-stats-toolkit/actions")
+    print("- Actions: https://github.com/ThePhoenixAgency/py-stats-toolkit/actions")
     
     return True
 

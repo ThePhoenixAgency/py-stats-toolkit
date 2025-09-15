@@ -12,7 +12,7 @@ def create_github_release():
     """Crée une release GitHub via l'API"""
     
     # Configuration
-    repo_owner = "PhoenixGuardianTools"
+    repo_owner = "ThePhoenixAgency"
     repo_name = "py-stats-toolkit"
     tag_name = "v1.0.2"
     
@@ -57,7 +57,7 @@ pip install py-stats-toolkit==1.0.2
 ### 🔗 Liens
 - [Documentation](https://py-stats-toolkit.readthedocs.io/)
 - [PyPI](https://pypi.org/project/py-stats-toolkit/)
-- [Issues](https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues)
+- [Issues](https://github.com/ThePhoenixAgency/py-stats-toolkit/issues)
 
 ---
 *Release créée automatiquement le {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*""",
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         print("📤 La publication sur PyPI se fera automatiquement via GitHub Actions.")
     else:
         print("\n💡 Pour créer la release manuellement:")
-        print("1. Allez sur https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases")
+        print("1. Allez sur https://github.com/ThePhoenixAgency/py-stats-toolkit/releases")
         print("2. Cliquez sur 'Create a new release'")
         print("3. Sélectionnez le tag v1.0.2")
         print("4. Remplissez les informations et publiez") 

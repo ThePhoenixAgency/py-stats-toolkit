@@ -126,7 +126,7 @@ def main():
         
         print(f"\n🔗 Liens utiles:")
         print(f"- PyPI: https://pypi.org/project/py-stats-toolkit/")
-        print(f"- GitHub: https://github.com/PhoenixGuardianTools/py-stats-toolkit")
+        print(f"- GitHub: https://github.com/ThePhoenixAgency/py-stats-toolkit")
         
     finally:
         cleanup_processes()
