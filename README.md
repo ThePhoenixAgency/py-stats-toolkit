@@ -126,9 +126,11 @@ Le projet utilise GitHub Actions pour l'automatisation :
 
 ## 📚 Documentation
 
+- **🌐 [Site officiel](https://phoenixguardiantools.github.io/py-stats-toolkit/)** - Hébergé gratuitement sur GitHub Pages
 - [Documentation complète](https://py-stats-toolkit.readthedocs.io/)
 - [Exemples d'utilisation](https://github.com/PhoenixGuardianTools/py-stats-toolkit/tree/main/examples)
 - [Guide de contribution](CONTRIBUTING.md)
+- [Guide GitHub Pages](GITHUB_PAGES_GUIDE.md) - Comment avoir un domaine gratuit comme github.io
 
 ## 🧪 Tests et Qualité du Code
 
