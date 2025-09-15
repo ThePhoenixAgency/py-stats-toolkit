@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://phoenixguardiantools.github.io/py-stats-toolkit/sitemap.xml
