@@ -51,10 +51,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/PhoenixGuardianTools/py-stats-toolkit"
-Repository = "https://github.com/PhoenixGuardianTools/py-stats-toolkit.git"
+Homepage = "https://github.com/ThePhoenixAgency/py-stats-toolkit"
+Repository = "https://github.com/ThePhoenixAgency/py-stats-toolkit.git"
 Documentation = "https://py-stats-toolkit.readthedocs.io/"
-"Bug Tracker" = "https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues"
+"Bug Tracker" = "https://github.com/ThePhoenixAgency/py-stats-toolkit/issues"
 
 [tool.setuptools.packages.find]
 include = ["py_stats_toolkit*"]

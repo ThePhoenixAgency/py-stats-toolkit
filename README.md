@@ -25,7 +25,7 @@ pip install py-stats-toolkit==1.0.3
 ### Installation depuis les sources
 
 ```bash
-git clone https://github.com/PhoenixGuardianTools/py-stats-toolkit.git
+git clone https://github.com/ThePhoenixAgency/py-stats-toolkit.git
 cd py-stats-toolkit
 pip install -e .
 ```
@@ -128,7 +128,7 @@ Le projet utilise GitHub Actions pour l'automatisation :
 
 - **🌐 [Site officiel](https://phoenixguardiantools.github.io/py-stats-toolkit/)** - Hébergé gratuitement sur GitHub Pages
 - [Documentation complète](https://py-stats-toolkit.readthedocs.io/)
-- [Exemples d'utilisation](https://github.com/PhoenixGuardianTools/py-stats-toolkit/tree/main/examples)
+- [Exemples d'utilisation](https://github.com/ThePhoenixAgency/py-stats-toolkit/tree/main/examples)
 - [Guide de contribution](CONTRIBUTING.md)
 - [Guide GitHub Pages](GITHUB_PAGES_GUIDE.md) - Comment avoir un domaine gratuit comme github.io
 
@@ -208,14 +208,14 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 ## 🔗 Liens Utiles
 
 - [PyPI](https://pypi.org/project/py-stats-toolkit/)
-- [GitHub](https://github.com/PhoenixGuardianTools/py-stats-toolkit)
-- [Issues](https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues)
-- [Releases](https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases)
+- [GitHub](https://github.com/ThePhoenixAgency/py-stats-toolkit)
+- [Issues](https://github.com/ThePhoenixAgency/py-stats-toolkit/issues)
+- [Releases](https://github.com/ThePhoenixAgency/py-stats-toolkit/releases)
 
 ## 📞 Contact
 
 - Email : autopublisher.ai@gmail.com
-- GitHub : [PhoenixGuardianTools](https://github.com/PhoenixGuardianTools)
+- GitHub : [ThePhoenixAgency](https://github.com/ThePhoenixAgency)
 
 ---
 
