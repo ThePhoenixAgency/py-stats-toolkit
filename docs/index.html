@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Py-Stats-Toolkit - Toolkit Python pour l'Analyse Statistique</title>
+    <meta name="description" content="Un toolkit Python complet pour l'analyse statistique et le traitement des données, conçu pour être simple d'utilisation tout en offrant des fonctionnalités avancées.">
+    
+    <!-- GitHub Pages canonical URL -->
+    <link rel="canonical" href="https://phoenixguardiantools.github.io/py-stats-toolkit/">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Py-Stats-Toolkit - Toolkit Python pour l'Analyse Statistique">
+    <meta property="og:description" content="Un toolkit Python complet pour l'analyse statistique et le traitement des données">
+    <meta property="og:url" content="https://phoenixguardiantools.github.io/py-stats-toolkit/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Py-Stats-Toolkit">
+    <meta name="twitter:description" content="Toolkit Python pour l'analyse statistique et le traitement des données">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+    
+    <!-- Styles -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-buttons {
+            margin: 2rem 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 0.5rem;
+            background: #fff;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            line-height: 1.4;
+        }
+        
+        .code-block code {
+            color: #a0aec0;
+        }
+        
+        .keyword { color: #63b3ed; }
+        .string { color: #68d391; }
+        .comment { color: #a0aec0; font-style: italic; }
+        .function { color: #f6e05e; }
+        
+        .installation-tabs {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .tab {
+            background: #e2e8f0;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: none;
+            margin-right: 0.5rem;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .badges {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Py-Stats-Toolkit</h1>
+            <p>Toolkit Python complet pour l'analyse statistique et le traitement des données</p>
+            
+            <div class="badges">
+                <span class="badge">Python 3.8+</span>
+                <span class="badge">MIT License</span>
+                <span class="badge">v1.0.4</span>
+                <span class="badge">PyPI</span>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="https://pypi.org/project/py-stats-toolkit/" class="btn">📦 Installer depuis PyPI</a>
+                <a href="https://github.com/PhoenixGuardianTools/py-stats-toolkit" class="btn btn-secondary">⚡ Code Source GitHub</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Installation Section -->
+            <div class="section">
+                <h2>🚀 Installation Rapide</h2>
+                <div class="installation-tabs">
+                    <button class="tab active" onclick="showTab('pip')">pip install</button>
+                    <button class="tab" onclick="showTab('source')">Depuis les sources</button>
+                </div>
+                
+                <div id="pip" class="tab-content active">
+                    <div class="code-block">
+<code><span class="comment"># Installation depuis PyPI (recommandé)</span>
+<span class="keyword">pip</span> <span class="string">install</span> py-stats-toolkit==1.0.3</code>
+                    </div>
+                </div>
+                
+                <div id="source" class="tab-content">
+                    <div class="code-block">
+<code><span class="comment"># Installation depuis les sources</span>
+<span class="keyword">git</span> <span class="string">clone</span> https://github.com/PhoenixGuardianTools/py-stats-toolkit.git
+<span class="keyword">cd</span> py-stats-toolkit
+<span class="keyword">pip</span> <span class="string">install</span> -e .</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="section">
+                <h2>🎯 Fonctionnalités Principales</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">📈</div>
+                        <h3>Statistiques Descriptives</h3>
+                        <p>Calcul automatique de toutes les statistiques descriptives avec gestion des valeurs manquantes et validation des données.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <h3>Régression Linéaire</h3>
+                        <p>Régression linéaire simple et multiple avec validation des hypothèses et diagnostics complets.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Analyse de Corrélation</h3>
+                        <p>Matrices de corrélation, tests de significativité et visualisations avancées.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Visualisation</h3>
+                        <p>Graphiques statistiques professionnels avec personnalisation complète et export haute qualité.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Example -->
+            <div class="section">
+                <h2>💡 Exemple d'Utilisation</h2>
+                <div class="code-block">
+<code><span class="keyword">from</span> py_stats_toolkit.stats <span class="keyword">import</span> descriptives, regression, correlation
+<span class="keyword">from</span> py_stats_toolkit.visualization <span class="keyword">import</span> plots
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+
+<span class="comment"># Charger vos données</span>
+data = pd.<span class="function">read_csv</span>(<span class="string">'votre_fichier.csv'</span>)
+
+<span class="comment"># Statistiques descriptives</span>
+stats = descriptives.<span class="function">calculate_descriptive_statistics</span>(data)
+<span class="function">print</span>(stats)
+
+<span class="comment"># Régression linéaire</span>
+model = regression.<span class="function">linear_regression</span>(data, <span class="string">'variable_cible'</span>, [<span class="string">'var1'</span>, <span class="string">'var2'</span>])
+<span class="function">print</span>(model.<span class="function">summary</span>())
+
+<span class="comment"># Visualisation</span>
+plots.<span class="function">create_correlation_matrix</span>(data)</code>
+                </div>
+            </div>
+
+            <!-- Quality Section -->
+            <div class="section">
+                <h2>🏆 Qualité du Code</h2>
+                <p>Le projet suit les meilleures pratiques Python avec plusieurs outils de qualité :</p>
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li><strong>Black</strong> : Formatage automatique du code selon les standards PEP8</li>
+                    <li><strong>isort</strong> : Organisation automatique des imports</li>
+                    <li><strong>Flake8</strong> : Détection des erreurs de style et de qualité</li>
+                    <li><strong>MyPy</strong> : Vérification statique des types</li>
+                    <li><strong>Bandit</strong> : Analyse de sécurité pour détecter les vulnérabilités</li>
+                    <li><strong>Pytest</strong> : Framework de tests complet avec couverture</li>
+                </ul>
+                
+                <div class="code-block">
+<code><span class="comment"># Contrôle de qualité</span>
+black .                    <span class="comment"># Formatage du code</span>
+isort .                    <span class="comment"># Tri des imports</span>
+flake8 .                   <span class="comment"># Linting PEP8</span>
+mypy py_stats_toolkit/     <span class="comment"># Vérification des types</span>
+bandit -r py_stats_toolkit/ <span class="comment"># Analyse de sécurité</span></code>
+                </div>
+            </div>
+
+            <!-- Links Section -->
+            <div class="section">
+                <h2>🔗 Liens Utiles</h2>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">📦</div>
+                        <h3><a href="https://pypi.org/project/py-stats-toolkit/" style="text-decoration: none; color: #667eea;">PyPI Package</a></h3>
+                        <p>Installation directe via pip</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">💻</div>
+                        <h3><a href="https://github.com/PhoenixGuardianTools/py-stats-toolkit" style="text-decoration: none; color: #667eea;">Code Source</a></h3>
+                        <p>Repository GitHub complet</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">🐛</div>
+                        <h3><a href="https://github.com/PhoenixGuardianTools/py-stats-toolkit/issues" style="text-decoration: none; color: #667eea;">Issues & Support</a></h3>
+                        <p>Rapporter des bugs ou demander de l'aide</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">📋</div>
+                        <h3><a href="https://github.com/PhoenixGuardianTools/py-stats-toolkit/releases" style="text-decoration: none; color: #667eea;">Releases</a></h3>
+                        <p>Historique des versions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/PhoenixGuardianTools">GitHub Organization</a>
+                <a href="mailto:autopublisher.ai@gmail.com">Contact</a>
+                <a href="https://github.com/PhoenixGuardianTools/py-stats-toolkit/blob/main/LICENSE">License MIT</a>
+            </div>
+            <p>&copy; 2024 PhoenixGuardianTools. Tous droits réservés.</p>
+            <p style="margin-top: 0.5rem; color: #a0aec0; font-size: 0.9rem;">
+                Site hébergé gratuitement sur <strong>GitHub Pages</strong> 🚀<br>
+                Domaine gratuit : <strong>phoenixguardiantools.github.io/py-stats-toolkit</strong>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
