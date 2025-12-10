@@ -1,39 +1,39 @@
 # Dépendances de test
-pytest>=6.2.0
-pytest-cov>=2.12.0
-pytest-asyncio>=0.16.0
-pytest-mock>=3.6.0
-pytest-xdist>=2.4.0
-coverage>=6.2.0
-hypothesis>=6.0.0
+pytest>=8.3.0
+pytest-cov>=6.0.0
+pytest-asyncio>=0.24.0
+pytest-mock>=3.14.0
+pytest-xdist>=3.6.0
+coverage>=7.6.0
+hypothesis>=6.122.0
 
 # Dépendances de linting et formatage
-black>=21.5b2
-flake8>=3.9.0
-mypy>=0.910
-isort>=5.9.0
-pylint>=2.8.0
-bandit>=1.7.0
-safety>=1.10.0
+black>=24.10.0
+flake8>=7.1.0
+mypy>=1.13.0
+isort>=5.13.0
+pylint>=3.3.0
+bandit>=1.8.0
+pip-audit>=2.10.0
 
 # Dépendances de documentation
-sphinx>=4.0.0
-sphinx-rtd-theme>=1.0.0
-sphinx-autodoc-typehints>=1.12.0
-mkdocs>=1.2.0
-mkdocs-material>=7.0.0
+sphinx>=8.1.0
+sphinx-rtd-theme>=3.0.0
+sphinx-autodoc-typehints>=2.5.0
+mkdocs>=1.6.0
+mkdocs-material>=9.5.0
 
 # Dépendances de développement
-ipython>=7.0.0
-jupyter>=1.0.0
-notebook>=6.4.0
-pre-commit>=2.15.0
+ipython>=8.30.0
+jupyter>=1.1.0
+notebook>=7.3.0
+pre-commit>=4.0.0
 bump2version>=1.0.0
-twine>=3.4.0
-build>=0.7.0
+twine>=6.0.0
+build>=1.2.0
 
 # Dépendances de débogage
-debugpy>=1.4.0
+debugpy>=1.8.0
 ipdb>=0.13.0
-memory-profiler>=0.58.0
-line-profiler>=3.3.0 
+memory-profiler>=0.61.0
+line-profiler>=4.2.0 
