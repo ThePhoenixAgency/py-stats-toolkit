@@ -4,7 +4,7 @@ Un toolkit Python complet pour l'analyse statistique et le traitement des donné
 
 ## 🏆 Qualité du Code
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
@@ -19,7 +19,7 @@ Un toolkit Python complet pour l'analyse statistique et le traitement des donné
 ### Installation depuis PyPI (recommandé)
 
 ```bash
-pip install py-stats-toolkit==1.0.3
+pip install py-stats-toolkit
 ```
 
 ### Installation depuis les sources
