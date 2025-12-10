@@ -43,4 +43,4 @@ distributed>=2024.1.0
 # Autres dépendances
 PyWavelets>=1.7.0
 tqdm>=4.67.0
-joblib>=1.4.0 
+joblib>=1.4.0
