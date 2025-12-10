@@ -24,7 +24,7 @@ import pandas as pd
 # Import base class and utilities
 from py_stats_toolkit.core.base import StatisticalModule
 from py_stats_toolkit.core.validators import DataValidator
-from py_stats_toolkit.utils.parallel import ParallelProcessor, get_optimal_chunk_size
+from py_stats_toolkit.utils.parallel import ParallelProcessor
 from py_stats_toolkit.algorithms import correlation as correlation_algos
 
 
