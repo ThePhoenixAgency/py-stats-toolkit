@@ -54,21 +54,14 @@ class MoyenneGlissanteModule(StatisticalModule):
         self.validate_data(data)
         self.window_size = window_size
         
+        # Convert to Series if not already
         if isinstance(data, pd.Series):
-            data_array = data.values
+            series_data = data
         else:
-            data_array = data
+            series_data = pd.Series(data)
         
-        # Simple rolling mean calculation for all data
-        if isinstance(data, pd.Series):
-            result = data.rolling(window=window_size).mean()
-        else:
-            result = pd.Series(data_array).rolling(window=window_size).mean()
-        
-        if isinstance(data, pd.Series):
-            self.result = pd.Series(result, index=data.index)
-        else:
-            self.result = pd.Series(result)
+        # Calculate rolling mean
+        self.result = series_data.rolling(window=window_size).mean()
         
         return self.result
     

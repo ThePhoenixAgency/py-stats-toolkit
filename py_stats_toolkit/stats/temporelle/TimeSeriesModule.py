@@ -29,8 +29,9 @@ from ...utils.parallel import ParallelProcessor
 class TimeSeriesAnalyzer(StatisticalModule):
     """Module pour l'analyse de séries temporelles."""
     
-    def __init__(self, n_jobs: int = -1):
+    def __init__(self, n_jobs: int = -1, batch_size: int = 1000):
         super().__init__()
+        self.batch_size = batch_size
         self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
     
     def process(self, data, timestamps=None, **kwargs):
