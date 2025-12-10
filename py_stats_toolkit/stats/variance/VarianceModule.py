@@ -18,7 +18,7 @@ tags : module, stats, refactored
 =====================================================================
 """
 
-from typing import Dict, Union
+from typing import Dict
 import pandas as pd
 
 # Import base class and utilities
