@@ -1,8 +1,8 @@
-'''
+"""
 =====================================================================
 File : FrequenceModule.py
 =====================================================================
-version : 1.0.0
+version : 2.0.0
 release : 15/06/2025
 author : Phoenix Project
 contact : contact@phonxproject.onmicrosoft.fr
@@ -11,121 +11,65 @@ license : MIT
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-Description du module FrequenceModule.py
+Refactored module for frequency analysis.
+Follows SOLID principles with separation of business logic and algorithms.
 
-tags : module, stats
+tags : module, stats, refactored
 =====================================================================
-Ce module Description du module FrequenceModule.py
+"""
 
-tags : module, stats
-=====================================================================
-'''
-
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Union
 import numpy as np
 import pandas as pd
 
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
+# Import base class and utilities
+from py_stats_toolkit.core.base import StatisticalModule
+from py_stats_toolkit.core.validators import DataValidator
+from py_stats_toolkit.algorithms import descriptive_stats as desc_algos
+from py_stats_toolkit.utils.data_processor import DataProcessor
 
-class FrequenceModule(BaseCapsule):
+
+class FrequenceModule(StatisticalModule):
     """
-    Classe FrequenceModule
+    Module for frequency analysis (Business Logic Layer).
     
-    Attributes:
-        data, parameters, results
+    Responsibilities:
+    - Orchestrate frequency analysis workflow
+    - Manage results and state
+    - Provide user-facing API
+    
+    Delegates to:
+    - DataValidator for validation
+    - desc_algos for computations
     """
     
     def __init__(self):
-        """
-        Initialise FrequenceModule.
-        """
+        """Initialize frequency module."""
         super().__init__()
-        pass
     
-    def configure(self, **kwargs) -> None:
+    def process(self, data: Union[pd.Series, np.ndarray, list], 
+                normalize: bool = False, **kwargs) -> pd.DataFrame:
         """
-        Configure les paramètres de FrequenceModule.
+        Compute frequency distribution.
         
         Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
+            data: Input data
+            normalize: If True, return relative frequencies
+            **kwargs: Additional arguments
             
         Returns:
-            Dict[str, Any]: Résultats de l'analyse
+            DataFrame with frequencies
         """
-        pass 
-
-import numpy as np
-import pandas as pd
-from core.AbstractClassBase import StatisticalModule
-from utils.parallel import ParallelProcessor
-
-class FrequenceModule(StatisticalModule):
-    """Module pour l'analyse de fréquence."""
-    
-    def __init__(self, n_jobs: int = -1):
-        super().__init__()
-        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-    
-    def process(self, data, normalize=False, **kwargs):
-        """
-        Calcule les fréquences des valeurs.
+        # Validation (delegated to validator)
+        DataValidator.validate_data(data)
         
-        Args:
-            data: Données d'entrée (numpy array ou pandas Series)
-            normalize: Si True, retourne les fréquences relatives
-            **kwargs: Arguments additionnels
-            
-        Returns:
-            DataFrame avec les fréquences
-        """
-        self.validate_data(data)
+        # Store state
+        self.data = data
         
-        if isinstance(data, pd.Series):
-            series = data
-        else:
-            series = pd.Series(data)
+        # Convert to numpy for computation
+        data_array = DataProcessor.to_numpy(data)
         
-        # Calcul des fréquences
-        freq = series.value_counts(normalize=normalize)
-        cum_freq = freq.cumsum()
+        # Computation (delegated to algorithm layer)
+        self.result = desc_algos.compute_frequency_distribution(data_array, normalize)
         
-        # Création du DataFrame de résultats
-        self.result = pd.DataFrame({
-            'Fréquence': freq,
-            'Fréquence Cumulée': cum_freq
-        })
-        
-        if normalize:
-            self.result.columns = ['Fréquence Relative', 'Fréquence Relative Cumulée']
-        
-        return self.result
-    
-    def get_frequence_absolue(self):
-        """Retourne les fréquences absolues."""
-        if self.result is None:
-            raise ValueError("Exécutez d'abord process()")
-        return self.result['Fréquence']
-    
-    def get_frequence_cumulee(self):
-        """Retourne les fréquences cumulées."""
-        if self.result is None:
-            raise ValueError("Exécutez d'abord process()")
-        return self.result['Fréquence Cumulée']
-    
-    def get_frequence_relative(self):
-        """Retourne les fréquences relatives."""
-        if self.result is None:
-            raise ValueError("Exécutez d'abord process()")
-        return self.process(self.data, normalize=True)['Fréquence Relative'] 
+        return self.result 

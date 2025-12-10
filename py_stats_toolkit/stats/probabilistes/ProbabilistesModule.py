@@ -1,8 +1,8 @@
-'''
+"""
 =====================================================================
 File : ProbabilistesModule.py
 =====================================================================
-version : 1.0.0
+version : 2.0.0
 release : 15/06/2025
 author : Phoenix Project
 contact : contact@phonxproject.onmicrosoft.fr
@@ -11,180 +11,104 @@ license : MIT
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-Description du module ProbabilistesModule.py
+Refactored module for probability analysis.
+Follows SOLID principles with separation of business logic and algorithms.
 
-tags : module, stats
+tags : module, stats, refactored
 =====================================================================
-Ce module Description du module ProbabilistesModule.py
+"""
 
-tags : module, stats
-=====================================================================
-'''
-
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Union
 import numpy as np
-import pandas as pd
 
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
+# Import base class and utilities
+from py_stats_toolkit.core.base import StatisticalModule
+from py_stats_toolkit.core.validators import DataValidator
+from py_stats_toolkit.algorithms import probability as prob_algos
+from py_stats_toolkit.utils.data_processor import DataProcessor
 
-class ProbabilistesModule(BaseCapsule):
+
+class ProbabilistesModule(StatisticalModule):
     """
-    Classe ProbabilistesModule
+    Module for probability analysis (Business Logic Layer).
     
-    Attributes:
-        data, parameters, results
+    Responsibilities:
+    - Orchestrate probability analysis workflow
+    - Manage results and state
+    - Provide user-facing API
+    
+    Delegates to:
+    - DataValidator for validation
+    - prob_algos for computations
     """
     
     def __init__(self):
-        """
-        Initialise ProbabilistesModule.
-        """
+        """Initialize probability module."""
         super().__init__()
-        pass
+        self.distribution_type = None
     
-    def configure(self, **kwargs) -> None:
+    def process(self, data: Union[np.ndarray, list], 
+                distribution: str = "normal", **kwargs):
         """
-        Configure les paramètres de ProbabilistesModule.
+        Fit a distribution to data.
         
         Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
+            data: Input data
+            distribution: Type of distribution ('normal', 'exponential', 'gamma')
+            **kwargs: Additional parameters
             
         Returns:
-            Dict[str, Any]: Résultats de l'analyse
+            Distribution object
         """
-        pass 
-
-import numpy as np
-from scipy import stats
-from ..core.AbstractClassBase import StatisticalModule
-from ...utils.parallel import ParallelProcessor, BatchProcessor
-
-class ProbabilistesModule(StatisticalModule):
-    """Module pour l'analyse probabiliste."""
+        # Validation (delegated to validator)
+        DataValidator.validate_data(data)
+        
+        # Store state
+        self.data = data
+        self.distribution_type = distribution
+        
+        # Convert to numpy
+        data_array = DataProcessor.to_numpy(data)
+        
+        # Computation (delegated to algorithm layer)
+        self.result = prob_algos.fit_distribution(data_array, distribution)
+        
+        return self.result['distribution']
     
-    def __init__(self, n_jobs: int = -1, batch_size: int = 1000):
-        super().__init__()
-        self.distribution = None
-        self.params = None
-        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-        self.batch_processor = BatchProcessor(batch_size=batch_size)
-    
-    def _fit_distribution_chunk(self, chunk):
-        """Ajuste une distribution sur un chunk de données."""
-        if self.distribution == "normal":
-            return stats.norm.fit(chunk)
-        elif self.distribution == "exponential":
-            return stats.expon.fit(chunk)
-        elif self.distribution == "gamma":
-            return stats.gamma.fit(chunk)
-        else:
-            raise ValueError(f"Distribution {self.distribution} non supportée")
-    
-    def _average_params(self, param_list):
-        """Moyenne les paramètres de distribution sur plusieurs chunks."""
-        return np.mean(param_list, axis=0)
-    
-    def process(self, data, distribution="normal", **kwargs):
+    def get_pdf(self, x: np.ndarray) -> np.ndarray:
         """
-        Ajuste une distribution aux données en parallèle.
+        Compute probability density function.
         
         Args:
-            data: Données d'entrée (numpy array)
-            distribution: Type de distribution ('normal', 'exponential', 'gamma', etc.)
-            **kwargs: Paramètres additionnels pour la distribution
+            x: Values at which to compute PDF
             
         Returns:
-            Objet de distribution ajusté
+            PDF values
         """
-        self.validate_data(data)
-        self.distribution = distribution
+        if not self.has_result():
+            raise ValueError("No distribution fitted. Call process() first.")
         
-        # Pour les petits ensembles de données, ajustement direct
-        if len(data) < self.batch_processor.batch_size:
-            if distribution == "normal":
-                self.params = stats.norm.fit(data)
-                self.result = stats.norm(*self.params)
-            elif distribution == "exponential":
-                self.params = stats.expon.fit(data)
-                self.result = stats.expon(*self.params)
-            elif distribution == "gamma":
-                self.params = stats.gamma.fit(data)
-                self.result = stats.gamma(*self.params)
-            else:
-                raise ValueError(f"Distribution {distribution} non supportée")
-            return self.result
-        
-        # Pour les grands ensembles de données, traitement parallèle
-        chunks = np.array_split(data, self.parallel_processor.n_jobs)
-        chunk_params = self.parallel_processor.parallel_map(self._fit_distribution_chunk, chunks)
-        self.params = self._average_params(chunk_params)
-        
-        # Création de l'objet de distribution avec les paramètres moyens
-        if distribution == "normal":
-            self.result = stats.norm(*self.params)
-        elif distribution == "exponential":
-            self.result = stats.expon(*self.params)
-        elif distribution == "gamma":
-            self.result = stats.gamma(*self.params)
-        
-        return self.result
+        return prob_algos.compute_pdf(
+            self.distribution_type, 
+            self.result['params'], 
+            x
+        )
     
-    def get_distribution_params(self):
-        """Retourne les paramètres de la distribution ajustée."""
-        return self.params
-    
-    def get_probability_density(self, x):
+    def get_cdf(self, x: np.ndarray) -> np.ndarray:
         """
-        Calcule la densité de probabilité pour les valeurs x en parallèle.
+        Compute cumulative distribution function.
         
         Args:
-            x: Valeurs pour lesquelles calculer la densité
+            x: Values at which to compute CDF
             
         Returns:
-            Densité de probabilité
+            CDF values
         """
-        if self.result is None:
-            raise ValueError("Exécutez d'abord process()")
+        if not self.has_result():
+            raise ValueError("No distribution fitted. Call process() first.")
         
-        # Pour les petits ensembles, calcul direct
-        if len(x) < self.batch_processor.batch_size:
-            return self.result.pdf(x)
-        
-        # Pour les grands ensembles, traitement parallèle
-        chunks = np.array_split(x, self.parallel_processor.n_jobs)
-        pdf_chunks = self.parallel_processor.parallel_map(self.result.pdf, chunks)
-        return np.concatenate(pdf_chunks)
-    
-    def get_cumulative_distribution(self, x):
-        """
-        Calcule la fonction de répartition pour les valeurs x en parallèle.
-        
-        Args:
-            x: Valeurs pour lesquelles calculer la fonction de répartition
-            
-        Returns:
-            Fonction de répartition
-        """
-        if self.result is None:
-            raise ValueError("Exécutez d'abord process()")
-        
-        # Pour les petits ensembles, calcul direct
-        if len(x) < self.batch_processor.batch_size:
-            return self.result.cdf(x)
-        
-        # Pour les grands ensembles, traitement parallèle
-        chunks = np.array_split(x, self.parallel_processor.n_jobs)
-        cdf_chunks = self.parallel_processor.parallel_map(self.result.cdf, chunks)
-        return np.concatenate(cdf_chunks) 
+        return prob_algos.compute_cdf(
+            self.distribution_type,
+            self.result['params'],
+            x
+        )
