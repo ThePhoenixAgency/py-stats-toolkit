@@ -21,55 +21,10 @@ tags : module, stats
 =====================================================================
 '''
 
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
-import numpy as np
-import pandas as pd
-
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
-
-class MoyenneGlissanteModule(BaseCapsule):
-    """
-    Classe MoyenneGlissanteModule
-    
-    Attributes:
-        data, parameters, results
-    """
-    
-    def __init__(self):
-        """
-        Initialise MoyenneGlissanteModule.
-        """
-        super().__init__()
-        pass
-    
-    def configure(self, **kwargs) -> None:
-        """
-        Configure les paramètres de MoyenneGlissanteModule.
-        
-        Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
-            
-        Returns:
-            Dict[str, Any]: Résultats de l'analyse
-        """
-        pass 
-
 import numpy as np
 import pandas as pd
 from ..core.AbstractClassBase import StatisticalModule
-from ...utils.parallel import ParallelProcessor, BatchProcessor
+from ...utils.parallel import ParallelProcessor
 
 class MoyenneGlissanteModule(StatisticalModule):
     """Module pour le calcul de la moyenne glissante."""

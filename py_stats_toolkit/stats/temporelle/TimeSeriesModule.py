@@ -21,63 +21,17 @@ tags : module, stats
 =====================================================================
 '''
 
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 import pandas as pd
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
 
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
-
-class TimeSeriesAnalyzer(BaseCapsule):
-    """
-    Classe TimeSeriesAnalyzer
-    
-    Attributes:
-        data, parameters, results
-    """
-    
-    def __init__(self):
-        """
-        Initialise TimeSeriesAnalyzer.
-        """
-        super().__init__()
-        pass
-    
-    def configure(self, **kwargs) -> None:
-        """
-        Configure les paramètres de TimeSeriesAnalyzer.
-        
-        Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
-            
-        Returns:
-            Dict[str, Any]: Résultats de l'analyse
-        """
-        pass 
-
-import numpy as np
-import pandas as pd
-from ..core.AbstractClassBase import TimeSeriesModule
-from ...utils.parallel import ParallelProcessor, BatchProcessor
-
-class TimeSeriesAnalyzer(TimeSeriesModule):
+class TimeSeriesAnalyzer(StatisticalModule):
     """Module pour l'analyse de séries temporelles."""
     
-    def __init__(self, n_jobs: int = -1, batch_size: int = 1000):
+    def __init__(self, n_jobs: int = -1):
         super().__init__()
         self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-        self.batch_processor = BatchProcessor(batch_size=batch_size)
     
     def process(self, data, timestamps=None, **kwargs):
         """
