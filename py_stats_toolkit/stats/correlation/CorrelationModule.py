@@ -106,7 +106,13 @@ class CorrelationModule(StatisticalModule):
         if not self.has_result():
             raise ValueError("No analysis performed. Call process() first.")
         
-        # Delegate computation to algorithm layer
-        return correlation_algos.compute_pairwise_correlations(
-            self.data, self.method, threshold
-        ) 
+        # Extract pairs from the already-computed correlation matrix
+        corr_matrix = self.result
+        pairs = []
+        cols = corr_matrix.columns
+        for i in range(len(cols)):
+            for j in range(i + 1, len(cols)):
+                corr_value = corr_matrix.iloc[i, j]
+                if abs(corr_value) >= threshold:
+                    pairs.append((cols[i], cols[j], corr_value))
+        return pairs
