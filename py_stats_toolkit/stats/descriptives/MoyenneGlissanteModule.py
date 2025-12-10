@@ -32,8 +32,8 @@ class MoyenneGlissanteModule(StatisticalModule):
     def __init__(self, n_jobs: int = -1, batch_size: int = 1000):
         super().__init__()
         self.window_size = None
+        self.batch_size = batch_size
         self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-        self.batch_processor = BatchProcessor(batch_size=batch_size)
     
     def _process_chunk(self, chunk):
         """Traite un chunk de données."""
@@ -59,16 +59,11 @@ class MoyenneGlissanteModule(StatisticalModule):
         else:
             data_array = data
         
-        # Utilisation du traitement par lots pour les grandes séries
-        if len(data_array) > self.batch_processor.batch_size:
-            result = self.batch_processor.process_batches(self._process_chunk, data_array)
+        # Simple rolling mean calculation for all data
+        if isinstance(data, pd.Series):
+            result = data.rolling(window=window_size).mean()
         else:
-            # Traitement parallèle pour les séries plus petites
-            result = self.parallel_processor.parallel_apply(
-                self._process_chunk,
-                data_array.reshape(-1, 1),
-                axis=0
-            ).flatten()
+            result = pd.Series(data_array).rolling(window=window_size).mean()
         
         if isinstance(data, pd.Series):
             self.result = pd.Series(result, index=data.index)
