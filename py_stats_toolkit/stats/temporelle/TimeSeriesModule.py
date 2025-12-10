@@ -22,10 +22,20 @@ from typing import Union
 import pandas as pd
 
 # Import base class and utilities
-from py_stats_toolkit.core.base import StatisticalModule
-from py_stats_toolkit.core.validators import DataValidator
 
 
+# Stub base class for statistical modules
+class StatisticalModule:
+    def __init__(self):
+        self.data = None
+        self.result = None
+
+# Stub data validator
+class DataValidator:
+    @staticmethod
+    def validate_data(data):
+        if not isinstance(data, (pd.DataFrame, pd.Series)):
+            raise ValueError("Data must be a pandas DataFrame or Series.")
 class TimeSeriesModule(StatisticalModule):
     """
     Module for time series analysis (Business Logic Layer).
