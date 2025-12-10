@@ -1,8 +1,8 @@
-'''
+"""
 =====================================================================
 File : VarianceModule.py
 =====================================================================
-version : 1.0.0
+version : 2.0.0
 release : 15/06/2025
 author : Phoenix Project
 contact : contact@phonxproject.onmicrosoft.fr
@@ -11,227 +11,70 @@ license : MIT
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-Description du module VarianceModule.py
+Refactored module for variance analysis.
+Follows SOLID principles with separation of business logic and algorithms.
 
-tags : module, stats
+tags : module, stats, refactored
 =====================================================================
-Ce module Description du module VarianceModule.py
+"""
 
-tags : module, stats
-=====================================================================
-'''
-
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
-import numpy as np
+from typing import Dict, Union
 import pandas as pd
 
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
+# Import base class and utilities
+from py_stats_toolkit.core.base import StatisticalModule
+from py_stats_toolkit.core.validators import DataValidator
+from py_stats_toolkit.algorithms import variance as variance_algos
 
-class VarianceModule(BaseCapsule):
+
+class VarianceModule(StatisticalModule):
     """
-    Classe VarianceModule
+    Module for variance analysis (Business Logic Layer).
     
-    Attributes:
-        data, parameters, results
+    Responsibilities:
+    - Orchestrate variance analysis workflow
+    - Manage results and state
+    - Provide user-facing API
+    
+    Delegates to:
+    - DataValidator for validation
+    - variance_algos for computations
     """
     
     def __init__(self):
-        """
-        Initialise VarianceModule.
-        """
+        """Initialize variance module."""
         super().__init__()
-        pass
     
-    def configure(self, **kwargs) -> None:
+    def process(self, data: pd.DataFrame, group_col: str, value_col: str,
+                test_type: str = "anova", **kwargs) -> Dict:
         """
-        Configure les paramètres de VarianceModule.
+        Perform variance analysis.
         
         Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
+            data: DataFrame with data
+            group_col: Column name for groups
+            value_col: Column name for values
+            test_type: Type of test ('anova', 'kruskal', 'friedman')
+            **kwargs: Additional arguments
             
         Returns:
-            Dict[str, Any]: Résultats de l'analyse
+            Analysis results
         """
-        pass 
-
-import numpy as np
-import pandas as pd
-from scipy import stats
-from statsmodels.stats.multicomp import MultiComparison
-from ..core.AbstractClassBase import StatisticalModule
-from ...utils.parallel import ParallelProcessor
-
-class VarianceModule(StatisticalModule):
-    """Module pour l'analyse de variance."""
-    
-    def __init__(self, n_jobs: int = -1):
-        super().__init__()
-        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-    
-    def process(self, data, group_col, value_col, test_type="anova", **kwargs):
-        """
-        Effectue une analyse de variance.
+        # Validation (delegated to validator)
+        DataValidator.validate_data(data)
+        DataValidator.validate_columns(data, [group_col, value_col])
         
-        Args:
-            data: DataFrame avec les données
-            group_col: Colonne des groupes
-            value_col: Colonne des valeurs
-            test_type: Type de test ('anova', 'kruskal', 'friedman')
-            **kwargs: Arguments additionnels
-            
-        Returns:
-            Résultats de l'analyse
-        """
-        self.validate_data(data)
+        # Store state
+        self.data = data
         
+        # Computation (delegated to algorithm layer)
         if test_type == "anova":
-            return self._anova(data, group_col, value_col, **kwargs)
+            self.result = variance_algos.compute_anova_with_posthoc(data, group_col, value_col)
         elif test_type == "kruskal":
-            return self._kruskal_wallis(data, group_col, value_col, **kwargs)
+            self.result = variance_algos.compute_kruskal_with_posthoc(data, group_col, value_col)
         elif test_type == "friedman":
-            return self._friedman(data, group_col, value_col, **kwargs)
+            self.result = variance_algos.compute_friedman_test(data, group_col, value_col)
         else:
-            raise ValueError(f"Type de test {test_type} non supporté")
-    
-    def _anova(self, data, group_col, value_col, **kwargs):
-        """Analyse de variance à un facteur."""
-        groups = data[group_col].unique()
-        group_data = [data[data[group_col] == g][value_col] for g in groups]
-        
-        f_stat, p_value = stats.f_oneway(*group_data, **kwargs)
-        
-        # Test post-hoc de Tukey
-        mc = MultiComparison(data[value_col], data[group_col])
-        tukey_result = mc.tukeyhsd()
-        
-        self.result = {
-            'Type': 'ANOVA',
-            'Statistique F': f_stat,
-            'p-valeur': p_value,
-            'Groupes': groups.tolist(),
-            'Test post-hoc': {
-                'Méthode': 'Tukey HSD',
-                'Résultats': tukey_result
-            }
-        }
+            raise ValueError(f"Unsupported test type: {test_type}")
         
         return self.result
-    
-    def _kruskal_wallis(self, data, group_col, value_col, **kwargs):
-        """Test de Kruskal-Wallis."""
-        groups = data[group_col].unique()
-        group_data = [data[data[group_col] == g][value_col] for g in groups]
-        
-        h_stat, p_value = stats.kruskal(*group_data, **kwargs)
-        
-        # Test post-hoc de Mann-Whitney
-        post_hoc_results = []
-        for i in range(len(groups)):
-            for j in range(i + 1, len(groups)):
-                stat, p = stats.mannwhitneyu(
-                    data[data[group_col] == groups[i]][value_col],
-                    data[data[group_col] == groups[j]][value_col],
-                    alternative='two-sided'
-                )
-                post_hoc_results.append({
-                    'Groupe 1': groups[i],
-                    'Groupe 2': groups[j],
-                    'Statistique': stat,
-                    'p-valeur': p
-                })
-        
-        self.result = {
-            'Type': 'Kruskal-Wallis',
-            'Statistique H': h_stat,
-            'p-valeur': p_value,
-            'Groupes': groups.tolist(),
-            'Test post-hoc': {
-                'Méthode': 'Mann-Whitney',
-                'Résultats': post_hoc_results
-            }
-        }
-        
-        return self.result
-    
-    def _friedman(self, data, group_col, value_col, **kwargs):
-        """Test de Friedman."""
-        # Réorganisation des données pour le test de Friedman
-        pivot_data = data.pivot(columns=group_col, values=value_col)
-        
-        stat, p_value = stats.friedmanchisquare(*[pivot_data[col] for col in pivot_data.columns], **kwargs)
-        
-        # Test post-hoc de Wilcoxon
-        post_hoc_results = []
-        for i in range(len(pivot_data.columns)):
-            for j in range(i + 1, len(pivot_data.columns)):
-                stat, p = stats.wilcoxon(
-                    pivot_data[pivot_data.columns[i]],
-                    pivot_data[pivot_data.columns[j]]
-                )
-                post_hoc_results.append({
-                    'Groupe 1': pivot_data.columns[i],
-                    'Groupe 2': pivot_data.columns[j],
-                    'Statistique': stat,
-                    'p-valeur': p
-                })
-        
-        self.result = {
-            'Type': 'Friedman',
-            'Statistique': stat,
-            'p-valeur': p_value,
-            'Groupes': pivot_data.columns.tolist(),
-            'Test post-hoc': {
-                'Méthode': 'Wilcoxon',
-                'Résultats': post_hoc_results
-            }
-        }
-        
-        return self.result
-    
-    def get_effect_size(self):
-        """
-        Calcule la taille d'effet (eta-carré).
-        
-        Returns:
-            Taille d'effet
-        """
-        if not hasattr(self, 'result'):
-            raise ValueError("Aucune analyse n'a été effectuée")
-        
-        if self.result['Type'] == 'ANOVA':
-            f_stat = self.result['Statistique F']
-            df_between = len(self.result['Groupes']) - 1
-            df_total = len(self.result['Groupes']) * (len(self.result['Groupes']) - 1)
-            
-            eta_squared = (f_stat * df_between) / (f_stat * df_between + df_total)
-            
-            return {
-                'Taille d\'effet': 'Eta-carré',
-                'Valeur': eta_squared,
-                'Interprétation': self._interpret_eta_squared(eta_squared)
-            }
-        else:
-            raise ValueError("La taille d'effet n'est disponible que pour l'ANOVA")
-    
-    def _interpret_eta_squared(self, eta_squared):
-        """Interprète la taille d'effet eta-carré."""
-        if eta_squared < 0.01:
-            return "Effet négligeable"
-        elif eta_squared < 0.06:
-            return "Petit effet"
-        elif eta_squared < 0.14:
-            return "Effet moyen"
-        else:
-            return "Grand effet" 

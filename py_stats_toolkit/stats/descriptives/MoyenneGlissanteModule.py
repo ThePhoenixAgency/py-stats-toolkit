@@ -1,8 +1,8 @@
-'''
+"""
 =====================================================================
 File : MoyenneGlissanteModule.py
 =====================================================================
-version : 1.0.0
+version : 2.0.0
 release : 15/06/2025
 author : Phoenix Project
 contact : contact@phonxproject.onmicrosoft.fr
@@ -11,117 +11,83 @@ license : MIT
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-Description du module MoyenneGlissanteModule.py
+Refactored module for moving average (descriptive statistics).
+Follows SOLID principles with separation of business logic and algorithms.
 
-tags : module, stats
+tags : module, stats, refactored
 =====================================================================
-Ce module Description du module MoyenneGlissanteModule.py
+"""
 
-tags : module, stats
-=====================================================================
-'''
-
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Union
 import numpy as np
 import pandas as pd
 
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
+# Import base class and utilities
+from py_stats_toolkit.core.base import StatisticalModule
+from py_stats_toolkit.core.validators import DataValidator
+from py_stats_toolkit.algorithms import descriptive_stats as desc_algos
+from py_stats_toolkit.utils.data_processor import DataProcessor
 
-class MoyenneGlissanteModule(BaseCapsule):
+
+class MoyenneGlissanteModule(StatisticalModule):
     """
-    Classe MoyenneGlissanteModule
+    Module for moving average calculation (Business Logic Layer).
     
-    Attributes:
-        data, parameters, results
+    Responsibilities:
+    - Orchestrate moving average workflow
+    - Manage results and state
+    - Provide user-facing API
+    
+    Delegates to:
+    - DataValidator for validation
+    - desc_algos for computations
+    - DataProcessor for data transformations
     """
     
     def __init__(self):
-        """
-        Initialise MoyenneGlissanteModule.
-        """
-        super().__init__()
-        pass
-    
-    def configure(self, **kwargs) -> None:
-        """
-        Configure les paramètres de MoyenneGlissanteModule.
-        
-        Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
-            
-        Returns:
-            Dict[str, Any]: Résultats de l'analyse
-        """
-        pass 
-
-import numpy as np
-import pandas as pd
-from ..core.AbstractClassBase import StatisticalModule
-from ...utils.parallel import ParallelProcessor, BatchProcessor
-
-class MoyenneGlissanteModule(StatisticalModule):
-    """Module pour le calcul de la moyenne glissante."""
-    
-    def __init__(self, n_jobs: int = -1, batch_size: int = 1000):
+        """Initialize moving average module."""
         super().__init__()
         self.window_size = None
-        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-        self.batch_processor = BatchProcessor(batch_size=batch_size)
     
-    def _process_chunk(self, chunk):
-        """Traite un chunk de données."""
-        return pd.Series(chunk).rolling(window=self.window_size).mean()
-    
-    def process(self, data, window_size=5, **kwargs):
+    def process(self, data: Union[pd.Series, np.ndarray, list], 
+                window_size: int = 5, **kwargs) -> pd.Series:
         """
-        Calcule la moyenne glissante sur les données en parallèle.
+        Compute moving average.
         
         Args:
-            data: Données d'entrée (numpy array ou pandas Series)
-            window_size: Taille de la fenêtre glissante
-            **kwargs: Arguments additionnels
+            data: Input data (Series, array, or list)
+            window_size: Size of the moving window
+            **kwargs: Additional arguments
             
         Returns:
-            Moyenne glissante calculée
+            Moving average as Series
         """
-        self.validate_data(data)
+        # Validation (delegated to validator)
+        DataValidator.validate_data(data)
+        
+        # Store state
+        self.data = data
         self.window_size = window_size
         
-        if isinstance(data, pd.Series):
-            data_array = data.values
-        else:
-            data_array = data
+        # Convert to numpy for computation
+        data_array = DataProcessor.to_numpy(data)
         
-        # Utilisation du traitement par lots pour les grandes séries
-        if len(data_array) > self.batch_processor.batch_size:
-            result = self.batch_processor.process_batches(self._process_chunk, data_array)
-        else:
-            # Traitement parallèle pour les séries plus petites
-            result = self.parallel_processor.parallel_apply(
-                self._process_chunk,
-                data_array.reshape(-1, 1),
-                axis=0
-            ).flatten()
+        # Computation (delegated to algorithm layer)
+        result_array = desc_algos.compute_moving_average(data_array, window_size)
         
+        # Convert back to Series
         if isinstance(data, pd.Series):
-            self.result = pd.Series(result, index=data.index)
+            self.result = pd.Series(result_array, index=data.index, name=data.name)
         else:
-            self.result = pd.Series(result)
+            self.result = pd.Series(result_array)
         
         return self.result
     
-    def get_window_size(self):
-        """Retourne la taille de la fenêtre utilisée."""
+    def get_window_size(self) -> int:
+        """
+        Get the window size used.
+        
+        Returns:
+            Window size
+        """
         return self.window_size 
