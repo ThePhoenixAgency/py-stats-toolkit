@@ -5,7 +5,7 @@ File : BaseCapsule.py
 version : 1.0.0
 release : 15/06/2025
 author : Phoenix Project
-contact : contact@phonxproject.onmicrosoft.fr
+contact : contact@phoenixproject.onmicrosoft.fr
 license : MIT
 =====================================================================
 Copyright (c) 2025, Phoenix Project
