@@ -41,7 +41,7 @@ class CorrelationModule(StatisticalModule):
     
     def process(self, data, method="pearson", **kwargs):
         """
-        Calcule la corrélation entre les variables en parallèle.
+        Calcule la corrélation entre les variables.
         
         Args:
             data: Données d'entrée (pandas DataFrame)
@@ -57,29 +57,10 @@ class CorrelationModule(StatisticalModule):
         if not isinstance(data, pd.DataFrame):
             raise TypeError("Les données doivent être un pandas DataFrame")
         
-        # Pour les petits DataFrames, calcul direct
-        if len(data.columns) < 100:
-            self.result = data.corr(method=method)
-            return self.result
-        
-        # Pour les grands DataFrames, traitement parallèle
-        n_cols = len(data.columns)
-        chunk_size = get_optimal_chunk_size(n_cols, self.parallel_processor.n_jobs)
-        
-        # Division des colonnes en chunks
-        chunks = []
-        for i in range(0, n_cols, chunk_size):
-            chunk_cols = data.columns[i:min(i + chunk_size, n_cols)]
-            chunks.append(data[chunk_cols])
-        
-        # Calcul parallèle des corrélations
-        chunk_results = self.parallel_processor.parallel_map(
-            self._compute_correlation_chunk,
-            chunks
-        )
-        
-        # Assemblage des résultats
-        self.result = pd.concat(chunk_results, axis=1)
+        # Compute correlation matrix directly
+        # pandas/numpy already use optimized algorithms
+        # Chunking correlation computation produces incorrect results
+        self.result = data.corr(method=method)
         return self.result
     
     def get_correlation_matrix(self):
@@ -109,12 +90,12 @@ class CorrelationModule(StatisticalModule):
         
         # Filtrage des paires selon le seuil
         mask = np.abs(corr_values) >= threshold
-        pairs = []
+        mask_indices = np.where(mask)[0]
         
-        for idx in np.where(mask)[0]:
-            var1 = self.result.columns[i[idx]]
-            var2 = self.result.columns[j[idx]]
-            corr = corr_values[idx]
-            pairs.append((var1, var2, corr))
+        # Vectorized construction of pairs using list comprehension
+        pairs = [
+            (self.result.columns[i[idx]], self.result.columns[j[idx]], corr_values[idx])
+            for idx in mask_indices
+        ]
         
         return sorted(pairs, key=lambda x: abs(x[2]), reverse=True) 

@@ -67,7 +67,8 @@ class ProbabilistesModule(StatisticalModule):
         self.distribution = distribution
         
         # Pour les petits ensembles de données, ajustement direct
-        if len(data) < self.batch_size:
+        # Use 2x batch_size threshold to avoid parallel overhead for medium datasets
+        if len(data) < self.batch_size * 2:
             if distribution == "normal":
                 self.params = stats.norm.fit(data)
                 self.result = stats.norm(*self.params)
@@ -114,7 +115,8 @@ class ProbabilistesModule(StatisticalModule):
             raise ValueError("Exécutez d'abord process()")
         
         # Pour les petits ensembles, calcul direct
-        if len(x) < self.batch_size:
+        # Use 2x batch_size threshold to avoid parallel overhead
+        if len(x) < self.batch_size * 2:
             return self.result.pdf(x)
         
         # Pour les grands ensembles, traitement parallèle
@@ -136,7 +138,8 @@ class ProbabilistesModule(StatisticalModule):
             raise ValueError("Exécutez d'abord process()")
         
         # Pour les petits ensembles, calcul direct
-        if len(x) < self.batch_size:
+        # Use 2x batch_size threshold to avoid parallel overhead
+        if len(x) < self.batch_size * 2:
             return self.result.cdf(x)
         
         # Pour les grands ensembles, traitement parallèle

@@ -63,7 +63,8 @@ class VarianceModule(StatisticalModule):
     def _anova(self, data, group_col, value_col, **kwargs):
         """Analyse de variance à un facteur."""
         groups = data[group_col].unique()
-        group_data = [data[data[group_col] == g][value_col] for g in groups]
+        # Pre-filter groups once to avoid repeated DataFrame filtering
+        group_data = [data[data[group_col] == g][value_col].to_numpy() for g in groups]
         
         f_stat, p_value = stats.f_oneway(*group_data, **kwargs)
         
@@ -87,17 +88,19 @@ class VarianceModule(StatisticalModule):
     def _kruskal_wallis(self, data, group_col, value_col, **kwargs):
         """Test de Kruskal-Wallis."""
         groups = data[group_col].unique()
-        group_data = [data[data[group_col] == g][value_col] for g in groups]
+        # Pre-filter groups once to avoid repeated DataFrame filtering
+        group_data_dict = {g: data[data[group_col] == g][value_col].values for g in groups}
+        group_data = [group_data_dict[g] for g in groups]
         
         h_stat, p_value = stats.kruskal(*group_data, **kwargs)
         
-        # Test post-hoc de Mann-Whitney
+        # Test post-hoc de Mann-Whitney - use pre-filtered data
         post_hoc_results = []
         for i in range(len(groups)):
             for j in range(i + 1, len(groups)):
                 stat, p = stats.mannwhitneyu(
-                    data[data[group_col] == groups[i]][value_col],
-                    data[data[group_col] == groups[j]][value_col],
+                    group_data_dict[groups[i]],
+                    group_data_dict[groups[j]],
                     alternative='two-sided'
                 )
                 post_hoc_results.append({
@@ -125,19 +128,23 @@ class VarianceModule(StatisticalModule):
         # Réorganisation des données pour le test de Friedman
         pivot_data = data.pivot(columns=group_col, values=value_col)
         
-        stat, p_value = stats.friedmanchisquare(*[pivot_data[col] for col in pivot_data.columns], **kwargs)
+        # Pre-extract column data to avoid repeated indexing
+        columns = pivot_data.columns
+        column_data = {col: pivot_data[col].values for col in columns}
         
-        # Test post-hoc de Wilcoxon
+        stat, p_value = stats.friedmanchisquare(*[column_data[col] for col in columns], **kwargs)
+        
+        # Test post-hoc de Wilcoxon - use pre-extracted data
         post_hoc_results = []
-        for i in range(len(pivot_data.columns)):
-            for j in range(i + 1, len(pivot_data.columns)):
+        for i in range(len(columns)):
+            for j in range(i + 1, len(columns)):
                 stat, p = stats.wilcoxon(
-                    pivot_data[pivot_data.columns[i]],
-                    pivot_data[pivot_data.columns[j]]
+                    column_data[columns[i]],
+                    column_data[columns[j]]
                 )
                 post_hoc_results.append({
-                    'Groupe 1': pivot_data.columns[i],
-                    'Groupe 2': pivot_data.columns[j],
+                    'Groupe 1': columns[i],
+                    'Groupe 2': columns[j],
                     'Statistique': stat,
                     'p-valeur': p
                 })

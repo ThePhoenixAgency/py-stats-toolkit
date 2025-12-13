@@ -142,14 +142,14 @@ class FactorielleModule(StatisticalModule):
         
         if self.result['Type'] == 'ACP':
             return {
-                'Variance expliquée par composante': dict(zip(
-                    [f'PC{i+1}' for i in range(len(self.result['Variance expliquée']))],
-                    self.result['Variance expliquée']
-                )),
-                'Variance cumulée': dict(zip(
-                    [f'PC{i+1}' for i in range(len(self.result['Variance cumulée']))],
-                    self.result['Variance cumulée']
-                )),
+                'Variance expliquée par composante': {
+                    f'PC{i+1}': val 
+                    for i, val in enumerate(self.result['Variance expliquée'])
+                },
+                'Variance cumulée': {
+                    f'PC{i+1}': val 
+                    for i, val in enumerate(self.result['Variance cumulée'])
+                },
                 'Nombre de composantes pour 80% de variance': np.argmax(
                     self.result['Variance cumulée'] >= 0.8
                 ) + 1

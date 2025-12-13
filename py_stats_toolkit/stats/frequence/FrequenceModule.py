@@ -83,4 +83,9 @@ class FrequenceModule(StatisticalModule):
         """Retourne les fréquences relatives."""
         if self.result is None:
             raise ValueError("Exécutez d'abord process()")
-        return self.process(self.data, normalize=True)['Fréquence Relative'] 
+        # Check if already normalized
+        if 'Fréquence Relative' in self.result.columns:
+            return self.result['Fréquence Relative']
+        # Normalize existing frequency counts instead of reprocessing
+        freq_col = 'Fréquence' if 'Fréquence' in self.result.columns else self.result.columns[0]
+        return self.result[freq_col] / self.result[freq_col].sum() 
