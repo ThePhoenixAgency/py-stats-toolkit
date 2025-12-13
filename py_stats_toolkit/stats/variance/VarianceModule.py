@@ -64,10 +64,11 @@ class VarianceModule(StatisticalModule):
 
     def _anova(self, data, group_col, value_col, **kwargs):
         """Analyse de variance à un facteur."""
-        # Use groupby for efficient group extraction
+        # Get unique groups to maintain consistent ordering
         groups = data[group_col].unique()
+        # Use groupby with get_group for efficient extraction while preserving order
         group_data = [
-            group[value_col].to_numpy() for _, group in data.groupby(group_col)
+            data.groupby(group_col).get_group(g)[value_col].to_numpy() for g in groups
         ]
 
         f_stat, p_value = stats.f_oneway(*group_data, **kwargs)
@@ -129,6 +130,9 @@ class VarianceModule(StatisticalModule):
         """Test de Friedman."""
         # Réorganisation des données pour le test de Friedman
         pivot_data = data.pivot(columns=group_col, values=value_col)
+
+        # Friedman test requires complete cases - drop rows with NaN
+        pivot_data = pivot_data.dropna()
 
         # Get all column data as numpy array for efficient access
         columns = pivot_data.columns

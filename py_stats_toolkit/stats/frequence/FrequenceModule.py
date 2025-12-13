@@ -87,7 +87,6 @@ class FrequenceModule(StatisticalModule):
             return self.result["Fréquence Relative"]
         # Normalize existing frequency counts instead of reprocessing
         # This should always exist if process() was called successfully
-        assert (
-            "Fréquence" in self.result.columns
-        ), "Internal error: 'Fréquence' column missing"
+        if "Fréquence" not in self.result.columns:
+            raise RuntimeError("Internal error: 'Fréquence' column missing")
         return self.result["Fréquence"] / self.result["Fréquence"].sum()

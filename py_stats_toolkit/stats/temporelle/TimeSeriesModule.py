@@ -76,10 +76,9 @@ class TimeSeriesAnalyzer(StatisticalModule):
 
         # Détection des cycles
         if len(series) > 2:
+            # rfft is more efficient for real-valued data
             # Compute FFT only on the positive frequencies to save computation
-            fft = np.fft.rfft(
-                series.to_numpy()
-            )  # rfft is more efficient for real-valued data
+            fft = np.fft.rfft(series.to_numpy())
             freqs = np.fft.rfftfreq(len(series))
             # Skip DC component (index 0)
             main_freq_idx = np.argmax(np.abs(fft[1:])) + 1
@@ -137,10 +136,9 @@ class TimeSeriesAnalyzer(StatisticalModule):
         if period is not None:
             return period
 
-        # Détection automatique de la période - use rfft for efficiency
-        fft = np.fft.rfft(
-            series.to_numpy()
-        )  # rfft is more efficient for real-valued data
+        # rfft is more efficient for real-valued data
+        # Détection automatique de la période
+        fft = np.fft.rfft(series.to_numpy())
         freqs = np.fft.rfftfreq(len(series))
         main_freq_idx = np.argmax(np.abs(fft[1:])) + 1
         return 1 / freqs[main_freq_idx] if freqs[main_freq_idx] != 0 else np.inf
