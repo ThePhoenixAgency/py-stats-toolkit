@@ -64,9 +64,11 @@ class VarianceModule(StatisticalModule):
 
     def _anova(self, data, group_col, value_col, **kwargs):
         """Analyse de variance à un facteur."""
+        # Use groupby for efficient group extraction
         groups = data[group_col].unique()
-        # Pre-filter groups once to avoid repeated DataFrame filtering
-        group_data = [data[data[group_col] == g][value_col].to_numpy() for g in groups]
+        group_data = [
+            group[value_col].to_numpy() for _, group in data.groupby(group_col)
+        ]
 
         f_stat, p_value = stats.f_oneway(*group_data, **kwargs)
 
@@ -86,10 +88,10 @@ class VarianceModule(StatisticalModule):
 
     def _kruskal_wallis(self, data, group_col, value_col, **kwargs):
         """Test de Kruskal-Wallis."""
+        # Use groupby for efficient group extraction
         groups = data[group_col].unique()
-        # Pre-filter groups once to avoid repeated DataFrame filtering
         group_data_dict = {
-            g: data[data[group_col] == g][value_col].to_numpy() for g in groups
+            name: group[value_col].to_numpy() for name, group in data.groupby(group_col)
         }
         group_data = [group_data_dict[g] for g in groups]
 
@@ -128,21 +130,19 @@ class VarianceModule(StatisticalModule):
         # Réorganisation des données pour le test de Friedman
         pivot_data = data.pivot(columns=group_col, values=value_col)
 
-        # Pre-extract column data to avoid repeated indexing
+        # Get all column data as numpy array for efficient access
         columns = pivot_data.columns
-        column_data = {col: pivot_data[col].to_numpy() for col in columns}
+        pivot_array = pivot_data.to_numpy()
 
         stat, p_value = stats.friedmanchisquare(
-            *[column_data[col] for col in columns], **kwargs
+            *[pivot_array[:, i] for i in range(len(columns))], **kwargs
         )
 
-        # Test post-hoc de Wilcoxon - use pre-extracted data
+        # Test post-hoc de Wilcoxon - use array indexing
         post_hoc_results = []
         for i in range(len(columns)):
             for j in range(i + 1, len(columns)):
-                stat, p = stats.wilcoxon(
-                    column_data[columns[i]], column_data[columns[j]]
-                )
+                stat, p = stats.wilcoxon(pivot_array[:, i], pivot_array[:, j])
                 post_hoc_results.append(
                     {
                         "Groupe 1": columns[i],

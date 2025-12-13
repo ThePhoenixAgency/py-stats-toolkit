@@ -57,7 +57,8 @@ class CorrelationModule(StatisticalModule):
 
         # Compute correlation matrix directly
         # pandas/numpy already use optimized algorithms
-        # Chunking correlation computation produces incorrect results
+        # Note: Chunking correlation computation produces incorrect results because
+        # correlation requires all data points to compute proper covariance and variance statistics
         self.result = data.corr(method=method)
         return self.result
 
