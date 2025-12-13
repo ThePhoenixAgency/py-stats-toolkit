@@ -25,7 +25,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from ...utils.parallel import ParallelProcessor, get_optimal_chunk_size
+from ...utils.parallel import ParallelProcessor
 from ..core.AbstractClassBase import StatisticalModule
 
 
@@ -36,10 +36,6 @@ class CorrelationModule(StatisticalModule):
         super().__init__()
         self.method = None
         self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-
-    def _compute_correlation_chunk(self, chunk_data):
-        """Calcule la corrélation pour un chunk de données."""
-        return chunk_data.corr(method=self.method)
 
     def process(self, data, method="pearson", **kwargs):
         """

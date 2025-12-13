@@ -89,7 +89,7 @@ class VarianceModule(StatisticalModule):
         groups = data[group_col].unique()
         # Pre-filter groups once to avoid repeated DataFrame filtering
         group_data_dict = {
-            g: data[data[group_col] == g][value_col].values for g in groups
+            g: data[data[group_col] == g][value_col].to_numpy() for g in groups
         }
         group_data = [group_data_dict[g] for g in groups]
 
@@ -130,7 +130,7 @@ class VarianceModule(StatisticalModule):
 
         # Pre-extract column data to avoid repeated indexing
         columns = pivot_data.columns
-        column_data = {col: pivot_data[col].values for col in columns}
+        column_data = {col: pivot_data[col].to_numpy() for col in columns}
 
         stat, p_value = stats.friedmanchisquare(
             *[column_data[col] for col in columns], **kwargs

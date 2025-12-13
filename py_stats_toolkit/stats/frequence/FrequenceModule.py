@@ -86,9 +86,8 @@ class FrequenceModule(StatisticalModule):
         if "Fréquence Relative" in self.result.columns:
             return self.result["Fréquence Relative"]
         # Normalize existing frequency counts instead of reprocessing
-        freq_col = (
-            "Fréquence"
-            if "Fréquence" in self.result.columns
-            else self.result.columns[0]
-        )
-        return self.result[freq_col] / self.result[freq_col].sum()
+        if "Fréquence" not in self.result.columns:
+            raise ValueError(
+                "Le DataFrame de résultats ne contient pas de colonne 'Fréquence'"
+            )
+        return self.result["Fréquence"] / self.result["Fréquence"].sum()
