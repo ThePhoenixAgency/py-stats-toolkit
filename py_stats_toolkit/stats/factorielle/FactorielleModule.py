@@ -202,7 +202,7 @@ class FactorielleModule(StatisticalModule):
         else:
             return {
                 'Variance du bruit': self.result['Noise variance'].tolist(),
-                'Qualité de l'ajustement': 1 - np.mean(self.result['Noise variance'])
+                "Qualité de l'ajustement": 1 - np.mean(self.result['Noise variance'])
             }
     
     def transform(self, new_data):
