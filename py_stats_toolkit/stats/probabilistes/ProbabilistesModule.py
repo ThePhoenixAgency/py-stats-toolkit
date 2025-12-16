@@ -21,55 +21,10 @@ tags : module, stats
 =====================================================================
 '''
 
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
-import numpy as np
-import pandas as pd
-
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
-
-class ProbabilistesModule(BaseCapsule):
-    """
-    Classe ProbabilistesModule
-    
-    Attributes:
-        data, parameters, results
-    """
-    
-    def __init__(self):
-        """
-        Initialise ProbabilistesModule.
-        """
-        super().__init__()
-        pass
-    
-    def configure(self, **kwargs) -> None:
-        """
-        Configure les paramètres de ProbabilistesModule.
-        
-        Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
-            
-        Returns:
-            Dict[str, Any]: Résultats de l'analyse
-        """
-        pass 
-
 import numpy as np
 from scipy import stats
 from ..core.AbstractClassBase import StatisticalModule
-from ...utils.parallel import ParallelProcessor, BatchProcessor
+from ...utils.parallel import ParallelProcessor
 
 class ProbabilistesModule(StatisticalModule):
     """Module pour l'analyse probabiliste."""
@@ -78,8 +33,8 @@ class ProbabilistesModule(StatisticalModule):
         super().__init__()
         self.distribution = None
         self.params = None
+        self.batch_size = batch_size
         self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-        self.batch_processor = BatchProcessor(batch_size=batch_size)
     
     def _fit_distribution_chunk(self, chunk):
         """Ajuste une distribution sur un chunk de données."""
@@ -112,7 +67,7 @@ class ProbabilistesModule(StatisticalModule):
         self.distribution = distribution
         
         # Pour les petits ensembles de données, ajustement direct
-        if len(data) < self.batch_processor.batch_size:
+        if len(data) < self.batch_size:
             if distribution == "normal":
                 self.params = stats.norm.fit(data)
                 self.result = stats.norm(*self.params)
@@ -159,7 +114,7 @@ class ProbabilistesModule(StatisticalModule):
             raise ValueError("Exécutez d'abord process()")
         
         # Pour les petits ensembles, calcul direct
-        if len(x) < self.batch_processor.batch_size:
+        if len(x) < self.batch_size:
             return self.result.pdf(x)
         
         # Pour les grands ensembles, traitement parallèle
@@ -181,7 +136,7 @@ class ProbabilistesModule(StatisticalModule):
             raise ValueError("Exécutez d'abord process()")
         
         # Pour les petits ensembles, calcul direct
-        if len(x) < self.batch_processor.batch_size:
+        if len(x) < self.batch_size:
             return self.result.cdf(x)
         
         # Pour les grands ensembles, traitement parallèle

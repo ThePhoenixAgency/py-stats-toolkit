@@ -21,55 +21,10 @@ tags : module, stats
 =====================================================================
 '''
 
-# Imports spécifiques au module
-from typing import Any, Dict, List, Optional, Tuple, Union
-import numpy as np
-import pandas as pd
-
-# Imports de la base
-from capsules.BaseCapsule import BaseCapsule
-
-class MoyenneGlissanteModule(BaseCapsule):
-    """
-    Classe MoyenneGlissanteModule
-    
-    Attributes:
-        data, parameters, results
-    """
-    
-    def __init__(self):
-        """
-        Initialise MoyenneGlissanteModule.
-        """
-        super().__init__()
-        pass
-    
-    def configure(self, **kwargs) -> None:
-        """
-        Configure les paramètres de MoyenneGlissanteModule.
-        
-        Args:
-            **kwargs: Paramètres de configuration
-        """
-        pass
-    
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
-        """
-        Exécute le flux de travail d'analyse.
-        
-        Args:
-            data (Union[pd.DataFrame, pd.Series]): Données à analyser
-            **kwargs: Arguments additionnels
-            
-        Returns:
-            Dict[str, Any]: Résultats de l'analyse
-        """
-        pass 
-
 import numpy as np
 import pandas as pd
 from ..core.AbstractClassBase import StatisticalModule
-from ...utils.parallel import ParallelProcessor, BatchProcessor
+from ...utils.parallel import ParallelProcessor
 
 class MoyenneGlissanteModule(StatisticalModule):
     """Module pour le calcul de la moyenne glissante."""
@@ -77,8 +32,8 @@ class MoyenneGlissanteModule(StatisticalModule):
     def __init__(self, n_jobs: int = -1, batch_size: int = 1000):
         super().__init__()
         self.window_size = None
+        self.batch_size = batch_size
         self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-        self.batch_processor = BatchProcessor(batch_size=batch_size)
     
     def _process_chunk(self, chunk):
         """Traite un chunk de données."""
@@ -99,26 +54,14 @@ class MoyenneGlissanteModule(StatisticalModule):
         self.validate_data(data)
         self.window_size = window_size
         
+        # Convert to Series if not already
         if isinstance(data, pd.Series):
-            data_array = data.values
+            series_data = data
         else:
-            data_array = data
+            series_data = pd.Series(data)
         
-        # Utilisation du traitement par lots pour les grandes séries
-        if len(data_array) > self.batch_processor.batch_size:
-            result = self.batch_processor.process_batches(self._process_chunk, data_array)
-        else:
-            # Traitement parallèle pour les séries plus petites
-            result = self.parallel_processor.parallel_apply(
-                self._process_chunk,
-                data_array.reshape(-1, 1),
-                axis=0
-            ).flatten()
-        
-        if isinstance(data, pd.Series):
-            self.result = pd.Series(result, index=data.index)
-        else:
-            self.result = pd.Series(result)
+        # Calculate rolling mean
+        self.result = series_data.rolling(window=window_size).mean()
         
         return self.result
     
