@@ -8,7 +8,7 @@ import pandas as pd
 
 class DataProcessor:
     """Utility class for data processing and transformation."""
-    
+
     @staticmethod
     def to_numpy(data: Union[pd.DataFrame, pd.Series, np.ndarray, list]) -> np.ndarray:
         """Convert data to numpy array."""
@@ -22,9 +22,9 @@ class DataProcessor:
             return np.array(data)
         else:
             raise TypeError(f"Cannot convert {type(data).__name__} to numpy array")
-    
+
     @staticmethod
-    def to_series(data: Union[pd.DataFrame, pd.Series, np.ndarray, list], 
+    def to_series(data: Union[pd.DataFrame, pd.Series, np.ndarray, list],
                   name: str = None, index=None) -> pd.Series:
         """Convert data to pandas Series."""
         if isinstance(data, pd.Series):
@@ -38,7 +38,7 @@ class DataProcessor:
             return pd.Series(data, name=name, index=index)
         else:
             raise TypeError(f"Cannot convert {type(data).__name__} to pandas Series")
-    
+
     @staticmethod
     def to_dataframe(data: Union[pd.DataFrame, pd.Series, np.ndarray, list],
                      columns=None) -> pd.DataFrame:

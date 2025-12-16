@@ -31,13 +31,13 @@ def compute_frequency_distribution(data: np.ndarray, normalize: bool = False) ->
     series = pd.Series(data)
     freq = series.value_counts(normalize=normalize)
     cum_freq = freq.cumsum()
-    
+
     result = pd.DataFrame({
         'Frequency': freq,
         'Cumulative_Frequency': cum_freq
     })
-    
+
     if normalize:
         result.columns = ['Relative_Frequency', 'Relative_Cumulative_Frequency']
-    
+
     return result

@@ -8,48 +8,50 @@ import pandas as pd
 
 class DataValidator:
     """Validator for statistical data."""
-    
+
     @staticmethod
     def validate_data(data: Union[pd.DataFrame, pd.Series, np.ndarray, list]) -> None:
         """Validate input data for statistical analysis."""
         if data is None:
             raise ValueError("Data cannot be None")
-        
+
         if isinstance(data, list):
             if len(data) == 0:
                 raise ValueError("Data cannot be empty")
             return
-        
+
         if isinstance(data, np.ndarray):
             if data.size == 0:
                 raise ValueError("Data cannot be empty")
             return
-        
+
         if isinstance(data, pd.Series):
             if len(data) == 0:
                 raise ValueError("Data cannot be empty")
             return
-        
+
         if isinstance(data, pd.DataFrame):
             if len(data) == 0:
                 raise ValueError("Data cannot be empty")
             if len(data.columns) == 0:
                 raise ValueError("DataFrame must have at least one column")
             return
-        
-        raise TypeError(f"Unsupported data type: {type(data).__name__}. "
-                       f"Supported types: DataFrame, Series, ndarray, list")
-    
+
+        raise TypeError(
+            f"Unsupported data type: {type(data).__name__}. "
+            f"Supported types: DataFrame, Series, ndarray, list"
+        )
+
     @staticmethod
     def validate_columns(data: pd.DataFrame, columns: list) -> None:
         """Validate that specified columns exist in DataFrame."""
         if not isinstance(data, pd.DataFrame):
             raise TypeError("Data must be a pandas DataFrame")
-        
+
         missing_cols = [col for col in columns if col not in data.columns]
         if missing_cols:
             raise ValueError(f"Columns not found in DataFrame: {missing_cols}")
-    
+
     @staticmethod
     def validate_numeric(data: Union[pd.DataFrame, pd.Series, np.ndarray]) -> None:
         """Validate that data is numeric."""

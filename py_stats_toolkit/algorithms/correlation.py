@@ -17,19 +17,19 @@ def compute_pairwise_correlations(data: pd.DataFrame, method: str = "pearson",
     """Compute pairwise correlations above threshold."""
     corr_matrix = compute_correlation_matrix(data, method)
     n = len(corr_matrix.columns)
-    
+
     i, j = np.triu_indices(n, k=1)
     corr_values = corr_matrix.values[i, j]
-    
+
     mask = np.abs(corr_values) >= threshold
     pairs = []
-    
+
     for idx in np.where(mask)[0]:
         var1 = corr_matrix.columns[i[idx]]
         var2 = corr_matrix.columns[j[idx]]
         corr = corr_values[idx]
         pairs.append((var1, var2, corr))
-    
+
     return sorted(pairs, key=lambda x: abs(x[2]), reverse=True)
 
 

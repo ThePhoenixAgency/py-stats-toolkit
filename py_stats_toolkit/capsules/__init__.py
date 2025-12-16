@@ -24,4 +24,4 @@ from py_stats_toolkit.core.base import StatisticalModule
 # Alias for backward compatibility
 BaseCapsule = StatisticalModule
 
-__all__ = ['BaseCapsule', 'StatisticalModule'] 
+__all__ = ['BaseCapsule', 'StatisticalModule']

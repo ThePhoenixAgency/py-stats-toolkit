@@ -31,7 +31,7 @@ def compute_pdf(distribution_type: str, params: Tuple, x: np.ndarray) -> np.ndar
         dist = stats.gamma(*params)
     else:
         raise ValueError(f"Unknown distribution: {distribution_type}")
-    
+
     return dist.pdf(x)
 
 
@@ -45,7 +45,7 @@ def compute_cdf(distribution_type: str, params: Tuple, x: np.ndarray) -> np.ndar
         dist = stats.gamma(*params)
     else:
         raise ValueError(f"Unknown distribution: {distribution_type}")
-    
+
     return dist.cdf(x)
 
 
@@ -62,7 +62,7 @@ def fit_distribution(data: np.ndarray, distribution_type: str) -> Dict[str, Any]
         dist = stats.gamma(*params)
     else:
         raise ValueError(f"Unknown distribution: {distribution_type}")
-    
+
     return {
         'distribution': dist,
         'params': params,

@@ -12,10 +12,10 @@ def compute_linear_regression(X: np.ndarray, y: np.ndarray) -> Dict[str, Any]:
     """Compute linear regression."""
     model = LinearRegression()
     model.fit(X, y)
-    
+
     y_pred = model.predict(X)
     residuals = y - y_pred
-    
+
     return {
         'coefficients': model.coef_,
         'intercept': model.intercept_,
@@ -30,10 +30,10 @@ def compute_ridge_regression(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -
     """Compute Ridge regression."""
     model = Ridge(alpha=alpha)
     model.fit(X, y)
-    
+
     y_pred = model.predict(X)
     residuals = y - y_pred
-    
+
     return {
         'coefficients': model.coef_,
         'intercept': model.intercept_,
@@ -49,10 +49,10 @@ def compute_lasso_regression(X: np.ndarray, y: np.ndarray, alpha: float = 1.0) -
     """Compute Lasso regression."""
     model = Lasso(alpha=alpha)
     model.fit(X, y)
-    
+
     y_pred = model.predict(X)
     residuals = y - y_pred
-    
+
     return {
         'coefficients': model.coef_,
         'intercept': model.intercept_,
@@ -68,13 +68,13 @@ def compute_polynomial_regression(X: np.ndarray, y: np.ndarray, degree: int = 2)
     """Compute polynomial regression."""
     poly = PolynomialFeatures(degree=degree)
     X_poly = poly.fit_transform(X)
-    
+
     model = LinearRegression()
     model.fit(X_poly, y)
-    
+
     y_pred = model.predict(X_poly)
     residuals = y - y_pred
-    
+
     return {
         'coefficients': model.coef_,
         'intercept': model.intercept_,

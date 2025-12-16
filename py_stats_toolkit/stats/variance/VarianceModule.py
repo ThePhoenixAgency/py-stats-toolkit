@@ -30,33 +30,33 @@ from py_stats_toolkit.core.validators import DataValidator
 class VarianceModule(StatisticalModule):
     """
     Module for variance analysis (Business Logic Layer).
-    
+
     Responsibilities:
     - Orchestrate variance analysis workflow
     - Manage results and state
     - Provide user-facing API
-    
+
     Delegates to:
     - DataValidator for validation
     - variance_algos for computations
     """
-    
+
     def __init__(self):
         """Initialize variance module."""
         super().__init__()
-    
+
     def process(self, data: pd.DataFrame, group_col: str, value_col: str,
                 test_type: str = "anova", **kwargs) -> Dict[str, Any]:
         """
         Perform variance analysis.
-        
+
         Args:
             data: DataFrame with data
             group_col: Column name for groups
             value_col: Column name for values
             test_type: Type of test ('anova', 'kruskal', 'friedman')
             **kwargs: Additional arguments
-            
+
         Returns:
             Dictionary with analysis results containing:
             For ANOVA:
@@ -81,10 +81,10 @@ class VarianceModule(StatisticalModule):
         # Validation (delegated to validator)
         DataValidator.validate_data(data)
         DataValidator.validate_columns(data, [group_col, value_col])
-        
+
         # Store state
         self.data = data
-        
+
         # Computation (delegated to algorithm layer)
         if test_type == "anova":
             self.result = variance_algos.compute_anova_with_posthoc(data, group_col, value_col)
@@ -97,5 +97,5 @@ class VarianceModule(StatisticalModule):
                 f"Unsupported test type: {test_type}. "
                 f"Supported types are: 'anova', 'kruskal', 'friedman'."
             )
-        
+
         return self.result

@@ -32,44 +32,44 @@ from py_stats_toolkit.utils.data_processor import DataProcessor
 class FrequenceModule(StatisticalModule):
     """
     Module for frequency analysis (Business Logic Layer).
-    
+
     Responsibilities:
     - Orchestrate frequency analysis workflow
     - Manage results and state
     - Provide user-facing API
-    
+
     Delegates to:
     - DataValidator for validation
     - desc_algos for computations
     """
-    
+
     def __init__(self):
         """Initialize frequency module."""
         super().__init__()
-    
-    def process(self, data: Union[pd.Series, np.ndarray, list], 
+
+    def process(self, data: Union[pd.Series, np.ndarray, list],
                 normalize: bool = False, **kwargs) -> pd.DataFrame:
         """
         Compute frequency distribution.
-        
+
         Args:
             data: Input data
             normalize: If True, return relative frequencies
             **kwargs: Additional arguments
-            
+
         Returns:
             DataFrame with frequencies
         """
         # Validation (delegated to validator)
         DataValidator.validate_data(data)
-        
+
         # Store state
         self.data = data
-        
+
         # Convert to numpy for computation
         data_array = DataProcessor.to_numpy(data)
-        
+
         # Computation (delegated to algorithm layer)
         self.result = desc_algos.compute_frequency_distribution(data_array, normalize)
-        
-        return self.result 
+
+        return self.result
