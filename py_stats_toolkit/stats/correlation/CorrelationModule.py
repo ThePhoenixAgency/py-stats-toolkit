@@ -18,14 +18,13 @@ tags : module, stats, refactored
 =====================================================================
 """
 
-from typing import Union
+from typing import List, Tuple, Union
+
 import pandas as pd
 
-# Import base class and utilities
+from py_stats_toolkit.algorithms import correlation as correlation_algos
 from py_stats_toolkit.core.base import StatisticalModule
 from py_stats_toolkit.core.validators import DataValidator
-from py_stats_toolkit.utils.parallel import ParallelProcessor
-from py_stats_toolkit.algorithms import correlation as correlation_algos
 
 
 class CorrelationModule(StatisticalModule):
@@ -40,19 +39,12 @@ class CorrelationModule(StatisticalModule):
     Delegates to:
     - DataValidator for validation
     - correlation_algos for computations
-    - ParallelProcessor for parallel processing
     """
     
-    def __init__(self, n_jobs: int = -1):
-        """
-        Initialize correlation module.
-        
-        Args:
-            n_jobs: Number of parallel jobs (-1 for all CPUs)
-        """
+    def __init__(self):
+        """Initialize correlation module."""
         super().__init__()
         self.method = None
-        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
     
     def process(self, data: Union[pd.DataFrame, pd.Series], method: str = "pearson", 
                 **kwargs) -> pd.DataFrame:
@@ -71,7 +63,7 @@ class CorrelationModule(StatisticalModule):
         DataValidator.validate_data(data)
         
         if not isinstance(data, pd.DataFrame):
-            raise TypeError("Data must be a pandas DataFrame")
+            raise TypeError(f"Data must be a pandas DataFrame. Got {type(data).__name__} instead.")
         
         DataValidator.validate_numeric(data)
         
@@ -93,7 +85,7 @@ class CorrelationModule(StatisticalModule):
         """
         return self.get_result()
     
-    def get_correlation_pairs(self, threshold: float = 0.5):
+    def get_correlation_pairs(self, threshold: float = 0.5) -> List[Tuple[str, str, float]]:
         """
         Get variable pairs with correlation above threshold.
         
@@ -115,4 +107,4 @@ class CorrelationModule(StatisticalModule):
                 corr_value = corr_matrix.iloc[i, j]
                 if abs(corr_value) >= threshold:
                     pairs.append((cols[i], cols[j], corr_value))
-        return pairs
+        return sorted(pairs, key=lambda x: abs(x[2]), reverse=True)

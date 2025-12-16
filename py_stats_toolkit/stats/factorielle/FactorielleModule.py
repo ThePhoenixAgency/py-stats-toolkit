@@ -18,10 +18,10 @@ tags : module, stats, refactored
 =====================================================================
 """
 
-from typing import Union
+from typing import Any, Dict, Union
+
 import pandas as pd
 
-# Import base class and utilities
 from py_stats_toolkit.core.base import StatisticalModule
 from py_stats_toolkit.core.validators import DataValidator
 
@@ -37,7 +37,7 @@ class FactorielleModule(StatisticalModule):
         """Initialize factorial module."""
         super().__init__()
     
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs):
+    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
         """
         Process factorial data.
         
@@ -46,7 +46,7 @@ class FactorielleModule(StatisticalModule):
             **kwargs: Additional arguments
             
         Returns:
-            Analysis results
+            Dictionary with analysis results
         """
         DataValidator.validate_data(data)
         self.data = data

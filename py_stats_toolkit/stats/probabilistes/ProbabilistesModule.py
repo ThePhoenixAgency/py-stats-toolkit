@@ -18,13 +18,14 @@ tags : module, stats, refactored
 =====================================================================
 """
 
-from typing import Union
-import numpy as np
+from typing import Any, Union
 
-# Import base class and utilities
+import numpy as np
+from scipy.stats import rv_continuous
+
+from py_stats_toolkit.algorithms import probability as prob_algos
 from py_stats_toolkit.core.base import StatisticalModule
 from py_stats_toolkit.core.validators import DataValidator
-from py_stats_toolkit.algorithms import probability as prob_algos
 from py_stats_toolkit.utils.data_processor import DataProcessor
 
 
@@ -48,17 +49,18 @@ class ProbabilistesModule(StatisticalModule):
         self.distribution_type = None
     
     def process(self, data: Union[np.ndarray, list], 
-                distribution: str = "normal", **kwargs):
+                distribution: str = "normal", **kwargs) -> Any:
         """
         Fit a distribution to data.
         
         Args:
-            data: Input data
+            data: Input data (numpy array or list)
             distribution: Type of distribution ('normal', 'exponential', 'gamma')
             **kwargs: Additional parameters
             
         Returns:
-            Distribution object
+            scipy.stats distribution object with fitted parameters.
+            The returned object has methods like pdf(), cdf(), rvs(), etc.
         """
         # Validation (delegated to validator)
         DataValidator.validate_data(data)

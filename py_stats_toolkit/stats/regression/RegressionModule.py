@@ -19,14 +19,13 @@ tags : module, stats, refactored
 """
 
 from typing import Any, Dict, List, Union
+
 import numpy as np
 import pandas as pd
 
-# Import base class and utilities
+from py_stats_toolkit.algorithms import regression as regression_algos
 from py_stats_toolkit.core.base import StatisticalModule
 from py_stats_toolkit.core.validators import DataValidator
-from py_stats_toolkit.algorithms import regression as regression_algos
-from py_stats_toolkit.utils.data_processor import DataProcessor
 
 
 class RegressionModule(StatisticalModule):
@@ -57,10 +56,18 @@ class RegressionModule(StatisticalModule):
             x_cols: List of feature column names
             y_col: Target column name
             regression_type: Type of regression ('linear', 'ridge', 'lasso', 'polynomial')
-            **kwargs: Additional arguments for the model
+            **kwargs: Additional arguments (alpha for ridge/lasso, degree for polynomial)
             
         Returns:
-            Regression results
+            Dictionary with regression results containing:
+            - 'coefficients': Regression coefficients
+            - 'intercept': Intercept value
+            - 'r2_score': R-squared score
+            - 'predictions': Predicted values
+            - 'residuals': Residual values
+            - 'model': Fitted model object
+            - 'regression_type': Type of regression performed
+            - Additional keys depending on regression type
         """
         # Validation (delegated to validator)
         DataValidator.validate_data(data)
@@ -77,19 +84,22 @@ class RegressionModule(StatisticalModule):
         if regression_type == "linear":
             result = regression_algos.compute_linear_regression(X, y)
         elif regression_type == "ridge":
-            alpha = kwargs.pop('alpha', 1.0)
+            alpha = kwargs.get('alpha', 1.0)
             result = regression_algos.compute_ridge_regression(X, y, alpha)
         elif regression_type == "lasso":
-            alpha = kwargs.pop('alpha', 1.0)
+            alpha = kwargs.get('alpha', 1.0)
             result = regression_algos.compute_lasso_regression(X, y, alpha)
         elif regression_type == "polynomial":
-            degree = kwargs.pop('degree', 2)
+            degree = kwargs.get('degree', 2)
             result = regression_algos.compute_polynomial_regression(X, y, degree)
         else:
-            raise ValueError(f"Unsupported regression type: {regression_type}")
+            raise ValueError(
+                f"Unsupported regression type: {regression_type}. "
+                f"Supported types are: 'linear', 'ridge', 'lasso', 'polynomial'."
+            )
         
         # Format results with column names
-        result['type'] = regression_type
+        result['regression_type'] = regression_type
         if regression_type != 'polynomial':
             result['coefficients'] = dict(zip(x_cols, result['coefficients']))
         
@@ -116,7 +126,7 @@ class RegressionModule(StatisticalModule):
         model = self.result['model']
         
         # Apply transformation for polynomial regression
-        if self.result['type'] == 'polynomial':
+        if self.result['regression_type'] == 'polynomial':
             X = self.result['transformer'].transform(X)
         
         return model.predict(X)

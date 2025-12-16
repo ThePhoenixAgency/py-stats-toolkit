@@ -18,24 +18,14 @@ tags : module, stats, refactored
 =====================================================================
 """
 
-from typing import Union
+from typing import Any, Dict, Union
+
 import pandas as pd
 
-# Import base class and utilities
+from py_stats_toolkit.core.base import StatisticalModule
+from py_stats_toolkit.core.validators import DataValidator
 
 
-# Stub base class for statistical modules
-class StatisticalModule:
-    def __init__(self):
-        self.data = None
-        self.result = None
-
-# Stub data validator
-class DataValidator:
-    @staticmethod
-    def validate_data(data):
-        if not isinstance(data, (pd.DataFrame, pd.Series)):
-            raise ValueError("Data must be a pandas DataFrame or Series.")
 class TimeSeriesModule(StatisticalModule):
     """
     Module for time series analysis (Business Logic Layer).
@@ -47,7 +37,7 @@ class TimeSeriesModule(StatisticalModule):
         """Initialize time series module."""
         super().__init__()
     
-    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs):
+    def process(self, data: Union[pd.DataFrame, pd.Series], **kwargs) -> Dict[str, Any]:
         """
         Process time series data.
         
@@ -56,7 +46,7 @@ class TimeSeriesModule(StatisticalModule):
             **kwargs: Additional arguments
             
         Returns:
-            Analysis results
+            Dictionary with analysis results
         """
         DataValidator.validate_data(data)
         self.data = data

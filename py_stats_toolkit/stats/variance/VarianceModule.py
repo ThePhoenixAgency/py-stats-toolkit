@@ -18,13 +18,13 @@ tags : module, stats, refactored
 =====================================================================
 """
 
-from typing import Dict
+from typing import Any, Dict
+
 import pandas as pd
 
-# Import base class and utilities
+from py_stats_toolkit.algorithms import variance as variance_algos
 from py_stats_toolkit.core.base import StatisticalModule
 from py_stats_toolkit.core.validators import DataValidator
-from py_stats_toolkit.algorithms import variance as variance_algos
 
 
 class VarianceModule(StatisticalModule):
@@ -46,7 +46,7 @@ class VarianceModule(StatisticalModule):
         super().__init__()
     
     def process(self, data: pd.DataFrame, group_col: str, value_col: str,
-                test_type: str = "anova", **kwargs) -> Dict:
+                test_type: str = "anova", **kwargs) -> Dict[str, Any]:
         """
         Perform variance analysis.
         
@@ -58,7 +58,25 @@ class VarianceModule(StatisticalModule):
             **kwargs: Additional arguments
             
         Returns:
-            Analysis results
+            Dictionary with analysis results containing:
+            For ANOVA:
+                - 'f_statistic': F-statistic value
+                - 'p_value': p-value
+                - 'groups': List of group names
+                - 'posthoc_method': 'Tukey HSD'
+                - 'posthoc_results': Post-hoc test results
+            For Kruskal-Wallis:
+                - 'h_statistic': H-statistic value
+                - 'p_value': p-value
+                - 'groups': List of group names
+                - 'posthoc_method': 'Mann-Whitney U'
+                - 'posthoc_results': Post-hoc test results
+            For Friedman:
+                - 'statistic': Test statistic
+                - 'p_value': p-value
+                - 'groups': List of group names
+                - 'posthoc_method': 'Wilcoxon'
+                - 'posthoc_results': Post-hoc test results
         """
         # Validation (delegated to validator)
         DataValidator.validate_data(data)
@@ -75,6 +93,9 @@ class VarianceModule(StatisticalModule):
         elif test_type == "friedman":
             self.result = variance_algos.compute_friedman_test(data, group_col, value_col)
         else:
-            raise ValueError(f"Unsupported test type: {test_type}")
+            raise ValueError(
+                f"Unsupported test type: {test_type}. "
+                f"Supported types are: 'anova', 'kruskal', 'friedman'."
+            )
         
         return self.result
