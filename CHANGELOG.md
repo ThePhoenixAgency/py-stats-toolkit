@@ -5,6 +5,37 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/),
 et ce projet adhère à [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2025-12-10
+
+### Changed
+- **BREAKING:** Mise à jour de la version minimale de Python de 3.8 à 3.9
+- Mise à jour majeure de toutes les dépendances vers leurs dernières versions sécurisées
+  - numpy: >=2.0.0 (précédemment >=1.21.0)
+  - pandas: >=2.0.0 (précédemment >=1.3.0)
+  - scipy: >=1.10.0 (précédemment >=1.7.0)
+  - matplotlib: >=3.8.0 (précédemment >=3.4.0)
+  - scikit-learn: >=1.3.0 (précédemment >=0.24.0)
+  - fastapi: >=0.115.0 (précédemment >=0.68.0)
+  - pydantic: >=2.10.0 (précédemment >=1.8.0)
+  - cryptography: >=44.0.0 (précédemment >=3.4.0)
+  - pytest: >=8.3.0 (précédemment >=7.0.0)
+  - black: >=24.10.0 (précédemment >=21.5b2)
+  - mypy: >=1.13.0 (précédemment >=0.910)
+- Ajout du support officiel pour Python 3.12
+- Mise à jour des configurations d'outils (black, mypy) pour cibler Python 3.9+
+
+### Added
+- Ajout de pip-audit>=2.10.0 aux dépendances de développement pour l'analyse de sécurité
+
+### Removed
+- Suppression des entrées dupliquées dans requirements.txt
+- Abandon du support pour Python 3.8 (fin de vie en octobre 2024)
+
+### Security
+- Correction de 22 vulnérabilités de sécurité identifiées par pip-audit
+- Mise à jour de cryptography vers la version >=44.0.0 pour corriger plusieurs CVEs critiques
+- Note: Une vulnérabilité subsiste dans ecdsa (CVE-2024-23342) - considérée hors périmètre par les mainteneurs
+
 ## [1.0.3] - 2025-01-27
 
 ### Added
