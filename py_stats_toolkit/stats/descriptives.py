@@ -19,10 +19,6 @@ class DescriptiveStatistics:
     including central tendency, dispersion, and percentiles.
     """
 
-    def __init__(self):
-        """Initialize DescriptiveStatistics."""
-        pass
-
     def analyze(
         self, data: Union[list, np.ndarray, pd.Series, pd.DataFrame]
     ) -> Dict[str, Any]:

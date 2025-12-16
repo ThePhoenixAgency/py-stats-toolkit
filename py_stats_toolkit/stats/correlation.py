@@ -26,6 +26,9 @@ class CorrelationAnalysis:
         Args:
             method: Correlation method ('pearson', 'spearman', or 'kendall')
         """
+        valid_methods = {"pearson", "spearman", "kendall"}
+        if method not in valid_methods:
+            raise ValueError(f"Method must be one of {valid_methods}, got '{method}'")
         self.method = method
 
     def analyze(
