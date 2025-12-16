@@ -81,7 +81,7 @@ class BaseCapsule:
                 data_array = np.array(data)
                 if data_array.size == 0:
                     raise ValueError("Data cannot be empty")
-            except Exception as e:
+            except (TypeError, ValueError) as e:
                 raise ValueError(f"Invalid data type: {type(data)}. Error: {e}")
 
     def process(
