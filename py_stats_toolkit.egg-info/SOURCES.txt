@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+py_stats_toolkit/__init__.py
+py_stats_toolkit.egg-info/PKG-INFO
+py_stats_toolkit.egg-info/SOURCES.txt
+py_stats_toolkit.egg-info/dependency_links.txt
+py_stats_toolkit.egg-info/requires.txt
+py_stats_toolkit.egg-info/top_level.txt
+py_stats_toolkit/capsules/BaseCapsule.py
+py_stats_toolkit/capsules/__init__.py
+tests/test_basic_imports.py
+tests/test_correlation.py
+tests/test_descriptives.py
+tests/test_regression_module.py

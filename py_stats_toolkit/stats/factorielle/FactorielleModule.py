@@ -2,7 +2,7 @@
 =====================================================================
 File : FactorielleModule.py
 =====================================================================
-version : 1.0.0
+version : 2.0.0 (Refactored)
 release : 15/06/2025
 author : Phoenix Project
 contact : contact@phonxproject.onmicrosoft.fr
@@ -11,15 +11,16 @@ license : MIT
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-Description du module FactorielleModule.py
+Refactored module for factorial analysis (PCA/Factor Analysis).
+Follows SOLID principles with separation of business logic and algorithms.
 
-tags : module, stats
-=====================================================================
-Ce module Description du module FactorielleModule.py
-
-tags : module, stats
+tags : module, stats, refactored
 =====================================================================
 """
+
+tags : module, stats
+"""
+from typing import Any, Dict, Optional
 
 import numpy as np
 import pandas as pd
@@ -34,8 +35,22 @@ class FactorielleModule(StatisticalModule):
     """Module pour l'analyse factorielle."""
 
     def __init__(self, n_jobs: int = -1):
+from py_stats_toolkit.core.base import StatisticalModule
+from py_stats_toolkit.core.validators import DataValidator
+
+
+class FactorielleModule(StatisticalModule):
+    """
+    Module for factorial analysis (Business Logic Layer).
+
+    Provides dimensionality reduction using:
+    - PCA (Principal Component Analysis)
+    - Factor Analysis
+    """
+
+    def __init__(self):
+        """Initialize factorial module."""
         super().__init__()
-        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
         self.scaler = StandardScaler()
 
     def process(self, data, method="pca", n_components=None, **kwargs):
@@ -47,9 +62,26 @@ class FactorielleModule(StatisticalModule):
             method: Méthode d'analyse ('pca', 'fa')
             n_components: Nombre de composantes à extraire
             **kwargs: Arguments additionnels
+        self.model = None
+
+    def process(self, data: pd.DataFrame, method: str = "pca",
+                n_components: Optional[int] = None, **kwargs) -> Dict[str, Any]:
+        """
+        Perform factorial analysis.
+
+        Args:
+            data: DataFrame with numerical features
+            method: Analysis method ('pca' or 'fa' for factor analysis)
+            n_components: Number of components to extract (None for all)
+            **kwargs: Additional arguments for the model
 
         Returns:
-            Résultats de l'analyse
+            Dictionary with analysis results containing:
+            - 'components': Transformed data
+            - 'explained_variance': Variance explained by each component (PCA only)
+            - 'loadings': Component loadings
+            - 'n_components': Number of components
+            - 'method': Method used
         """
         self.validate_data(data)
 
@@ -130,6 +162,69 @@ class FactorielleModule(StatisticalModule):
 
         return self.result
 
+        DataValidator.validate_data(data)
+        DataValidator.validate_numeric(data)
+
+        if not isinstance(data, pd.DataFrame):
+            raise TypeError("FactorielleModule requires a DataFrame")
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
+
+        self.data = data
+
+        # Standardize data
+        X_scaled = self.scaler.fit_transform(data)
+
+        # Determine n_components if not specified
+        if n_components is None:
+            n_components = min(data.shape)
+
+        # Choose model based on method
+        if method.lower() == "pca":
+            self.model = PCA(n_components=n_components, **kwargs)
+        elif method.lower() == "fa":
+            self.model = FactorAnalysis(n_components=n_components, **kwargs)
+        else:
+            raise ValueError(
+                f"Unsupported method: {method}. "
+                f"Supported methods are: 'pca', 'fa'."
+            )
+
+        # Fit and transform
+        components = self.model.fit_transform(X_scaled)
+
+        # Create component DataFrame with meaningful column names
+        component_names = [f'Component_{i+1}' for i in range(n_components)]
+        components_df = pd.DataFrame(
+            components,
+            columns=component_names,
+            index=data.index
+        )
+
+        # Get loadings (components_ for PCA, components_ for FA)
+        loadings = pd.DataFrame(
+            self.model.components_.T,
+            columns=component_names,
+            index=data.columns
+        )
+
+        # Build result dictionary
+        self.result = {
+            'components': components_df,
+            'loadings': loadings,
+            'n_components': n_components,
+            'method': method
+        }
+
+        # Add explained variance for PCA
+        if method.lower() == "pca":
+            self.result['explained_variance'] = self.model.explained_variance_ratio_
+            self.result['cumulative_variance'] = np.cumsum(self.model.explained_variance_ratio_)
+
+        return self.result
+
+    def transform(self, new_data: pd.DataFrame) -> pd.DataFrame:
+    
     def get_quality_metrics(self):
         """
         Calcule les métriques de qualité de l'analyse.
@@ -197,9 +292,13 @@ class FactorielleModule(StatisticalModule):
 
         Args:
             threshold: Seuil de contribution
+        Transform new data using the fitted model.
+
+        Args:
+            new_data: New data to transform
 
         Returns:
-            Variables contribuant significativement à chaque composante/facteur
+            Transformed data
         """
         if not hasattr(self, "result"):
             raise ValueError("Aucune analyse n'a été effectuée")
@@ -213,3 +312,17 @@ class FactorielleModule(StatisticalModule):
                 contributions[col] = significant_vars.to_dict()
 
         return contributions
+        if self.model is None:
+            raise ValueError("No model fitted. Call process() first.")
+
+        X_scaled = self.scaler.transform(new_data)
+        components = self.model.transform(X_scaled)
+
+        n_components = self.result['n_components']
+        component_names = [f'Component_{i+1}' for i in range(n_components)]
+
+        return pd.DataFrame(
+            components,
+            columns=component_names,
+            index=new_data.index
+        )

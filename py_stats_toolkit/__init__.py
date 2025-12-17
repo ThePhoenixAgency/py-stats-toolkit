@@ -13,7 +13,7 @@ Modules disponibles:
 """
 
 # Version du toolkit
-__version__ = "1.0.1"
+__version__ = "1.0.4"
 
 # Imports des modules principaux
 try:
@@ -37,15 +37,16 @@ except ImportError:
     DataProcessor = None
     DataValidator = None
 
+
 # Fonction utilitaire pour créer une instance polymorphique
 def create_analysis_module(module_type: str, **kwargs):
     """
     Crée une instance de module d'analyse avec polymorphisme
-    
+
     Args:
         module_type: Type de module ("descriptives", "regression", "correlation", "visualization")
         **kwargs: Arguments de configuration
-        
+
     Returns:
         Instance du module correspondant
     """
@@ -55,31 +56,33 @@ def create_analysis_module(module_type: str, **kwargs):
         "correlation": CorrelationAnalysis,
         "visualization": DataVisualizer
     }
-    
+
     if module_type not in modules:
         raise ValueError(f"Type de module non supporté: {module_type}. Types disponibles: {list(modules.keys())}")
-    
+
     module_class = modules[module_type]
     if module_class is None:
         raise ImportError(f"Le module '{module_type}' n'est pas disponible")
-    
+
     return module_class(**kwargs)
+
 
 # Fonction pour analyser des données avec polymorphisme
 def analyze_data(data, module_type: str = "descriptives", **kwargs):
     """
     Analyse des données avec polymorphisme automatique
-    
+
     Args:
         data: Données à analyser (DataFrame, Series, List ou array)
         module_type: Type de module à utiliser
         **kwargs: Arguments additionnels
-        
+
     Returns:
         Résultats de l'analyse
     """
     module = create_analysis_module(module_type, **kwargs)
     return module.analyze(data, **kwargs)
+
 
 # Exports principaux
 __all__ = [
@@ -90,11 +93,11 @@ __all__ = [
     'DataVisualizer',
     'DataProcessor',
     'DataValidator',
-    
+
     # Fonctions utilitaires
     'create_analysis_module',
     'analyze_data',
-    
+
     # Version
     '__version__'
-] 
+]
