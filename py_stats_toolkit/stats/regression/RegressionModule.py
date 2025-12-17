@@ -1,8 +1,8 @@
-'''
+"""
 =====================================================================
 File : RegressionModule.py
 =====================================================================
-version : 1.0.0
+version : 2.0.0
 release : 15/06/2025
 author : Phoenix Project
 contact : contact@phonxproject.onmicrosoft.fr
@@ -11,184 +11,142 @@ license : MIT
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-Description du module RegressionModule.py
+Refactored module for regression analysis.
+Follows SOLID principles with separation of business logic and algorithms.
 
-tags : module, stats
+tags : module, stats, refactored
 =====================================================================
-Ce module Description du module RegressionModule.py
+"""
 
-tags : module, stats
-=====================================================================
-'''
+from typing import Any, Dict, List, Union
 
 import numpy as np
 import pandas as pd
+
+from py_stats_toolkit.algorithms import regression as regression_algos
+from py_stats_toolkit.core.base import StatisticalModule
+from py_stats_toolkit.core.validators import DataValidator
+
+
+class RegressionModule(StatisticalModule):
+    """
+    Module for regression analysis (Business Logic Layer).
+
+    Responsibilities:
+    - Orchestrate regression workflow
+    - Manage results and state
+    - Provide user-facing API
+
+    Delegates to:
+    - DataValidator for validation
+    - regression_algos for computations
+    """
+
+    def __init__(self):
+        """Initialize regression module."""
+        super().__init__()
+
+    def process(self, data: pd.DataFrame, x_cols: List[str], y_col: str,
+                regression_type: str = "linear", **kwargs) -> Dict[str, Any]:
+        """
+        Perform regression analysis.
+
+        Args:
+            data: DataFrame with data
+            x_cols: List of feature column names
+            y_col: Target column name
+            regression_type: Type of regression ('linear', 'ridge', 'lasso', 'polynomial')
+            **kwargs: Additional arguments (alpha for ridge/lasso, degree for polynomial)
+
+        Returns:
+            Dictionary with regression results containing:
+            - 'coefficients': Regression coefficients
+            - 'intercept': Intercept value
+            - 'r2_score': R-squared score
+            - 'predictions': Predicted values
+            - 'residuals': Residual values
+            - 'model': Fitted model object
+            - 'regression_type': Type of regression performed
+            - Additional keys depending on regression type
+        """
+        # Validation (delegated to validator)
+        DataValidator.validate_data(data)
+        DataValidator.validate_columns(data, x_cols + [y_col])
+
+        # Extract features and target
+        X = data[x_cols].values
+        y = data[y_col].values
 from scipy import stats
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.preprocessing import PolynomialFeatures
 from ..core.AbstractClassBase import StatisticalModule
 from ...utils.parallel import ParallelProcessor
 
-class RegressionModule(StatisticalModule):
-    """Module pour l'analyse de régression."""
-    
-    def __init__(self, n_jobs: int = -1):
-        super().__init__()
-        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
-    
-    def process(self, data, x_cols, y_col, regression_type="linear", **kwargs):
-        """
-        Effectue une analyse de régression.
-        
-        Args:
-            data: DataFrame avec les données
-            x_cols: Liste des colonnes prédictives
-            y_col: Colonne cible
-            regression_type: Type de régression ('linear', 'ridge', 'lasso', 'polynomial')
-            **kwargs: Arguments additionnels pour le modèle
-            
-        Returns:
-            Résultats de la régression
-        """
-        self.validate_data(data)
-        
-        X = data[x_cols]
-        y = data[y_col]
-        
+        # Store state
+        self.data = data
+
+        # Computation (delegated to algorithm layer)
         if regression_type == "linear":
-            return self._linear_regression(X, y, **kwargs)
+            result = regression_algos.compute_linear_regression(X, y)
         elif regression_type == "ridge":
-            return self._ridge_regression(X, y, **kwargs)
+            alpha = kwargs.get('alpha', 1.0)
+            result = regression_algos.compute_ridge_regression(X, y, alpha)
         elif regression_type == "lasso":
-            return self._lasso_regression(X, y, **kwargs)
+            alpha = kwargs.get('alpha', 1.0)
+            result = regression_algos.compute_lasso_regression(X, y, alpha)
         elif regression_type == "polynomial":
-            return self._polynomial_regression(X, y, **kwargs)
+            degree = kwargs.get('degree', 2)
+            result = regression_algos.compute_polynomial_regression(X, y, degree)
         else:
-            raise ValueError(f"Type de régression {regression_type} non supporté")
-    
-    def _linear_regression(self, X, y, **kwargs):
-        """Régression linéaire simple."""
-        model = LinearRegression(**kwargs)
-        model.fit(X, y)
-        
-        y_pred = model.predict(X)
-        residuals = y - y_pred
-        
-        self.result = {
-            'Type': 'Régression linéaire',
-            'Coefficients': dict(zip(X.columns, model.coef_)),
-            'Intercept': model.intercept_,
-            'R2': model.score(X, y),
-            'Prédictions': y_pred,
-            'Résidus': residuals,
-            'Modèle': model
-        }
-        
+            raise ValueError(
+                f"Unsupported regression type: {regression_type}. "
+                f"Supported types are: 'linear', 'ridge', 'lasso', 'polynomial'."
+            )
+
+        # Format results with column names
+        result['regression_type'] = regression_type
+        if regression_type != 'polynomial':
+            result['coefficients'] = dict(zip(x_cols, result['coefficients']))
+
+        self.result = result
         return self.result
-    
-    def _ridge_regression(self, X, y, alpha=1.0, **kwargs):
-        """Régression Ridge."""
-        model = Ridge(alpha=alpha, **kwargs)
-        model.fit(X, y)
-        
-        y_pred = model.predict(X)
-        residuals = y - y_pred
-        
-        self.result = {
-            'Type': 'Régression Ridge',
-            'Coefficients': dict(zip(X.columns, model.coef_)),
-            'Intercept': model.intercept_,
-            'R2': model.score(X, y),
-            'Alpha': alpha,
-            'Prédictions': y_pred,
-            'Résidus': residuals,
-            'Modèle': model
-        }
-        
-        return self.result
-    
-    def _lasso_regression(self, X, y, alpha=1.0, **kwargs):
-        """Régression Lasso."""
-        model = Lasso(alpha=alpha, **kwargs)
-        model.fit(X, y)
-        
-        y_pred = model.predict(X)
-        residuals = y - y_pred
-        
-        self.result = {
-            'Type': 'Régression Lasso',
-            'Coefficients': dict(zip(X.columns, model.coef_)),
-            'Intercept': model.intercept_,
-            'R2': model.score(X, y),
-            'Alpha': alpha,
-            'Prédictions': y_pred,
-            'Résidus': residuals,
-            'Modèle': model
-        }
-        
-        return self.result
-    
-    def _polynomial_regression(self, X, y, degree=2, **kwargs):
-        """Régression polynomiale."""
-        poly = PolynomialFeatures(degree=degree)
-        X_poly = poly.fit_transform(X)
-        
-        model = LinearRegression(**kwargs)
-        model.fit(X_poly, y)
-        
-        y_pred = model.predict(X_poly)
-        residuals = y - y_pred
-        
-        self.result = {
-            'Type': 'Régression polynomiale',
-            'Coefficients': model.coef_,
-            'Intercept': model.intercept_,
-            'R2': model.score(X_poly, y),
-            'Degré': degree,
-            'Prédictions': y_pred,
-            'Résidus': residuals,
-            'Modèle': model,
-            'Transformateur': poly
-        }
-        
-        return self.result
-    
-    def predict(self, X):
+
+    def predict(self, X: Union[pd.DataFrame, np.ndarray]) -> np.ndarray:
         """
-        Fait des prédictions avec le modèle entraîné.
-        
+        Make predictions with the trained model.
+
         Args:
-            X: Données pour la prédiction
-            
+            X: Feature data
+
         Returns:
-            Prédictions
+            Predictions
         """
-        if not hasattr(self, 'result'):
-            raise ValueError("Aucun modèle n'a été entraîné")
-        
-        model = self.result['Modèle']
-        
-        if self.result['Type'] == 'Régression polynomiale':
-            X = self.result['Transformateur'].transform(X)
-        
+        if not self.has_result():
+            raise ValueError("No model has been trained. Call process() first.")
+
+        # Convert to numpy if needed
+        if isinstance(X, pd.DataFrame):
+            X = X.values
+
+        model = self.result['model']
+
+        # Apply transformation for polynomial regression
+        if self.result['regression_type'] == 'polynomial':
+            X = self.result['transformer'].transform(X)
+
         return model.predict(X)
-    
-    def get_residuals_analysis(self):
+
+    def get_residuals_analysis(self) -> Dict[str, Any]:
         """
-        Analyse des résidus.
-        
+        Analyze residuals.
+
         Returns:
-            Statistiques sur les résidus
+            Residual statistics
         """
-        if not hasattr(self, 'result'):
-            raise ValueError("Aucun modèle n'a été entraîné")
-        
-        residuals = self.result['Résidus']
-        
-        return {
-            'Moyenne': np.mean(residuals),
-            'Écart-type': np.std(residuals),
-            'Skewness': stats.skew(residuals),
-            'Kurtosis': stats.kurtosis(residuals),
-            'Test de normalité': stats.normaltest(residuals)
-        } 
+        if not self.has_result():
+            raise ValueError("No analysis performed. Call process() first.")
+
+        residuals = self.result['residuals']
+
+        # Delegate computation to algorithm layer
+        return regression_algos.compute_residuals_analysis(residuals)

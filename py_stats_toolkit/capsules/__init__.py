@@ -1,8 +1,8 @@
-'''
+"""
 =====================================================================
 File : __init__.py
 =====================================================================
-version : 1.0.0
+version : 2.0.0 (Refactored - Backward Compatibility)
 release : 15/06/2025
 author : Phoenix Project
 contact : contact@phonxproject.onmicrosoft.fr
@@ -11,14 +11,17 @@ license : MIT
 Copyright (c) 2025, Phoenix Project
 All rights reserved.
 
-Ce module initialise le package des capsules d'analyse statistique.
-Il définit les imports publics et les configurations de base pour
-l'utilisation des capsules dans le projet py_stats_toolkit.
+Backward compatibility module for capsules.
+This module is deprecated. Use py_stats_toolkit.core.base.StatisticalModule instead.
 
-tags : capsule, initialisation, package, configuration
+tags : capsule, deprecated, backward-compatibility
 =====================================================================
-'''
+"""
 
-from .BaseCapsule import BaseCapsule
+# Import new base class for backward compatibility
+from py_stats_toolkit.core.base import StatisticalModule
 
-__all__ = ['BaseCapsule'] 
+# Alias for backward compatibility
+BaseCapsule = StatisticalModule
+
+__all__ = ['BaseCapsule', 'StatisticalModule']
