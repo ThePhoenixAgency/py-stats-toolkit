@@ -18,9 +18,33 @@ tags : module, stats, refactored
 =====================================================================
 """
 
+tags : module, stats
+"""
 from typing import List, Tuple, Union
 
 import pandas as pd
+from scipy import stats
+
+from ...utils.parallel import ParallelProcessor
+from ..core.AbstractClassBase import StatisticalModule
+
+
+class CorrelationModule(StatisticalModule):
+    """Module pour l'analyse de corrélation."""
+
+    def __init__(self, n_jobs: int = -1):
+        super().__init__()
+        self.method = None
+        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
+
+    def process(self, data, method="pearson", **kwargs):
+        """
+        Calcule la corrélation entre les variables.
+
+        Args:
+            data: Données d'entrée (pandas DataFrame)
+            method: Méthode de corrélation ('pearson', 'spearman', 'kendall')
+            **kwargs: Arguments additionnels
 
 from py_stats_toolkit.algorithms import correlation as correlation_algos
 from py_stats_toolkit.core.base import StatisticalModule
@@ -59,6 +83,29 @@ class CorrelationModule(StatisticalModule):
         Returns:
             Correlation matrix
         """
+        self.validate_data(data)
+        self.method = method
+
+        if not isinstance(data, pd.DataFrame):
+            raise TypeError("Les données doivent être un pandas DataFrame")
+
+        # Compute correlation matrix directly
+        # pandas/numpy already use optimized algorithms
+        # Note: Chunking correlation computation produces incorrect results because
+        # correlation requires all data points to compute proper covariance and variance statistics
+        self.result = data.corr(method=method)
+        return self.result
+
+    def get_correlation_matrix(self):
+        """Retourne la matrice de corrélation."""
+        return self.result
+
+    def get_correlation_pairs(self, threshold=0.5):
+        """
+        Retourne les paires de variables avec une corrélation supérieure au seuil.
+
+        Args:
+            threshold: Seuil de corrélation
         # Validation (delegated to validator)
         DataValidator.validate_data(data)
 
@@ -100,6 +147,27 @@ from ...utils.parallel import ParallelProcessor, get_optimal_chunk_size
         Returns:
             List of (var1, var2, correlation) tuples
         """
+        if self.result is None:
+            raise ValueError("Exécutez d'abord process()")
+
+        # Utilisation de numpy pour le calcul parallèle des paires
+        corr_matrix = self.result.to_numpy()
+        n = len(self.result.columns)
+
+        # Création des indices pour les paires
+        i, j = np.triu_indices(n, k=1)
+        corr_values = corr_matrix[i, j]
+
+        # Filtrage des paires selon le seuil
+        mask = np.abs(corr_values) >= threshold
+        mask_indices = np.where(mask)[0]
+
+        # Vectorized construction of pairs using list comprehension
+        pairs = [
+            (self.result.columns[i[idx]], self.result.columns[j[idx]], corr_values[idx])
+            for idx in mask_indices
+        ]
+
         if not self.has_result():
             raise ValueError("No analysis performed. Call process() first.")
 
