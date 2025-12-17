@@ -37,6 +37,13 @@ class MoyenneGlissanteModule(StatisticalModule):
     - Orchestrate moving average workflow
     - Manage results and state
     - Provide user-facing API
+tags : module, stats
+'''
+
+import numpy as np
+import pandas as pd
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
 
     Delegates to:
     - DataValidator for validation
@@ -51,6 +58,14 @@ class MoyenneGlissanteModule(StatisticalModule):
 
     def process(self, data: Union[pd.Series, np.ndarray, list],
                 window_size: int = 5, **kwargs) -> pd.Series:
+        self.batch_size = batch_size
+        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
+    
+    def _process_chunk(self, chunk):
+        """Traite un chunk de données."""
+        return pd.Series(chunk).rolling(window=self.window_size).mean()
+    
+    def process(self, data, window_size=5, **kwargs):
         """
         Compute moving average.
 
@@ -81,6 +96,16 @@ class MoyenneGlissanteModule(StatisticalModule):
         else:
             self.result = pd.Series(result_array)
 
+        
+        # Convert to Series if not already
+        if isinstance(data, pd.Series):
+            series_data = data
+        else:
+            series_data = pd.Series(data)
+        
+        # Calculate rolling mean
+        self.result = series_data.rolling(window=window_size).mean()
+        
         return self.result
 
     def get_window_size(self) -> int:

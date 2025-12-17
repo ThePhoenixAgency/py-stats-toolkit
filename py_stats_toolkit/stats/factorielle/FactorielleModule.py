@@ -68,6 +68,8 @@ class FactorielleModule(StatisticalModule):
 
         if not isinstance(data, pd.DataFrame):
             raise TypeError("FactorielleModule requires a DataFrame")
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
 
         self.data = data
 
@@ -123,6 +125,66 @@ class FactorielleModule(StatisticalModule):
         return self.result
 
     def transform(self, new_data: pd.DataFrame) -> pd.DataFrame:
+    
+    def get_quality_metrics(self):
+        """
+        Calcule les métriques de qualité de l'analyse.
+        
+        Returns:
+            Métriques de qualité
+        """
+        if not hasattr(self, 'result'):
+            raise ValueError("Aucune analyse n'a été effectuée")
+        
+        if self.result['Type'] == 'ACP':
+            return {
+                'Variance expliquée par composante': dict(zip(
+                    [f'PC{i+1}' for i in range(len(self.result['Variance expliquée']))],
+                    self.result['Variance expliquée']
+                )),
+                'Variance cumulée': dict(zip(
+                    [f'PC{i+1}' for i in range(len(self.result['Variance cumulée']))],
+                    self.result['Variance cumulée']
+                )),
+                'Nombre de composantes pour 80% de variance': np.argmax(
+                    self.result['Variance cumulée'] >= 0.8
+                ) + 1
+            }
+        else:
+            return {
+                'Variance du bruit': self.result['Noise variance'].tolist(),
+                'Qualité de l\'ajustement': 1 - np.mean(self.result['Noise variance'])
+            }
+    
+    def transform(self, new_data):
+        """
+        Transforme de nouvelles données.
+        
+        Args:
+            new_data: Nouvelles données à transformer
+            
+        Returns:
+            Données transformées
+        """
+        if not hasattr(self, 'result'):
+            raise ValueError("Aucune analyse n'a été effectuée")
+        
+        # Standardisation des nouvelles données
+        X_new = self.scaler.transform(new_data)
+        
+        # Transformation selon la méthode utilisée
+        if self.result['Type'] == 'ACP':
+            return pd.DataFrame(
+                self.result['Modèle'].transform(X_new),
+                columns=[f'PC{i+1}' for i in range(self.result['Modèle'].n_components_)]
+            )
+        else:
+            return pd.DataFrame(
+                self.result['Modèle'].transform(X_new),
+                columns=[f'F{i+1}' for i in range(self.result['Modèle'].n_components_)]
+            )
+    
+    def get_contributions(self, threshold=0.5):
         """
         Transform new data using the fitted model.
 

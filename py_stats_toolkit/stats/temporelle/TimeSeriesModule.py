@@ -22,6 +22,8 @@ from typing import Any, Dict, Union
 
 import numpy as np
 import pandas as pd
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
 
 from py_stats_toolkit.core.base import StatisticalModule
 from py_stats_toolkit.core.validators import DataValidator
@@ -44,6 +46,15 @@ class TimeSeriesModule(StatisticalModule):
 
     def process(self, data: Union[pd.DataFrame, pd.Series],
                 window: int = 7, **kwargs) -> Dict[str, Any]:
+class TimeSeriesAnalyzer(StatisticalModule):
+    """Module pour l'analyse de séries temporelles."""
+    
+    def __init__(self, n_jobs: int = -1, batch_size: int = 1000):
+        super().__init__()
+        self.batch_size = batch_size
+        self.parallel_processor = ParallelProcessor(n_jobs=n_jobs)
+    
+    def process(self, data, timestamps=None, **kwargs):
         """
         Process time series data.
 

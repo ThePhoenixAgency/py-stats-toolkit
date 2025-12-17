@@ -84,6 +84,12 @@ class VarianceModule(StatisticalModule):
 
         # Store state
         self.data = data
+import numpy as np
+import pandas as pd
+from scipy import stats
+from statsmodels.stats.multicomp import MultiComparison
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
 
         # Computation (delegated to algorithm layer)
         if test_type == "anova":

@@ -71,5 +71,12 @@ class FrequenceModule(StatisticalModule):
 
         # Computation (delegated to algorithm layer)
         self.result = desc_algos.compute_frequency_distribution(data_array, normalize)
+tags : module, stats
+'''
+
+import numpy as np
+import pandas as pd
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
 
         return self.result

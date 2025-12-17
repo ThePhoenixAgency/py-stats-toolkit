@@ -76,6 +76,11 @@ class RegressionModule(StatisticalModule):
         # Extract features and target
         X = data[x_cols].values
         y = data[y_col].values
+from scipy import stats
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.preprocessing import PolynomialFeatures
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor
 
         # Store state
         self.data = data

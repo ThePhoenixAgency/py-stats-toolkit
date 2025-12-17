@@ -64,6 +64,11 @@ class CorrelationModule(StatisticalModule):
 
         if not isinstance(data, pd.DataFrame):
             raise TypeError(f"Data must be a pandas DataFrame. Got {type(data).__name__} instead.")
+import numpy as np
+import pandas as pd
+from scipy import stats
+from ..core.AbstractClassBase import StatisticalModule
+from ...utils.parallel import ParallelProcessor, get_optimal_chunk_size
 
         DataValidator.validate_numeric(data)
 
